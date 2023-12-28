@@ -38,7 +38,7 @@ class _log_inState extends State<log_in> {
             const Text(
               'NIPPON DATA SYSTEM LTD',
               style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
             ),
             const Padding(
               padding: EdgeInsets.all(10),
