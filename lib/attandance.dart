@@ -1,80 +1,51 @@
-//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print
+// ignore_for_file: camel_case_types, avoid_print, unnecessary_new, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:log_in/home.dart';
-import 'package:log_in/log_in.dart';
+import 'package:log_in/checkin.dart';
+import 'package:log_in/checkout.dart';
+import 'package:log_in/feedback.dart';
+import 'package:log_in/leave.dart';
 
-// ignore: use_key_in_widget_constructors
-class dashboard extends StatelessWidget {
+
+class attandance extends StatelessWidget {
+  attandance({super.key});
+
   void tapped(int index, BuildContext context) {
     if (index == 0) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const check_in()));
     } else if (index == 1) {
-      print("not the two :(");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const check_out()));
     } else if (index == 2) {
-      print("not the three :(");
+      Navigator.push(context, MaterialPageRoute(builder: (_) => const leave()));
     } else if (index == 3) {
-      print("not the four :(");
-    } else if (index == 4) {
-      print("not the five :(");
-    } else if (index == 5) {
-      print("not the six :(");
-    } else if (index == 6) {
-      print("not the seven :(");
-    } else if (index == 7) {
-      print("not the eight :(");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const feedback()));
     }
   }
 
   Items item1 = new Items(
-    title: "ALL COMPLAINTS",
-    subtitle: "",
+    title: "Day Check IN",
     event: "",
-    img: 'assets/image/cp45.jpg',
+    img: 'assets/image/check-in.png',
   );
 
   Items item2 = new Items(
-    title: "OVERDUE",
-    subtitle: "",
+    title: "Day Check OUT",
     event: "",
-    img: 'assets/image/food.png',
+    img: 'assets/image/check-out.png',
   );
   Items item3 = new Items(
-    title: "TODAY OVERDUE",
-    subtitle: "",
+    title: "Leave Request",
     event: "",
-    img: 'assets/image/map.png',
+    img: 'assets/image/schedule.png',
   );
   Items item4 = new Items(
-    title: "COMPLETED",
-    subtitle: "",
+    title: "Day FeedBack",
     event: "",
-    img: 'assets/image/festival.png',
-  );
-  Items item5 = new Items(
-    title: "PENDING",
-    subtitle: "",
-    event: "",
-    img: 'assets/image/todo.png',
-  );
-  Items item6 = new Items(
-    title: "SEARCH COMPLAINTS",
-    subtitle: "",
-    event: "",
-    img: 'assets/image/setting.png',
-  );
-  Items item7 = new Items(
-    title: "ATTANDENCE",
-    subtitle: "",
-    event: "",
-    img: 'assets/image/notification.png',
-  );
-  Items item8 = new Items(
-    title: "FEEDBACK",
-    subtitle: "",
-    event: "",
-    img: 'assets/image/7443.png',
+    img: 'assets/image/feedback.png',
   );
 
   @override
@@ -84,39 +55,18 @@ class dashboard extends StatelessWidget {
       item2,
       item3,
       item4,
-      item5,
-      item6,
-      item7,
-      item8,
     ];
     var color = 0xFF2979FF;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: const BackButton(
+          color: Colors.white,
+        ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.blue,
-        title: const Text('DASHBOARD'),
+        title: const Text('Attendance'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        actions: [
-          Row(
-            children: [
-              const Text(
-                'DATE FILTER',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              IconButton(
-                onPressed: () => {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const log_in())),
-                },
-                icon: const Icon(
-                  Icons.power_settings_new,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
       body: Flexible(
         child: GridView.count(
@@ -161,17 +111,6 @@ class dashboard extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      data.subtitle,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white38,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
                       data.event,
                       style: GoogleFonts.openSans(
                         textStyle: const TextStyle(
@@ -194,13 +133,11 @@ class dashboard extends StatelessWidget {
 
 class Items {
   String title;
-  String subtitle;
   String event;
   String img;
 
   Items({
     required this.title,
-    required this.subtitle,
     required this.event,
     required this.img,
   });

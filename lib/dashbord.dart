@@ -1,36 +1,81 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element
+//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:log_in/complaint.dart';
-import 'package:log_in/dashbord.dart';
+import 'package:log_in/attandance.dart';
+import 'package:log_in/home.dart';
+import 'package:log_in/log_in.dart';
 
-// ignore: must_be_immutable, camel_case_types
-class home extends StatelessWidget {
+// ignore: use_key_in_widget_constructors
+class dashboard extends StatelessWidget {
   void tapped(int index, BuildContext context) {
     if (index == 0) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
+      Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
     } else if (index == 1) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
+      print("not the two :(");
+    } else if (index == 2) {
+      print("not the three :(");
+    } else if (index == 3) {
+      print("not the four :(");
+    } else if (index == 4) {
+      print("not the five :(");
+    } else if (index == 5) {
+      print("not the six :(");
+    } else if (index == 6) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => attandance()));
+    } else if (index == 7) {
+      print("not the eight :(");
     }
-
-    
   }
 
-  Items item1 = Items(
-    title: "ANANTAPUR",
+  Items item1 = new Items(
+    title: "ALL COMPLAINTS",
     subtitle: "",
     event: "",
     img: 'assets/image/cp45.jpg',
   );
 
-  Items item2 = Items(
-    title: "DELHI",
+  Items item2 = new Items(
+    title: "OVERDUE",
     subtitle: "",
     event: "",
     img: 'assets/image/food.png',
+  );
+  Items item3 = new Items(
+    title: "TODAY OVERDUE",
+    subtitle: "",
+    event: "",
+    img: 'assets/image/map.png',
+  );
+  Items item4 = new Items(
+    title: "COMPLETED",
+    subtitle: "",
+    event: "",
+    img: 'assets/image/festival.png',
+  );
+  Items item5 = new Items(
+    title: "PENDING",
+    subtitle: "",
+    event: "",
+    img: 'assets/image/todo.png',
+  );
+  Items item6 = new Items(
+    title: "SEARCH COMPLAINTS",
+    subtitle: "",
+    event: "",
+    img: 'assets/image/setting.png',
+  );
+  Items item7 = new Items(
+    title: "ATTANDENCE",
+    subtitle: "",
+    event: "",
+    img: 'assets/image/notification.png',
+  );
+  Items item8 = new Items(
+    title: "FEEDBACK",
+    subtitle: "",
+    event: "",
+    img: 'assets/image/7443.png',
   );
 
   @override
@@ -38,25 +83,39 @@ class home extends StatelessWidget {
     List<Items> myList = [
       item1,
       item2,
+      item3,
+      item4,
+      item5,
+      item6,
+      item7,
+      item8,
     ];
     var color = 0xFF2979FF;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: BackButton(
-          color: Colors.white,
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => dashboard()));
-          },
-        ),
         backgroundColor: Colors.blue,
-        title: const Text('DISTRICT WISE ACTIVITY'),
+        title: const Text('DASHBOARD'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        actions: const [
+        actions: [
           Row(
-            children: [],
+            children: [
+              const Text(
+                'DATE FILTER',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              IconButton(
+                onPressed: () => {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const log_in())),
+                },
+                icon: const Icon(
+                  Icons.power_settings_new,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
         ],
       ),

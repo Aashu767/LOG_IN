@@ -14,6 +14,7 @@ class login extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
         pageTransitionsTheme: _removeTransitions(),
       ),
       debugShowCheckedModeBanner: false,
@@ -23,3 +24,4 @@ class login extends StatelessWidget {
 }
 
 _removeTransitions() {}
+

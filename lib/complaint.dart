@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:log_in/Form.dart';
+import 'package:log_in/home.dart';
 
 class Complaints extends StatelessWidget {
   const Complaints({super.key});
@@ -8,7 +9,10 @@ class Complaints extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(
+        leading: BackButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
+          },
           color: Colors.white,
         ),
         backgroundColor: Colors.blue,
@@ -16,7 +20,7 @@ class Complaints extends StatelessWidget {
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
       body: ListView.builder(
-        itemCount: 7,
+        itemCount: 8,
         itemBuilder: (BuildContext context, int index) {
           return getItem(index, context);
         },
@@ -26,24 +30,24 @@ class Complaints extends StatelessWidget {
 }
 
 Widget getItem(int index, BuildContext context) {
-  return InkWell(
-    onTap: () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Form_page()));
-    },
-    child: Container(
-      margin: const EdgeInsets.all(16),
-      alignment: Alignment.center,
-      decoration: const BoxDecoration(
-          color: Colors.lightBlue,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(8.0),
-            topRight: Radius.circular(8.0),
-            bottomLeft: Radius.circular(8.0),
-            bottomRight: Radius.circular(8.0),
-          )),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+  return Container(
+    margin: const EdgeInsets.all(16),
+    alignment: Alignment.center,
+    decoration: const BoxDecoration(
+        color: Colors.lightBlue,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8.0),
+          topRight: Radius.circular(8.0),
+          bottomLeft: Radius.circular(8.0),
+          bottomRight: Radius.circular(8.0),
+        )),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const Form_page()));
+        },
         child: Column(
           children: [
             Row(

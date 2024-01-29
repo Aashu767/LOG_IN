@@ -1,8 +1,9 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, unused_element, non_constant_identifier_names, prefer_final_fields, file_names
 
 import 'package:flutter/material.dart';
-import 'package:log_in/assign.dart';
+// import 'package:log_in/assign.dart';
 import 'package:log_in/comp_update.dart';
+import 'package:log_in/complaint.dart';
 
 class Form_page extends StatefulWidget {
   const Form_page({super.key});
@@ -12,6 +13,7 @@ class Form_page extends StatefulWidget {
 }
 
 class _Form_pageState extends State<Form_page> {
+  String _dropDownValue = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,7 @@ class _Form_pageState extends State<Form_page> {
                       Expanded(
                         flex: 4,
                         child: Text(
-                          ' 180024569',
+                          ' 1800245',
                           style: tstyle(),
                         ),
                       ),
@@ -501,11 +503,8 @@ class _Form_pageState extends State<Form_page> {
                           style: const ButtonStyle(
                               backgroundColor:
                                   MaterialStatePropertyAll(Colors.yellow)),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const assign()));
+                          onPressed: () async {
+                            showAlertDialog(context);
                           },
                           child: const Text(
                             "Assign To",
@@ -542,9 +541,140 @@ class _Form_pageState extends State<Form_page> {
       ),
     );
   }
+
+  showAlertDialog(BuildContext context) async {
+    Widget ASSIGNButton = TextButton(
+      style: const ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+      child: const Text("ASSIGN",
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => const Complaints()));
+      },
+    );
+    Widget CANCELButton = TextButton(
+      style: const ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: const Text("CANCEL",
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
+    );
+
+    AlertDialog alert = AlertDialog(
+      actionsAlignment: MainAxisAlignment.center,
+      scrollable: true,
+      title: const Center(
+        child: Text("Assign Complaint",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            )),
+      ),
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+            child: Column(
+          children: [
+            Container(
+                decoration: mydecoration(),
+                child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          'Comp No.:',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          '1800245',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ]))),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              decoration: mydecoration(),
+              child: StatefulBuilder(
+                  builder: (BuildContext context, StateSetter dropDownState) {
+                return DropdownButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  hint: _dropDownValue == ""
+                      ? const Text('Select To Assign')
+                      : Text(
+                          _dropDownValue,
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
+                        ),
+                  isExpanded: true,
+                  iconSize: 30.0,
+                  style: const TextStyle(
+                      color: Colors.blue,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
+                  items: ['luxmi', 'luxmi', 'luxmi', 'luxmi', 'luxmi'].map(
+                    (val) {
+                      return DropdownMenuItem<String>(
+                        value: val,
+                        child: Text(val),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (val) {
+                    dropDownState(
+                      () {
+                        _dropDownValue = val!;
+                      },
+                    );
+                  },
+                );
+              }),
+            ),
+          ],
+        )),
+      ),
+      actions: [
+        ASSIGNButton,
+        CANCELButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }
 
 TextStyle tstyle() {
   return const TextStyle(
       color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold);
+}
+
+BoxDecoration mydecoration() {
+  return BoxDecoration(
+    border:
+        Border.all(style: BorderStyle.solid, color: Colors.black, width: 2.0),
+  );
 }
