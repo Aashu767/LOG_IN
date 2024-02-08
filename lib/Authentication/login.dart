@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 
+import '../utils/secure_storage.dart';
+
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -23,7 +25,7 @@ class _LoginState extends State<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    geturl();
+
     // _checkVersion();
   }
 
@@ -35,19 +37,23 @@ class _LoginState extends State<Login> {
     setState(() {
       isLoading = true;
     });
-    debugPrint(
-        "user is $user, pass is $pass ${API.loginURL} ${MyApp.user_tcode}");
-    var res = await http.post(Uri.parse(API.loginURL), headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/x-www-form-urlencoded"
-    }, body: {
-      "_sUserId": user,
-      "_sPwd": pass,
-      "_VisitorCode": "",
-      "_TenantCode": "",
-      //"_TenantCode": "01",
-      "_Location": ""
-    });
+    // debugPrint(
+    //     "user is $user, pass is $pass ${API.loginURL} ${MyApp.user_tcode}");
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Validate_Login"),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: {
+          "_sUserId": user,
+          "_sPwd": pass,
+          "_VisitorCode": "",
+          "_TenantCode": "",
+          //"_TenantCode": "01",
+          "_Location": ""
+        });
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
@@ -153,11 +159,11 @@ class _LoginState extends State<Login> {
               height: 50,
             ),
             Image.asset(
-              'assets/images/logo.jpg',
+              'assets/image/logo.jpg',
               scale: 1.6,
             ),
             const Text(
-              'Sales Management',
+              'Newton Service',
               style: TextStyle(
                   color: Color.fromARGB(255, 60, 79, 112),
                   fontSize: 22,
