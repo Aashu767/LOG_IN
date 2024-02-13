@@ -1,10 +1,12 @@
 //  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/attandance.dart';
 import 'package:log_in/home.dart';
 import 'package:log_in/log_in.dart';
+import 'package:log_in/main.dart';
 
 // ignore: use_key_in_widget_constructors
 class dashboard extends StatelessWidget {
@@ -106,9 +108,10 @@ class dashboard extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
               IconButton(
-                onPressed: () => {
+                onPressed: () async => {
+                  await FlutterSecureStorage().deleteAll(),
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const log_in())),
+                      MaterialPageRoute(builder: (_) => const login())),
                 },
                 icon: const Icon(
                   Icons.power_settings_new,
