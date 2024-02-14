@@ -1,6 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:log_in/dashbord.dart';
 import 'package:xml2json/xml2json.dart';
 
 import '../utils/secure_storage.dart';
@@ -23,7 +26,6 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     // _checkVersion();
@@ -90,13 +92,13 @@ class _LoginState extends State<Login> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "Allow Newton Sales to use your location ?",
+                              "Allow Newton Service to use your location ?",
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
                             ),
                             const Text(
-                              "Newton sales app collects location data to enable attendance & customer visits even when the Sales app is closed or not in use.",
+                              "Newton Service app collects location data to enable attendance & customer visits even when the Sales app is closed or not in use.",
                             ),
                             Center(
                               child: Row(
@@ -104,6 +106,11 @@ class _LoginState extends State<Login> {
                                 children: [
                                   TextButton(
                                       onPressed: () async {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    dashboard()));
                                         await UserSecureStorage()
                                             .setStaffId(staffId);
                                         await UserSecureStorage().setuser(user);

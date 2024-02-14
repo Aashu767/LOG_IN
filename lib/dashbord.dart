@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/attandance.dart';
 import 'package:log_in/home.dart';
-import 'package:log_in/log_in.dart';
+// import 'package:log_in/log_in.dart';
 
 // ignore: use_key_in_widget_constructors
 class dashboard extends StatelessWidget {
@@ -108,7 +109,7 @@ class dashboard extends StatelessWidget {
               IconButton(
                 onPressed: () => {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const log_in())),
+                      MaterialPageRoute(builder: (_) => const Login())),
                 },
                 icon: const Icon(
                   Icons.power_settings_new,

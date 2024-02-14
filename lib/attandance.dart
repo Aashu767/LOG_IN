@@ -7,7 +7,6 @@ import 'package:log_in/checkout.dart';
 import 'package:log_in/feedback.dart';
 import 'package:log_in/leave.dart';
 
-
 class attandance extends StatelessWidget {
   attandance({super.key});
 
