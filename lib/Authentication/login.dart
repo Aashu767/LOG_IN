@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_super_parameters
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
                                   fontWeight: FontWeight.bold),
                             ),
                             const Text(
-                              "Newton Service app collects location data to enable attendance & customer visits even when the Sales app is closed or not in use.",
+                              "Newton sales app collects location data to enable attendance & customer visits even when the Sales app is closed or not in use.",
                             ),
                             Center(
                               child: Row(
@@ -114,6 +114,11 @@ class _LoginState extends State<Login> {
                                         await UserSecureStorage()
                                             .setStaffId(staffId);
                                         await UserSecureStorage().setuser(user);
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) => dashboard()));
                                       },
                                       child: const Text(
                                         "Allow ",
