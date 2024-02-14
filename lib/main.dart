@@ -1,6 +1,7 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:log_in/Authentication/splash.dart';
 import 'package:log_in/log_in.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class login extends StatelessWidget {
         pageTransitionsTheme: _removeTransitions(),
       ),
       debugShowCheckedModeBanner: false,
-      home: const log_in(),
+      home: const Splash(),
     );
   }
 }
