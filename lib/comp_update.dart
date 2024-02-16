@@ -57,6 +57,7 @@ class _comp_updateState extends State<comp_update> {
         actions: [
           CupertinoActionSheetAction(
             child: const Text('Photo Gallery'),
+            
             onPressed: () {
               // close the options modal
               Navigator.of(context).pop();
