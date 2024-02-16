@@ -7,7 +7,6 @@ import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/attandance.dart';
 import 'package:log_in/home.dart';
 
-
 // ignore: use_key_in_widget_constructors
 class dashboard extends StatelessWidget {
   void tapped(int index, BuildContext context) {
@@ -32,51 +31,35 @@ class dashboard extends StatelessWidget {
 
   Items item1 = new Items(
     title: "ALL COMPLAINTS",
-    subtitle: "",
-    event: "",
     img: 'assets/image/cp45.jpg',
   );
 
   Items item2 = new Items(
     title: "OVERDUE",
-    subtitle: "",
-    event: "",
     img: 'assets/image/food.png',
   );
   Items item3 = new Items(
     title: "TODAY OVERDUE",
-    subtitle: "",
-    event: "",
     img: 'assets/image/map.png',
   );
   Items item4 = new Items(
     title: "COMPLETED",
-    subtitle: "",
-    event: "",
     img: 'assets/image/festival.png',
   );
   Items item5 = new Items(
     title: "PENDING",
-    subtitle: "",
-    event: "",
     img: 'assets/image/todo.png',
   );
   Items item6 = new Items(
     title: "SEARCH COMPLAINTS",
-    subtitle: "",
-    event: "",
     img: 'assets/image/setting.png',
   );
   Items item7 = new Items(
     title: "ATTANDENCE",
-    subtitle: "",
-    event: "",
     img: 'assets/image/notification.png',
   );
   Items item8 = new Items(
     title: "FEEDBACK",
-    subtitle: "",
-    event: "",
     img: 'assets/image/7443.png',
   );
 
@@ -164,27 +147,6 @@ class dashboard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      data.subtitle,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white38,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      data.event,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -198,14 +160,10 @@ class dashboard extends StatelessWidget {
 
 class Items {
   String title;
-  String subtitle;
-  String event;
   String img;
 
   Items({
     required this.title,
-    required this.subtitle,
-    required this.event,
     required this.img,
   });
 }
