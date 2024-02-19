@@ -42,6 +42,13 @@ dependencies:
   flutter_secure_storage:
   xml2json:
   http: ^1.2.0
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.0
+  gps_connectivity: ^0.0.4
+  new_version_plus: ^0.0.11
+  syncfusion_flutter_gauges: ^24.2.6
+  unique_identifier: ^0.3.0
+  animated_floating_buttons: ^0.0.2
   
 dev_dependencies:
   flutter_test:
