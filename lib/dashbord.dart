@@ -1,4 +1,4 @@
-//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously
+//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -6,9 +6,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/attandance.dart';
 import 'package:log_in/home.dart';
+import 'package:xml2json/xml2json.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 // ignore: use_key_in_widget_constructors
-class dashboard extends StatelessWidget {
+class dashboard extends StatefulWidget {
+  @override
+  State<dashboard> createState() => _dashboardState();
+}
+
+class _dashboardState extends State<dashboard> {
+  bool isLoading = false;
+
+  get menuId => null;
   void tapped(int index, BuildContext context) {
     if (index == 0) {
       Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
@@ -38,30 +49,88 @@ class dashboard extends StatelessWidget {
     title: "OVERDUE",
     img: 'assets/image/food.png',
   );
+
   Items item3 = new Items(
     title: "TODAY OVERDUE",
     img: 'assets/image/map.png',
   );
+
   Items item4 = new Items(
     title: "COMPLETED",
     img: 'assets/image/festival.png',
   );
+
   Items item5 = new Items(
     title: "PENDING",
     img: 'assets/image/todo.png',
   );
+
   Items item6 = new Items(
     title: "SEARCH COMPLAINTS",
     img: 'assets/image/setting.png',
   );
+
   Items item7 = new Items(
     title: "ATTANDENCE",
     img: 'assets/image/notification.png',
   );
+
   Items item8 = new Items(
     title: "FEEDBACK",
     img: 'assets/image/7443.png',
   );
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> MenuModel(String Menu_Id, String Menu_Name, String Count) async {
+    MenuModel(Menu_Id, Menu_Name, Count);
+  }
+
+  data(menuId, menuName, count) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks"),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: {
+          "UserID": "1192",
+        });
+    var bodyIs = res.body;
+    print(bodyIs);
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      setState(() {
+        isLoading = false;
+      });
+
+      debugPrint(statusCode.toString());
+      debugPrint("res is ${res.body}");
+      Xml2Json xml2Json = Xml2Json();
+      xml2Json.parse(bodyIs);
+      var jsonString = xml2Json.toParker();
+      debugPrint("xml2Json is $jsonString");
+      var data = jsonDecode(jsonString);
+      var staffId = data['string'];
+      debugPrint("data is ${data['string']}");
+      if (!context.mounted) return;
+      if (data['string'] != 'false') {
+        print(bodyIs);
+      }
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
