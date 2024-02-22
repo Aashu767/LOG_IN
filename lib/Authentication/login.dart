@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, use_super_parameters
+// ignore_for_file: deprecated_member_use, use_super_parameters, use_build_context_synchronously
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -114,7 +114,6 @@ class _LoginState extends State<Login> {
                                         await UserSecureStorage()
                                             .setStaffId(staffId);
                                         await UserSecureStorage().setuser(user);
-                                        // ignore: use_build_context_synchronously
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
