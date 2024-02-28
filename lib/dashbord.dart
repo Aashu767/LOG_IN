@@ -75,11 +75,6 @@ class _dashboardState extends State<dashboard> {
     img: 'assets/image/notification.png',
   );
 
-  Items item8 = new Items(
-    title: "FEEDBACK",
-    img: 'assets/image/7443.png',
-  );
-
   @override
   void initState() {
     super.initState();
@@ -142,7 +137,6 @@ class _dashboardState extends State<dashboard> {
       item5,
       item6,
       item7,
-      item8,
     ];
     var color = 0xFF2979FF;
     return Scaffold(
