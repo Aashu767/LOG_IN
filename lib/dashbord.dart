@@ -80,8 +80,9 @@ class _dashboardState extends State<dashboard> {
     super.initState();
   }
 
-  Future<void> MenuModel(String Menu_Id, String Menu_Name, String Count) async {
-    MenuModel(Menu_Id, Menu_Name, Count);
+  Future<void> fetchDataFromApi(
+      String Menu_Id, String Menu_Name, String Count) async {
+    fetchDataFromApi(Menu_Id, Menu_Name, Count);
   }
 
   data(menuId, menuname, count) async {
@@ -92,19 +93,16 @@ class _dashboardState extends State<dashboard> {
     var res = await http.post(
         Uri.parse(
             "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks"),
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
         body: {
           "UserID": "1192",
         });
     var bodyIs = res.body;
     print(bodyIs);
     var statusCode = res.statusCode;
-    if (statusCode == 200) {
+    var response;
+    if (response.statusCode == 200) {
       setState(() {
-        isLoading = false;
+        var data = json.decode(response.body);
       });
 
       debugPrint(statusCode.toString());
@@ -187,7 +185,7 @@ class _dashboardState extends State<dashboard> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
+                  children: [
                     Image.asset(data.img, width: 42),
                     const SizedBox(height: 14),
                     Text(
