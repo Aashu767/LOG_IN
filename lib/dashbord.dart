@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/attandance.dart';
 import 'package:log_in/home.dart';
+import 'package:log_in/models/menu_model.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,6 +19,9 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
   bool isLoading = false;
+  List<MenuModel> list1 = [
+    
+  ];
 
   get menuId => null;
   void tapped(int index, BuildContext context) {
@@ -122,6 +126,34 @@ class _dashboardState extends State<dashboard> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  List<MenuModel> menuDetails = [];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchMenuDetails();
+  // }
+
+  Future<void> fetchMenuDetails() async {
+    try {
+      final response = await http.get(Uri.parse(
+          'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks?UserID=1192'));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        final List<dynamic> menuList = responseData['Menu_Details'];
+        setState(() {
+          menuDetails =
+              menuList.map((menu) => MenuModel.fromJson(menu)).toList();
+        });
+      } else {
+        throw Exception('Failed to load menu details');
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 

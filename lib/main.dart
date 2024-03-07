@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:log_in/Authentication/splash.dart';
-import 'package:log_in/log_in.dart';
 
 void main() {
   runApp(const login());
