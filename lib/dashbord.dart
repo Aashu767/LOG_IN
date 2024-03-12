@@ -19,9 +19,7 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
   bool isLoading = false;
-  List<MenuModel> list1 = [
-    
-  ];
+  List<MenuModel> list1 = [];
 
   get menuId => null;
   void tapped(int index, BuildContext context) {
@@ -70,7 +68,7 @@ class _dashboardState extends State<dashboard> {
   );
 
   Items item6 = new Items(
-    title: "SEARCH COMPLAINTS",
+    title: "SEARCH\nCOMPLAINTS",
     img: 'assets/image/setting.png',
   );
 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/dashbord.dart';
 import 'package:xml2json/xml2json.dart';
-
 import '../utils/secure_storage.dart';
 
 class Login extends StatefulWidget {
@@ -68,7 +67,6 @@ class _LoginState extends State<Login> {
       Xml2Json xml2Json = Xml2Json();
       xml2Json.parse(bodyIs);
       var jsonString = xml2Json.toParker();
-      debugPrint("xml2Json is $jsonString");
       var data = jsonDecode(jsonString);
       var staffId = data['string'];
       debugPrint("data is ${data['string']}");

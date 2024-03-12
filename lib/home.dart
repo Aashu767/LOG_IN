@@ -15,21 +15,15 @@ class home extends StatelessWidget {
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => const Complaints()));
     }
-
-    
   }
 
   Items item1 = Items(
     title: "ANANTAPUR",
-    subtitle: "",
-    event: "",
     img: 'assets/image/cp45.jpg',
   );
 
   Items item2 = Items(
     title: "DELHI",
-    subtitle: "",
-    event: "",
     img: 'assets/image/food.png',
   );
 
@@ -102,27 +96,6 @@ class home extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      data.subtitle,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white38,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      data.event,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -136,14 +109,10 @@ class home extends StatelessWidget {
 
 class Items {
   String title;
-  String subtitle;
-  String event;
   String img;
 
   Items({
     required this.title,
-    required this.subtitle,
-    required this.event,
     required this.img,
   });
 }
