@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class GlobalURl {
   static String localnew =
-      "http://nds1.nippondata.com/ServiceWebApi/Service.asmx";
+      "http://nds1.nippondata.com/ServiceWebApi/Service.asmx/";
   static String Base_URL = localnew;
   static String MyallCompleted = "ws_all_complete_call?";
   static String Ws_Validate_Login = "Ws_Validate_Login?";
