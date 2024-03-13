@@ -77,10 +77,10 @@ class _dashboardState extends State<dashboard> {
     img: 'assets/image/notification.png',
   );
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   Future<void> fetchDataFromApi(
       String Menu_Id, String Menu_Name, String Count) async {
@@ -129,16 +129,16 @@ class _dashboardState extends State<dashboard> {
 
   List<MenuModel> menuDetails = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchMenuDetails();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    fetchMenuDetails();
+  }
 
   Future<void> fetchMenuDetails() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks?UserID=1192'));
+          'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);

@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class GlobalURl {
-  static String localnew =
-      "http://nds1.nippondata.com/ServiceWebApi/Service.asmx/";
+  static String localnew = "http://140.238.162.89/ServiceWebAPI/Service.asmx/";
   static String Base_URL = localnew;
   static String MyallCompleted = "ws_all_complete_call?";
   static String Ws_Validate_Login = "Ws_Validate_Login?";
