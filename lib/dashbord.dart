@@ -1,4 +1,4 @@
-//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter
+//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -7,6 +7,7 @@ import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/attandance.dart';
 import 'package:log_in/home.dart';
 import 'package:log_in/models/menu_model.dart';
+import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,7 +19,7 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<dashboard> {
-  bool isLoading = false;
+  bool isLoading = true;
   List<MenuModel> list1 = [];
 
   get menuId => null;
@@ -77,11 +78,6 @@ class _dashboardState extends State<dashboard> {
     img: 'assets/image/notification.png',
   );
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
   Future<void> fetchDataFromApi(
       String Menu_Id, String Menu_Name, String Count) async {
     fetchDataFromApi(Menu_Id, Menu_Name, Count);
@@ -92,39 +88,39 @@ class _dashboardState extends State<dashboard> {
       isLoading = true;
     });
 
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks"),
-        body: {
-          "UserID": "1192",
-        });
-    var bodyIs = res.body;
-    print(bodyIs);
-    var statusCode = res.statusCode;
-    var response;
-    if (response.statusCode == 200) {
-      setState(() {
-        var data = json.decode(response.body);
-      });
+    // var res = await http.post(
+    //     Uri.parse(
+    //         "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks/"),
+    //     body: {
+    //       "UserID": "1192",
+    //     });
+    // var bodyIs = res.body;
+    // print(bodyIs);
+    // var statusCode = res.statusCode;
+    // var response;
+    // if (response.statusCode == 200) {
+    //   setState(() {
+    //     var data = json.decode(response.body);
+    //   });
 
-      debugPrint(statusCode.toString());
-      debugPrint("res is ${res.body}");
-      Xml2Json xml2Json = Xml2Json();
-      xml2Json.parse(bodyIs);
-      var jsonString = xml2Json.toParker();
-      debugPrint("xml2Json is $jsonString");
-      var data = jsonDecode(jsonString);
-      var staffId = data['string'];
-      debugPrint("data is ${data['string']}");
-      if (!context.mounted) return;
-      if (data['string'] != 'false') {
-        return data;
-      }
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-    }
+    //   debugPrint(statusCode.toString());
+    //   debugPrint("res is ${res.body}");
+    //   Xml2Json xml2Json = Xml2Json();
+    //   xml2Json.parse(bodyIs);
+    //   var jsonString = xml2Json.toParker();
+    //   debugPrint("xml2Json is $jsonString");
+    //   var data = jsonDecode(jsonString);
+    //   var staffId = data['string'];
+    //   debugPrint("data is ${data['string']}");
+    //   if (!context.mounted) return;
+    //   if (data['string'] != 'false') {
+    //     return data;
+    //   }
+    // } else {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
+    // }
   }
 
   List<MenuModel> menuDetails = [];
@@ -138,7 +134,7 @@ class _dashboardState extends State<dashboard> {
   Future<void> fetchMenuDetails() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'));
+          'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks/'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -147,6 +143,45 @@ class _dashboardState extends State<dashboard> {
           menuDetails =
               menuList.map((menu) => MenuModel.fromJson(menu)).toList();
         });
+        fetchDataFromApi() async {
+          var List = Items;
+          var t_code = await UserSecureStorage().gettcode();
+          var body = {
+            "UserID": "1192",
+          };
+          var res = await http.post(
+              Uri.parse(
+                  'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks/'),
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body: body);
+
+          var bodyIs = res.body;
+          var statusCode = res.statusCode;
+          if (statusCode == 200) {
+            debugPrint("res is  2222${res.body}");
+            Xml2Json xml2Json = Xml2Json();
+            xml2Json.parse(bodyIs);
+            var jsonString = xml2Json.toParker();
+            var data = jsonDecode(jsonString);
+            var complaintObject = data['string'];
+            complaintObject =
+                complaintObject.toString().replaceAll("\\r\\\\n", "\n");
+            var object = json.decode(complaintObject.toString());
+            setState(() {
+              object.forEach((v) {
+                menuList.add(MenuModel.fromJson(v));
+              });
+              isLoading = false;
+            });
+          } else {
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }
       } else {
         throw Exception('Failed to load menu details');
       }

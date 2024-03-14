@@ -4,8 +4,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/dashbord.dart';
-// import 'package:log_in/dashbord.dart';
-
 import '../utils/secure_storage.dart';
 
 class Splash extends StatefulWidget {
@@ -18,10 +16,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    // getStaffCode();
     Timer(const Duration(seconds: 3), () => navigation());
-    // getCoordinates();
-    // startTimer();
   }
 
   var staffuser;
@@ -31,11 +26,6 @@ class _SplashState extends State<Splash> {
   }
 
   void navigation() async {
-    /* SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    if (sharedPreferences.getString("EmpId") != null) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) => const Dashboard()));
-    } else {*/
     getStaffCode();
     var staffId = await UserSecureStorage().getStaffId();
     if (staffId != null && staffId.toString().isNotEmpty) {
@@ -44,10 +34,8 @@ class _SplashState extends State<Splash> {
     } else {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
-              //const Login()
               const Login()));
     }
-    // }
   }
 
   @override
