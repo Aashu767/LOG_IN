@@ -49,6 +49,7 @@ dependencies:
   syncfusion_flutter_gauges: ^24.2.7
   unique_identifier: ^0.3.0
   animated_floating_buttons: ^0.0.2
+  shared_preferences: ^2.2.2
   
 dev_dependencies:
   flutter_test:

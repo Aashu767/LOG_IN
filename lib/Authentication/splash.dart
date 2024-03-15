@@ -32,9 +32,8 @@ class _SplashState extends State<Splash> {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (BuildContext context) => dashboard()));
     } else {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) =>
-              const Login()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => const Login()));
     }
   }
 

@@ -98,8 +98,10 @@ class _log_inState extends State<log_in> {
                   child: TextButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => dashboard()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>  dashboard()));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Please fill input')),

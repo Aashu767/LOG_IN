@@ -42,7 +42,7 @@ class home extends StatelessWidget {
           color: Colors.white,
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (_) => dashboard()));
+                context, MaterialPageRoute(builder: (_) =>  dashboard()));
           },
         ),
         backgroundColor: Colors.blue,

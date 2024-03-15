@@ -20,7 +20,7 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
   bool isLoading = true;
-  List<MenuModel> list1 = [];
+  // List<MenuModel> list1 = [];
 
   get menuId => null;
   void tapped(int index, BuildContext context) {
@@ -134,7 +134,7 @@ class _dashboardState extends State<dashboard> {
   Future<void> fetchMenuDetails() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks/'));
+          'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
@@ -151,7 +151,7 @@ class _dashboardState extends State<dashboard> {
           };
           var res = await http.post(
               Uri.parse(
-                  'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks/'),
+                  'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'),
               headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/x-www-form-urlencoded"
