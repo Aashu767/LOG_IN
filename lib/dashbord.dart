@@ -128,65 +128,85 @@ class _dashboardState extends State<dashboard> {
   @override
   void initState() {
     super.initState();
-    fetchMenuDetails();
+    fetchmenuApi();
+    // fetchMenuDetails();
   }
 
   Future<void> fetchMenuDetails() async {
     try {
-      final response = await http.get(Uri.parse(
-          'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'));
-
+      var response = await http.post(
+          Uri.parse(
+              "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks"),
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: {
+            "UserID": "1192",
+          });
+      var bodyIs = response.body;
+      print("resss$response");
       if (response.statusCode == 200) {
+        Xml2Json xml2Json = Xml2Json();
+        xml2Json.parse(bodyIs);
+        var jsonString = xml2Json.toParker();
+        var data = jsonDecode(jsonString);
+        var menulist = data['Menu_Details'];
+        debugPrint("data is ${data['Menu_Details']}");
         final Map<String, dynamic> responseData = json.decode(response.body);
         final List<dynamic> menuList = responseData['Menu_Details'];
         setState(() {
           menuDetails =
               menuList.map((menu) => MenuModel.fromJson(menu)).toList();
         });
-        fetchDataFromApi() async {
-          var List = Items;
-          var t_code = await UserSecureStorage().gettcode();
-          var body = {
-            "UserID": "1192",
-          };
-          var res = await http.post(
-              Uri.parse(
-                  'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'),
-              headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/x-www-form-urlencoded"
-              },
-              body: body);
-
-          var bodyIs = res.body;
-          var statusCode = res.statusCode;
-          if (statusCode == 200) {
-            debugPrint("res is  2222${res.body}");
-            Xml2Json xml2Json = Xml2Json();
-            xml2Json.parse(bodyIs);
-            var jsonString = xml2Json.toParker();
-            var data = jsonDecode(jsonString);
-            var complaintObject = data['string'];
-            complaintObject =
-                complaintObject.toString().replaceAll("\\r\\\\n", "\n");
-            var object = json.decode(complaintObject.toString());
-            setState(() {
-              object.forEach((v) {
-                menuList.add(MenuModel.fromJson(v));
-              });
-              isLoading = false;
-            });
-          } else {
-            setState(() {
-              isLoading = false;
-            });
-          }
-        }
       } else {
         throw Exception('Failed to load menu details');
       }
     } catch (e) {
       print('Error: $e');
+    }
+  }
+
+  fetchmenuApi() async {
+    var List = Items;
+    var t_code = await UserSecureStorage().gettcode();
+    var body = {
+      "UserID": "1192",
+    };
+    var res = await http.post(
+        Uri.parse(
+            'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      debugPrint("reis${res.body}");
+      Xml2Json xml2Json = Xml2Json();
+      xml2Json.parse(bodyIs);
+      var jsonString = xml2Json.toParker();
+      var data = jsonDecode(jsonString);
+      var menulistobject = data['Menu_Detail'];
+      menulistobject = menulistobject.toString().replaceAll("\\r\\\\n", "\n");
+      var object = json.decode(menulistobject.toString());
+            print("Iterable$object $menulistobject");
+      Iterable l = object;
+
+      //List<MenuDetails> posts = List<MenuDetails>.from(l.map((model)=> MenuDetails.fromJson(model)));
+      setState(() {
+        object.forEach((v) {
+          menulistobject.add(MenuModel.fromJson(v));
+        });
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
