@@ -1,0 +1,43 @@
+class zonemodel {
+  String? zoneId;
+  String? zoneName;
+  int? count;
+
+  zonemodel({this.zoneId, this.zoneName, this.count});
+
+  zonemodel.fromJson(Map<String, dynamic> json) {
+    zoneId = json['Zone_Id'];
+    zoneName = json['Zone_Name'];
+    count = json['count'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Zone_Id'] = this.zoneId;
+    data['Zone_Name'] = this.zoneName;
+    data['count'] = this.count;
+    return data;
+  }
+}
+class zonemodel {
+  String? zoneId;
+  String? zoneName;
+  int? count;
+
+  zonemodel({this.zoneId, this.zoneName, this.count});
+
+  zonemodel.fromJson(Map<String, dynamic> json) {
+    zoneId = json['Zone_Id'];
+    zoneName = json['Zone_Name'];
+    count = json['count'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Zone_Id'] = this.zoneId;
+    data['Zone_Name'] = this.zoneName;
+    data['count'] = this.count;
+    return data;
+  }
+}
+

@@ -1,12 +1,21 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element, camel_case_types
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/complaint.dart';
 import 'package:log_in/dashbord.dart';
+import 'package:log_in/utils/secure_storage.dart';
+import 'package:xml2json/xml2json.dart';
 
-// ignore: must_be_immutable, camel_case_types
-class home extends StatelessWidget {
+class home extends StatefulWidget {
+  @override
+  State<home> createState() => _homeState();
+}
+
+class _homeState extends State<home> {
+  bool isLoading = true;
   void tapped(int index, BuildContext context) {
     if (index == 0) {
       Navigator.push(
@@ -27,83 +36,183 @@ class home extends StatelessWidget {
     img: 'assets/image/food.png',
   );
 
-  @override
-  Widget build(BuildContext context) {
-    List<Items> myList = [
-      item1,
-      item2,
-    ];
-    var color = 0xFF2979FF;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: BackButton(
-          color: Colors.white,
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) =>  dashboard()));
+  Future<void> fetchDataFromApi(
+      String Zone_Id, String Zone_Name, String Count) async {
+    fetchDataFromApi(Zone_Id, Zone_Name, Count);
+  }
+
+  data(menuId, menuname, count) async {
+    setState(() {
+      isLoading = true;
+    });
+
+    @override
+    void initState() {
+      super.initState();
+    }
+
+    Future<void> fetchMenuDetails() async {
+      try {
+        var response = await http.post(
+            Uri.parse(
+                "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks"),
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: {
+              "UserID": "1192",
+            });
+        var bodyIs = response.body;
+        print("resss$response");
+        if (response.statusCode == 200) {
+          Xml2Json xml2Json = Xml2Json();
+          xml2Json.parse(bodyIs);
+          var jsonString = xml2Json.toParker();
+          var data = jsonDecode(jsonString);
+          var menulist = data['Menu_Details'];
+          debugPrint("data is ${data['Menu_Details']}");
+          final Map<String, dynamic> responseData = json.decode(response.body);
+          final List<dynamic> menuList = responseData['Menu_Details'];
+          setState(() {
+            menuDetails =
+                menuList.map((menu) => zonemodel.fromJson(menu)).toList();
+          });
+        } else {
+          throw Exception('Failed to load menu details');
+        }
+      } catch (e) {
+        print('Error: $e');
+      }
+    }
+
+    fetchmenuApi() async {
+      var List = Items;
+      var t_code = await UserSecureStorage().gettcode();
+      var body = {
+        "UserID": "1192",
+      };
+      var res = await http.post(
+          Uri.parse(
+              'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'),
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
           },
-        ),
-        backgroundColor: Colors.blue,
-        title: const Text('DISTRICT WISE ACTIVITY'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        actions: const [
-          Row(
-            children: [],
+          body: body);
+
+      var bodyIs = res.body;
+      var statusCode = res.statusCode;
+      if (statusCode == 200) {
+        debugPrint("reis${res.body}");
+        Xml2Json xml2Json = Xml2Json();
+        xml2Json.parse(bodyIs);
+        var jsonString = xml2Json.toParker();
+        var data = jsonDecode(jsonString);
+        var menulistobject = data['Menu_Detail'];
+        menulistobject = menulistobject.toString().replaceAll("\\r\\\\n", "\n");
+        var object = json.decode(menulistobject.toString());
+        print("Iterable$object $menulistobject");
+        Iterable l = object;
+
+        //List<MenuDetails> posts = List<MenuDetails>.from(l.map((model)=> MenuDetails.fromJson(model)));
+        setState(() {
+          object.forEach((v) {
+            menulistobject.add(zonemodel.fromJson(v));
+          });
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      List<Items> myList = [
+        item1,
+        item2,
+      ];
+      var color = 0xFF2979FF;
+      return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: BackButton(
+            color: Colors.white,
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => dashboard()));
+            },
           ),
-        ],
-      ),
-      body: Flexible(
-        child: GridView.count(
-          childAspectRatio: 1.0,
-          padding:
-              const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
-          crossAxisCount: 2,
-          crossAxisSpacing: 18,
-          mainAxisSpacing: 18,
-          children: myList.map((data) {
-            int index = myList.indexOf(data);
-            return GestureDetector(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(color),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Image.asset(data.img, width: 42),
-                    const SizedBox(height: 14),
-                    Text(
-                      data.title,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+          backgroundColor: Colors.blue,
+          title: const Text('DISTRICT WISE ACTIVITY'),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+          actions: const [
+            Row(
+              children: [],
+            ),
+          ],
+        ),
+        body: Flexible(
+          child: GridView.count(
+            childAspectRatio: 1.0,
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+            crossAxisCount: 2,
+            crossAxisSpacing: 18,
+            mainAxisSpacing: 18,
+            children: myList.map((data) {
+              int index = myList.indexOf(data);
+              return GestureDetector(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(color),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(data.img, width: 42),
+                      const SizedBox(height: 14),
+                      Text(
+                        data.title,
+                        style: GoogleFonts.openSans(
+                          textStyle: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () => {
-                        tapped(index, context),
-                      },
-                      icon: const Icon(
-                        Icons.arrow_circle_right_outlined,
-                        color: Colors.white,
+                      IconButton(
+                        onPressed: () => {
+                          tapped(index, context),
+                        },
+                        icon: const Icon(
+                          Icons.arrow_circle_right_outlined,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                  ],
+                      const SizedBox(height: 5),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
-      ),
-    );
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }
 
