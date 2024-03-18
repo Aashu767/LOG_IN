@@ -20,7 +20,7 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
   bool isLoading = true;
-  // List<MenuModel> list1 = [];
+  List<MenuModel> list1 = [];
 
   get menuId => null;
   void tapped(int index, BuildContext context) {
@@ -193,7 +193,7 @@ class _dashboardState extends State<dashboard> {
       var menulistobject = data['Menu_Detail'];
       menulistobject = menulistobject.toString().replaceAll("\\r\\\\n", "\n");
       var object = json.decode(menulistobject.toString());
-            print("Iterable$object $menulistobject");
+      print("Iterable$object $menulistobject");
       Iterable l = object;
 
       //List<MenuDetails> posts = List<MenuDetails>.from(l.map((model)=> MenuDetails.fromJson(model)));

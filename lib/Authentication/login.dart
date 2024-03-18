@@ -38,8 +38,6 @@ class _LoginState extends State<Login> {
     setState(() {
       isLoading = true;
     });
-    // debugPrint(
-    //     "user is $user, pass is $pass ${API.loginURL} ${MyApp.user_tcode}");
     var res = await http.post(
         Uri.parse(
             "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Validate_Login"),
