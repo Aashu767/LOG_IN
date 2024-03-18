@@ -190,11 +190,18 @@ class _dashboardState extends State<dashboard> {
       xml2Json.parse(bodyIs);
       var jsonString = xml2Json.toParker();
       var data = jsonDecode(jsonString);
-      var menulistobject = data['Menu_Details'];
-      menulistobject = menulistobject.toString().replaceAll("\\r\\\\n", "\n");
-      var object = json.decode(menulistobject.toString());
-      print("Iterable$object $menulistobject");
-      Iterable l = object;
+
+      var menuliststring = data['string'];
+      print("menulsy$menuliststring");
+      menuliststring = menuliststring.toString().replaceAll("\\r\\\\n", "\n");
+      //  menuliststring = menuliststring.toString().replaceAll("\\r\\\n", "\n");
+      print("menulsy$menuliststring");
+      var menuobject = json.decode(menuliststring.toString());
+      var menulistobject = menuobject['Menu_Details'];
+      print("menulbbbbby$menulistobject");
+      // var object = json.decode(menulistobject.toString());
+      // print("Iterable$object $menulistobject");
+      Iterable l = menulistobject;
 
       //List<MenuDetails> posts = List<MenuDetails>.from(l.map((model)=> MenuDetails.fromJson(model)));
       setState(() {
@@ -203,9 +210,7 @@ class _dashboardState extends State<dashboard> {
         // });
 
         ///try it///
-        menulist = l
-            .map((data) => MenuModel.fromJson(data))
-            .toList();
+        menulist = l.map((data) => MenuModel.fromJson(data)).toList();
 
         print("Iterablelist $menulist");
         isLoading = false;
@@ -261,15 +266,18 @@ class _dashboardState extends State<dashboard> {
       ),
       body: Flexible(
         child: GridView.count(
-          childAspectRatio: 1.0,
+          childAspectRatio: 2 / 2,
           padding:
               const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
           crossAxisCount: 2,
-          crossAxisSpacing: 18,
-          mainAxisSpacing: 18,
+          crossAxisSpacing: 15,
+          mainAxisSpacing: 15,
           children: myList.map((data) {
             int index = myList.indexOf(data);
             return GestureDetector(
+              onTap: () => {
+                tapped(index, context),
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: Color(color),
@@ -280,7 +288,7 @@ class _dashboardState extends State<dashboard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset(data.img, width: 42),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 12),
                     Text(
                       data.title,
                       style: GoogleFonts.openSans(
@@ -292,9 +300,7 @@ class _dashboardState extends State<dashboard> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () => {
-                        tapped(index, context),
-                      },
+                      onPressed: () => {},
                       icon: const Icon(
                         Icons.arrow_circle_right_outlined,
                         color: Colors.white,
