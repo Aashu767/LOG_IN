@@ -20,7 +20,7 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
   bool isLoading = true;
-  List<MenuModel> list1 = [];
+  List<MenuModel> menulist = [];
 
   get menuId => null;
   void tapped(int index, BuildContext context) {
@@ -198,9 +198,16 @@ class _dashboardState extends State<dashboard> {
 
       //List<MenuDetails> posts = List<MenuDetails>.from(l.map((model)=> MenuDetails.fromJson(model)));
       setState(() {
-        object.forEach((v) {
-          menulistobject.add(MenuModel.fromJson(v));
-        });
+        // object.forEach((v) {
+        //   menulistobject.add(MenuModel.fromJson(v));
+        // });
+
+        ///try it///
+        menulist = l
+            .map((data) => MenuModel.fromJson(data))
+            .toList();
+
+        print("Iterablelist $menulist");
         isLoading = false;
       });
     } else {
@@ -208,6 +215,7 @@ class _dashboardState extends State<dashboard> {
         isLoading = false;
       });
     }
+    print("Iterablelist2 $menulist ");
   }
 
   @override

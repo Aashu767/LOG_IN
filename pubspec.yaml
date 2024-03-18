@@ -50,7 +50,7 @@ dependencies:
   unique_identifier: ^0.3.0
   animated_floating_buttons: ^0.0.2
   shared_preferences: ^2.2.2
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
