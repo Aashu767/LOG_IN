@@ -190,7 +190,7 @@ class _dashboardState extends State<dashboard> {
       xml2Json.parse(bodyIs);
       var jsonString = xml2Json.toParker();
       var data = jsonDecode(jsonString);
-      var menulistobject = data['Menu_Detail'];
+      var menulistobject = data['Menu_Details'];
       menulistobject = menulistobject.toString().replaceAll("\\r\\\\n", "\n");
       var object = json.decode(menulistobject.toString());
       print("Iterable$object $menulistobject");
