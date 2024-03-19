@@ -1,4 +1,4 @@
-//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter, unused_element
+//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter, unused_element, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -87,40 +87,6 @@ class _dashboardState extends State<dashboard> {
     setState(() {
       isLoading = true;
     });
-
-    // var res = await http.post(
-    //     Uri.parse(
-    //         "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks/"),
-    //     body: {
-    //       "UserID": "1192",
-    //     });
-    // var bodyIs = res.body;
-    // print(bodyIs);
-    // var statusCode = res.statusCode;
-    // var response;
-    // if (response.statusCode == 200) {
-    //   setState(() {
-    //     var data = json.decode(response.body);
-    //   });
-
-    //   debugPrint(statusCode.toString());
-    //   debugPrint("res is ${res.body}");
-    //   Xml2Json xml2Json = Xml2Json();
-    //   xml2Json.parse(bodyIs);
-    //   var jsonString = xml2Json.toParker();
-    //   debugPrint("xml2Json is $jsonString");
-    //   var data = jsonDecode(jsonString);
-    //   var staffId = data['string'];
-    //   debugPrint("data is ${data['string']}");
-    //   if (!context.mounted) return;
-    //   if (data['string'] != 'false') {
-    //     return data;
-    //   }
-    // } else {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
-    // }
   }
 
   List<MenuModel> menuDetails = [];
@@ -129,7 +95,6 @@ class _dashboardState extends State<dashboard> {
   void initState() {
     super.initState();
     fetchmenuApi();
-    // fetchMenuDetails();
   }
 
   Future<void> fetchMenuDetails() async {
@@ -236,85 +201,116 @@ class _dashboardState extends State<dashboard> {
     ];
     var color = 0xFF2979FF;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
-        title: const Text('DASHBOARD'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        actions: [
-          Row(
-            children: [
-              const Text(
-                'DATE FILTER',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              IconButton(
-                onPressed: () async => {
-                  await FlutterSecureStorage().deleteAll(),
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const Login())),
-                },
-                icon: const Icon(
-                  Icons.power_settings_new,
-                  color: Colors.white,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.blue,
+          title: const Text('DASHBOARD'),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+          actions: [
+            Row(
+              children: [
+                const Text(
+                  'DATE FILTER',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: Flexible(
-        child: GridView.count(
-          childAspectRatio: 2 / 2,
-          padding:
-              const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
-          crossAxisCount: 2,
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 15,
-          children: myList.map((data) {
-            int index = myList.indexOf(data);
-            return GestureDetector(
-              onTap: () => {
-                tapped(index, context),
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(color),
-                  borderRadius: BorderRadius.circular(15),
+                IconButton(
+                  onPressed: () async => {
+                    await FlutterSecureStorage().deleteAll(),
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const Login())),
+                  },
+                  icon: const Icon(
+                    Icons.power_settings_new,
+                    color: Colors.white,
+                  ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(data.img, width: 42),
-                    const SizedBox(height: 12),
-                    Text(
-                      data.title,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () => {},
-                      icon: const Icon(
-                        Icons.arrow_circle_right_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                  ],
-                ),
-              ),
-            );
-          }).toList(),
+              ],
+            ),
+          ],
         ),
-      ),
-    );
+        body: isLoading
+            ? const Center(child: LinearProgressIndicator())
+            : menuDetails != null && menuDetails.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: menuDetails.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: const Icon(
+                            Icons.access_alarms_outlined,
+                            color: Colors.black,
+                          ),
+                          title: Text(
+                            "${menuDetails[index].menuDetails ?? ""}",
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            "${menuDetails[index].menuDetails ?? ""}",
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                : const Center(
+                    child: Text('No menu details available.'),
+                  )
+        //  Flexible(
+        //   child: GridView.count(
+        //     childAspectRatio: 2 / 2,
+        //     padding:
+        //         const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
+        //     crossAxisCount: 2,
+        //     crossAxisSpacing: 15,
+        //     mainAxisSpacing: 15,
+        //     children: myList.map((data) {
+        //       int index = myList.indexOf(data);
+        //       return GestureDetector(
+        //         onTap: () => {
+        //           tapped(index, context),
+        //         },
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             color: Color(color),
+        //             borderRadius: BorderRadius.circular(15),
+        //           ),
+        //           child: Column(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             crossAxisAlignment: CrossAxisAlignment.center,
+        //             children: [
+        //               Image.asset(data.img, width: 42),
+        //               const SizedBox(height: 12),
+        //               Text(
+        //                 data.title,
+        //                 style: GoogleFonts.openSans(
+        //                   textStyle: const TextStyle(
+        //                     color: Colors.white,
+        //                     fontSize: 16,
+        //                     fontWeight: FontWeight.w600,
+        //                   ),
+        //                 ),
+        //               ),
+        //               IconButton(
+        //                 onPressed: () => {},
+        //                 icon: const Icon(
+        //                   Icons.arrow_circle_right_outlined,
+        //                   color: Colors.white,
+        //                 ),
+        //               ),
+        //               const SizedBox(height: 5),
+        //             ],
+        //           ),
+        //         ),
+        //       );
+        //     }).toList(),
+        //   ),
+        // ),
+        );
   }
 }
 
