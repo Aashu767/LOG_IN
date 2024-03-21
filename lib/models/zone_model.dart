@@ -1,13 +1,35 @@
-// ignore_for_file: camel_case_types
+class ZoneModel {
+  List<ComplaintsType>? complaintsType;
 
-class zonemodel1 {
+  ZoneModel({this.complaintsType});
+
+  ZoneModel.fromJson(Map<String, dynamic> json) {
+    if (json['Complaints_Type'] != null) {
+      complaintsType = <ComplaintsType>[];
+      json['Complaints_Type'].forEach((v) {
+        complaintsType!.add(ComplaintsType.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (complaintsType != null) {
+      data['Complaints_Type'] =
+          complaintsType!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class ComplaintsType {
   String? zoneId;
   String? zoneName;
   int? count;
 
-  zonemodel1({this.zoneId, this.zoneName, this.count});
+  ComplaintsType({this.zoneId, this.zoneName, this.count});
 
-  zonemodel1.fromJson(Map<String, dynamic> json) {
+  ComplaintsType.fromJson(Map<String, dynamic> json) {
     zoneId = json['Zone_Id'];
     zoneName = json['Zone_Name'];
     count = json['count'];

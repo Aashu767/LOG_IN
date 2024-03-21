@@ -1,46 +1,35 @@
-//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter, unused_element, unnecessary_null_comparison, use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element, camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable, file_names
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:log_in/Authentication/login.dart';
-import 'package:log_in/Zone.dart';
-import 'package:log_in/attandance.dart';
-import 'package:log_in/models/menu_model.dart';
+import 'package:log_in/complaint.dart';
+import 'package:log_in/dashbord.dart';
+import 'package:log_in/models/zone_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
-class dashboard extends StatefulWidget {
+class home extends StatefulWidget {
   @override
-  State<dashboard> createState() => _dashboardState();
+  State<home> createState() => _homeState();
 }
 
-class _dashboardState extends State<dashboard> {
+class _homeState extends State<home> {
   bool isLoading = true;
-  List<MenuDetails> menulist = [];
+  List<ComplaintsType> zonelist = [];
+
   void tapped(int index, BuildContext context) {
     if (index == 0) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
     } else if (index == 1) {
-      print("not the two :(");
-    } else if (index == 2) {
-      print("not the three :(");
-    } else if (index == 3) {
-      print("not the four :(");
-    } else if (index == 4) {
-      print("not the five :(");
-    } else if (index == 5) {
-      print("not the six :(");
-    } else if (index == 6) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => attandance()));
-    } else if (index == 7) {
-      print("not the eight :(");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
     }
   }
 
-  List imgPath = [
+  List imgpath = [
     'assets/image/cp45.jpg',
     'assets/image/notification.png',
     'assets/image/food.png',
@@ -49,23 +38,23 @@ class _dashboardState extends State<dashboard> {
     'assets/image/todo.png',
     'assets/image/setting.png',
   ];
-
   @override
   void initState() {
     super.initState();
-    fetchmenuApi();
+    fetchzoneApi();
   }
 
-  fetchmenuApi() async {
+  fetchzoneApi() async {
     var t_code = await UserSecureStorage().gettcode();
     var body = {
+      "MenuID": "10005",
       "UserID": "1192",
       "dt1": "0",
       "dt2": "0",
     };
     var res = await http.post(
         Uri.parse(
-            'http://140.238.162.89/ServiceWebAPI/Service.asmx/Get_All_MenuLinks_SR'),
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_Zones_SR"),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"
@@ -76,17 +65,17 @@ class _dashboardState extends State<dashboard> {
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       debugPrint("reis${res.body}");
-      Xml2Json xml2Json = Xml2Json();
-      xml2Json.parse(bodyIs);
-      var jsonString = xml2Json.toParker();
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
-      var menuliststring = data['string'];
-      menuliststring = menuliststring.toString().replaceAll("\\r\\\\n", "\n");
-      var menuobject = json.decode(menuliststring.toString());
-      var menulistobject = menuobject['Menu_Details'];
-      Iterable l = menulistobject;
+      var zoneliststring = data['string'];
+      zoneliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var zoneobject = json.decode(zoneliststring.toString());
+      var zonelistobject = zoneobject['Complaints_Type'];
+      Iterable l = zonelistobject;
       setState(() {
-        menulist = l.map((data) => MenuDetails.fromJson(data)).toList();
+        zonelist = l.map((data) => ComplaintsType.fromJson(data)).toList();
         isLoading = false;
       });
     } else {
@@ -103,49 +92,40 @@ class _dashboardState extends State<dashboard> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => dashboard()));
+          },
+        ),
         backgroundColor: Colors.blue,
-        title: const Text('DASHBOARD'),
+        title: const Text('DISTRICT WISE ACTIVITY'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        actions: [
+        actions: const [
           Row(
-            children: [
-              const Text(
-                'DATE FILTER',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              IconButton(
-                onPressed: () async => {
-                  await FlutterSecureStorage().deleteAll(),
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const Login())),
-                },
-                icon: const Icon(
-                  Icons.power_settings_new,
-                  color: Colors.black,
-                ),
-              ),
-            ],
+            children: [],
           ),
         ],
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
           : GridView.count(
-              childAspectRatio: 3 / 2,
+              childAspectRatio: 1.0,
               padding: const EdgeInsets.only(
                   left: 16, right: 16, top: 16, bottom: 16),
               crossAxisCount: 2,
               crossAxisSpacing: 18,
               mainAxisSpacing: 18,
-              children: menulist.map((data) {
-                int index = menulist.indexOf(data);
+              children: zonelist.map((data) {
+                int index = zonelist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
                     tapped(index, context),
                   },
                   child: Container(
-                    height: 20,
-                    width: 5,
                     decoration: BoxDecoration(
                       color: Color(color),
                       borderRadius: BorderRadius.circular(15),
@@ -158,7 +138,7 @@ class _dashboardState extends State<dashboard> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Image.asset(data.imgPath, width: 42),
+                            // Image.asset(data.imgpath, width: 42,),
                             IconButton(
                               onPressed: () => {},
                               icon: const Icon(
@@ -170,7 +150,7 @@ class _dashboardState extends State<dashboard> {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          "${data.menuName}   [${data.count}]",
+                          "${data.zoneName}  [${data.count}]",
                           style: GoogleFonts.openSans(
                             textStyle: const TextStyle(
                               color: Colors.white,
@@ -179,7 +159,9 @@ class _dashboardState extends State<dashboard> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(
+                          height: 5,
+                        )
                       ],
                     ),
                   ),
