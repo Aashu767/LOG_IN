@@ -26,8 +26,6 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-
-    // _checkVersion();
   }
 
   Future<void> login(String user, String pass) async {
@@ -50,7 +48,6 @@ class _LoginState extends State<Login> {
           "_sPwd": pass,
           "_VisitorCode": "",
           "_TenantCode": "",
-          //"_TenantCode": "01",
           "_Location": ""
         });
     var bodyIs = res.body;
@@ -224,18 +221,6 @@ class _LoginState extends State<Login> {
                                   contentPadding: EdgeInsets.all(15.0),
                                   labelText: 'Password',
                                   border: OutlineInputBorder(),
-                                  // suffixIcon: IconButton(
-                                  //   icon: Icon(
-                                  //     _isObscure
-                                  //         ? Icons.visibility_off
-                                  //         : Icons.visibility,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     setState(() {
-                                  //       _isObscure = !_isObscure;
-                                  //     });
-                                  //   },
-                                  // ),
                                 ),
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText: _isObscure,
@@ -251,20 +236,6 @@ class _LoginState extends State<Login> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     /* Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) =>
-                              //                 ChnagePassword()));*/
-                              //   },
-                              //   child: const Align(
-                              //     alignment: Alignment.topRight,
-                              //     child: Text('Forgot Password?',
-                              //         style: TextStyle(color: Colors.blue)),
-                              //   ),
-                              // ),
                               const SizedBox(
                                 height: 40,
                               ),
@@ -275,8 +246,6 @@ class _LoginState extends State<Login> {
                                       child: CircularProgressIndicator())
                                   : GestureDetector(
                                       onTap: () {
-                                        // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                        //        builder: (BuildContext context) => Dashboard()));
                                         if (_formKey.currentState!.validate()) {
                                           login(_empIdController.text,
                                               _passwordController.text);

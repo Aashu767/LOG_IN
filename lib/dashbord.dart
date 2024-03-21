@@ -1,4 +1,4 @@
-//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter, unused_element, unnecessary_null_comparison
+//  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter, unused_element, unnecessary_null_comparison, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -12,7 +12,6 @@ import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-// ignore: use_key_in_widget_constructors
 class dashboard extends StatefulWidget {
   @override
   State<dashboard> createState() => _dashboardState();
@@ -20,9 +19,7 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
   bool isLoading = true;
-  List<MenuModel> menulist = [];
-
-  get menuId => null;
+  List<MenuModel> menulist = <MenuModel>[];
   void tapped(int index, BuildContext context) {
     if (index == 0) {
       Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
@@ -44,44 +41,46 @@ class _dashboardState extends State<dashboard> {
   }
 
   Items item1 = new Items(
-    title: "ALL COMPLAINTS",
+    title: "",
+    subtitle: "",
     img: 'assets/image/cp45.jpg',
   );
 
   Items item2 = new Items(
-    title: "OVERDUE",
+    title: "",
+    subtitle: "",
     img: 'assets/image/food.png',
   );
 
   Items item3 = new Items(
-    title: "TODAY OVERDUE",
+    title: "",
+    subtitle: "",
     img: 'assets/image/map.png',
   );
 
   Items item4 = new Items(
-    title: "COMPLETED",
+    title: "",
+    subtitle: "",
     img: 'assets/image/festival.png',
   );
 
   Items item5 = new Items(
-    title: "PENDING",
+    title: "",
+    subtitle: "",
     img: 'assets/image/todo.png',
   );
 
   Items item6 = new Items(
-    title: "SEARCH\nCOMPLAINTS",
+    title: "",
+    subtitle: "",
     img: 'assets/image/setting.png',
   );
 
   Items item7 = new Items(
-    title: "ATTANDENCE",
+    title: "",
+    subtitle: "",
     img: 'assets/image/notification.png',
   );
-
-  Future<void> fetchDataFromApi(
-      String Menu_Id, String Menu_Name, String Count) async {
-    fetchDataFromApi(Menu_Id, Menu_Name, Count);
-  }
 
   data(menuId, menuname, count) async {
     setState(() {
@@ -89,47 +88,10 @@ class _dashboardState extends State<dashboard> {
     });
   }
 
-  List<MenuModel> menuDetails = [];
-
   @override
   void initState() {
     super.initState();
     fetchmenuApi();
-  }
-
-  Future<void> fetchMenuDetails() async {
-    try {
-      var response = await http.post(
-          Uri.parse(
-              "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks"),
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: {
-            "UserID": "1192",
-          });
-      var bodyIs = response.body;
-      print("resss$response");
-      if (response.statusCode == 200) {
-        Xml2Json xml2Json = Xml2Json();
-        xml2Json.parse(bodyIs);
-        var jsonString = xml2Json.toParker();
-        var data = jsonDecode(jsonString);
-        var menulist = data['Menu_Details'];
-        debugPrint("data is ${data['Menu_Details']}");
-        final Map<String, dynamic> responseData = json.decode(response.body);
-        final List<dynamic> menuList = responseData['Menu_Details'];
-        setState(() {
-          menuDetails =
-              menuList.map((menu) => MenuModel.fromJson(menu)).toList();
-        });
-      } else {
-        throw Exception('Failed to load menu details');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
   }
 
   fetchmenuApi() async {
@@ -137,10 +99,12 @@ class _dashboardState extends State<dashboard> {
     var t_code = await UserSecureStorage().gettcode();
     var body = {
       "UserID": "1192",
+      "dt1": "0",
+      "dt2": "0",
     };
     var res = await http.post(
         Uri.parse(
-            'http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_MenuLinks'),
+            'http://140.238.162.89/ServiceWebAPI/Service.asmx/Get_All_MenuLinks_SR'),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"
@@ -155,29 +119,13 @@ class _dashboardState extends State<dashboard> {
       xml2Json.parse(bodyIs);
       var jsonString = xml2Json.toParker();
       var data = jsonDecode(jsonString);
-
       var menuliststring = data['string'];
-      print("menulsy$menuliststring");
       menuliststring = menuliststring.toString().replaceAll("\\r\\\\n", "\n");
-      //  menuliststring = menuliststring.toString().replaceAll("\\r\\\n", "\n");
-      print("menulsy$menuliststring");
       var menuobject = json.decode(menuliststring.toString());
       var menulistobject = menuobject['Menu_Details'];
-      print("menulbbbbby$menulistobject");
-      // var object = json.decode(menulistobject.toString());
-      // print("Iterable$object $menulistobject");
       Iterable l = menulistobject;
-
-      //List<MenuDetails> posts = List<MenuDetails>.from(l.map((model)=> MenuDetails.fromJson(model)));
       setState(() {
-        // object.forEach((v) {
-        //   menulistobject.add(MenuModel.fromJson(v));
-        // });
-
-        ///try it///
         menulist = l.map((data) => MenuModel.fromJson(data)).toList();
-
-        print("Iterablelist $menulist");
         isLoading = false;
       });
     } else {
@@ -185,7 +133,6 @@ class _dashboardState extends State<dashboard> {
         isLoading = false;
       });
     }
-    print("Iterablelist2 $menulist ");
   }
 
   @override
@@ -201,125 +148,99 @@ class _dashboardState extends State<dashboard> {
     ];
     var color = 0xFF2979FF;
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.blue,
-          title: const Text('DASHBOARD'),
-          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-          actions: [
-            Row(
-              children: [
-                const Text(
-                  'DATE FILTER',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.blue,
+        title: const Text('DASHBOARD'),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        actions: [
+          Row(
+            children: [
+              const Text(
+                'DATE FILTER',
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              IconButton(
+                onPressed: () async => {
+                  await FlutterSecureStorage().deleteAll(),
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const Login())),
+                },
+                icon: const Icon(
+                  Icons.power_settings_new,
+                  color: Colors.white,
                 ),
-                IconButton(
-                  onPressed: () async => {
-                    await FlutterSecureStorage().deleteAll(),
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Login())),
-                  },
-                  icon: const Icon(
-                    Icons.power_settings_new,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        body: isLoading
-            ? const Center(child: LinearProgressIndicator())
-            : menuDetails != null && menuDetails.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      itemCount: menuDetails.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: const Icon(
-                            Icons.access_alarms_outlined,
-                            color: Colors.black,
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Flexible(
+              child: GridView.count(
+                semanticChildCount: menulist.length,
+                childAspectRatio: 2 / 2,
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 16, bottom: 16),
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                children: myList.map((data) {
+                  int index = myList.indexOf(data);
+                  return GestureDetector(
+                    onTap: () => {
+                      tapped(index, context),
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(color),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(data.img, width: 42),
+                              IconButton(
+                                onPressed: () => {},
+                                icon: const Icon(
+                                  Icons.arrow_circle_right_outlined,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                          title: Text(
-                            "${menuDetails[index].menuDetails ?? ""}",
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                          const SizedBox(height: 12),
+                          Text(
+                            data.title,
+                            style: GoogleFonts.openSans(
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
-                          subtitle: Text(
-                            "${menuDetails[index].menuDetails ?? ""}",
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        );
-                      },
+                          const SizedBox(height: 5),
+                        ],
+                      ),
                     ),
-                  )
-                : const Center(
-                    child: Text('No menu details available.'),
-                  )
-        //  Flexible(
-        //   child: GridView.count(
-        //     childAspectRatio: 2 / 2,
-        //     padding:
-        //         const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
-        //     crossAxisCount: 2,
-        //     crossAxisSpacing: 15,
-        //     mainAxisSpacing: 15,
-        //     children: myList.map((data) {
-        //       int index = myList.indexOf(data);
-        //       return GestureDetector(
-        //         onTap: () => {
-        //           tapped(index, context),
-        //         },
-        //         child: Container(
-        //           decoration: BoxDecoration(
-        //             color: Color(color),
-        //             borderRadius: BorderRadius.circular(15),
-        //           ),
-        //           child: Column(
-        //             mainAxisAlignment: MainAxisAlignment.center,
-        //             crossAxisAlignment: CrossAxisAlignment.center,
-        //             children: [
-        //               Image.asset(data.img, width: 42),
-        //               const SizedBox(height: 12),
-        //               Text(
-        //                 data.title,
-        //                 style: GoogleFonts.openSans(
-        //                   textStyle: const TextStyle(
-        //                     color: Colors.white,
-        //                     fontSize: 16,
-        //                     fontWeight: FontWeight.w600,
-        //                   ),
-        //                 ),
-        //               ),
-        //               IconButton(
-        //                 onPressed: () => {},
-        //                 icon: const Icon(
-        //                   Icons.arrow_circle_right_outlined,
-        //                   color: Colors.white,
-        //                 ),
-        //               ),
-        //               const SizedBox(height: 5),
-        //             ],
-        //           ),
-        //         ),
-        //       );
-        //     }).toList(),
-        //   ),
-        // ),
-        );
+                  );
+                }).toList(),
+              ),
+            ),
+    );
   }
 }
 
 class Items {
   String title;
+  String subtitle;
   String img;
 
-  Items({
-    required this.title,
-    required this.img,
-  });
+  Items({required this.title, required this.subtitle, required this.img});
 }
