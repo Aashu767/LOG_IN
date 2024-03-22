@@ -1,22 +1,24 @@
-class ZoneModel {
+// ignore_for_file: camel_case_types, unnecessary_new, unnecessary_this, prefer_collection_literals
+
+class zonemodel {
   List<ComplaintsType>? complaintsType;
 
-  ZoneModel({this.complaintsType});
+  zonemodel({this.complaintsType});
 
-  ZoneModel.fromJson(Map<String, dynamic> json) {
+  zonemodel.fromJson(Map<String, dynamic> json) {
     if (json['Complaints_Type'] != null) {
       complaintsType = <ComplaintsType>[];
       json['Complaints_Type'].forEach((v) {
-        complaintsType!.add(ComplaintsType.fromJson(v));
+        complaintsType!.add(new ComplaintsType.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (complaintsType != null) {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.complaintsType != null) {
       data['Complaints_Type'] =
-          complaintsType!.map((v) => v.toJson()).toList();
+          this.complaintsType!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -36,10 +38,10 @@ class ComplaintsType {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['Zone_Id'] = zoneId;
-    data['Zone_Name'] = zoneName;
-    data['count'] = count;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['Zone_Id'] = this.zoneId;
+    data['Zone_Name'] = this.zoneName;
+    data['count'] = this.count;
     return data;
   }
 }

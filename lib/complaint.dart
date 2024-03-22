@@ -1,9 +1,72 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:log_in/Form.dart';
 import 'package:log_in/Zone.dart';
+import 'package:http/http.dart' as http;
+import 'package:log_in/models/complaintlist_model.dart';
+import 'package:xml2json/xml2json.dart';
 
-class Complaints extends StatelessWidget {
+class Complaints extends StatefulWidget {
   const Complaints({super.key});
+
+  @override
+  State<Complaints> createState() => _ComplaintsState();
+}
+
+class _ComplaintsState extends State<Complaints> {
+  bool isLoading = true;
+  List<ComplaintsList> complist = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchcompApi();
+  }
+
+  fetchcompApi() async {
+    var body = {
+      "UserID": "1192",
+      "TypeID": "0",
+      "MenuID": "10005",
+      "ZoneID": "A00011",
+      "dt1": "0",
+      "dt2": "0",
+    };
+
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_ComplaintsList_SR"),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statuCode = res.statusCode;
+    if (statuCode == 200) {
+      debugPrint("reis${res.body}");
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var compliststring = data['string'];
+      compliststring = compliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var compobject = json.decode(compliststring.toString());
+      var complistobject = compobject['Complaints_List'];
+      Iterable l = complistobject;
+      setState(() {
+        complist = l.map((data) => ComplaintsList.fromJson(data)).toList();
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,107 +82,93 @@ class Complaints extends StatelessWidget {
         title: const Text('COMPLAINTS'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
-      body: ListView.builder(
-        itemCount: 8,
-        itemBuilder: (BuildContext context, int index) {
-          return getItem(index, context);
-        },
-      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: complist.length,
+              itemBuilder: (index, context) {
+                return Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.teal,
+                        borderRadius: BorderRadius.circular(8)),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context as BuildContext,
+                            MaterialPageRoute(
+                                builder: (_) => const Form_page()));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                  text: 'Complaint No. :  ',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                        text: '${complist.first.complaintNo}'),
+                                  ]),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                  text: 'Customer Name :  ',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                        text: '${complist.first.customerName}'),
+                                  ]),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                  text: 'Mobile No. :  ',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                        text: '${complist.first.mobileNo}'),
+                                  ]),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                  text: 'Address :  ',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  children: [
+                                    TextSpan(text: '${complist.first.address}'),
+                                  ]),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                  text: 'Problem  :  ',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  children: [
+                                    TextSpan(text: '${complist.first.problem}'),
+                                  ]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              //
+              ),
     );
   }
-}
-
-Widget getItem(int index, BuildContext context) {
-  return Container(
-    margin: const EdgeInsets.all(16),
-    alignment: Alignment.center,
-    decoration: const BoxDecoration(
-        color: Colors.lightBlue,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8.0),
-          topRight: Radius.circular(8.0),
-          bottomLeft: Radius.circular(8.0),
-          bottomRight: Radius.circular(8.0),
-        )),
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const Form_page()));
-        },
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Text(
-                  'complain no. :',
-                  style: tstyle(),
-                ),
-                Text(
-                  ' 180024569',
-                  style: tstyle(),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'Cust Name:',
-                  style: tstyle(),
-                ),
-                Text(
-                  ' xiaomi india',
-                  style: tstyle(),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'Mob No. :',
-                  style: tstyle(),
-                ),
-                Text(
-                  ' 7838468018',
-                  style: tstyle(),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'Address: ',
-                  style: tstyle(),
-                ),
-                Text(
-                  ' B-14 sector-8 Noida',
-                  style: tstyle(),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'Problem : ',
-                  style: tstyle(),
-                ),
-                Text(
-                  ' Not Working',
-                  style: tstyle(),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-TextStyle tstyle() {
-  return const TextStyle(
-    color: Colors.black,
-    fontSize: 17,
-  );
 }

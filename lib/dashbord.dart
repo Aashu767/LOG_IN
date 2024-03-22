@@ -6,7 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/Zone.dart';
 import 'package:log_in/attandance.dart';
+import 'package:log_in/completed_task.dart';
 import 'package:log_in/models/menu_model.dart';
+import 'package:log_in/overdue.dart';
+import 'package:log_in/pending_task.dart';
+import 'package:log_in/search_complaints.dart';
+import 'package:log_in/today_overdue.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
@@ -24,19 +29,21 @@ class _dashboardState extends State<dashboard> {
     if (index == 0) {
       Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
     } else if (index == 1) {
-      print("not the two :(");
+      Navigator.push(context, MaterialPageRoute(builder: (_) => Overdue()));
     } else if (index == 2) {
-      print("not the three :(");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => Today_overdue()));
     } else if (index == 3) {
-      print("not the four :(");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => completed_task()));
     } else if (index == 4) {
-      print("not the five :(");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => pending_task()));
     } else if (index == 5) {
-      print("not the six :(");
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => Search_complaints()));
     } else if (index == 6) {
       Navigator.push(context, MaterialPageRoute(builder: (_) => attandance()));
-    } else if (index == 7) {
-      print("not the eight :(");
     }
   }
 
