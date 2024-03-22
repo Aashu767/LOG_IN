@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types, unused_element, non_constant_identifier_names, prefer_final_fields, file_names
 
 import 'package:flutter/material.dart';
-// import 'package:log_in/assign.dart';
 import 'package:log_in/comp_update.dart';
 import 'package:log_in/complaint.dart';
 

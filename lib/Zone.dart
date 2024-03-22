@@ -99,14 +99,11 @@ class _homeState extends State<home> {
                 context, MaterialPageRoute(builder: (_) => dashboard()));
           },
         ),
-        backgroundColor: Colors.blue,
-        title: const Text('DISTRICT WISE ACTIVITY'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        actions: const [
-          Row(
-            children: [],
-          ),
-        ],
+        backgroundColor: Color(color),
+        title: const Text(
+          'DISTRICT WISE ACTIVITY',
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
       ),
       body: isLoading
           ? const Center(
@@ -150,19 +147,27 @@ class _homeState extends State<home> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          "${data.zoneName}  [${data.count}]",
-                          style: GoogleFonts.openSans(
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                        const SizedBox(height: 5),
+                        Center(
+                          child: Text(
+                            "  ${data.zoneName}",
+                            style: GoogleFonts.openSans(
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(
                           height: 5,
+                        ),
+                        Text(
+                          "[${data.count}]",
+                          style: GoogleFonts.openSans(
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         )
                       ],
                     ),

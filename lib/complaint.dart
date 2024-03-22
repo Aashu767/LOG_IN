@@ -86,20 +86,19 @@ class _ComplaintsState extends State<Complaints> {
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: complist.length,
-              itemBuilder: (index, context) {
+              itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.teal,
-                        borderRadius: BorderRadius.circular(8)),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context as BuildContext,
-                            MaterialPageRoute(
-                                builder: (_) => const Form_page()));
-                      },
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Form_page()));
+                    },
+                    child: Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(8)),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(

@@ -110,7 +110,7 @@ class _dashboardState extends State<dashboard> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(color),
         title: const Text('DASHBOARD'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
         actions: [
@@ -128,7 +128,7 @@ class _dashboardState extends State<dashboard> {
                 },
                 icon: const Icon(
                   Icons.power_settings_new,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ],
@@ -151,8 +151,6 @@ class _dashboardState extends State<dashboard> {
                     tapped(index, context),
                   },
                   child: Container(
-                    height: 20,
-                    width: 5,
                     decoration: BoxDecoration(
                       color: Color(color),
                       borderRadius: BorderRadius.circular(15),
@@ -161,23 +159,14 @@ class _dashboardState extends State<dashboard> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // Image.asset(data.imgPath, width: 42),
-                            IconButton(
-                              onPressed: () => {},
-                              icon: const Icon(
-                                Icons.arrow_circle_right_outlined,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
+                        Image.asset(
+                          'assets/image/calendar.png',
+                          height: 50,
+                          width: 50,
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 8),
                         Text(
-                          "${data.menuName}   [${data.count}]",
+                          "${data.menuName} ",
                           style: GoogleFonts.openSans(
                             textStyle: const TextStyle(
                               color: Colors.white,
@@ -186,7 +175,16 @@ class _dashboardState extends State<dashboard> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 5),
+                        Text(
+                          "[${data.count}]",
+                          style: GoogleFonts.openSans(
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),

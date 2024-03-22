@@ -63,7 +63,7 @@ class attandance extends StatelessWidget {
           color: Colors.white,
         ),
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(color),
         title: const Text('Attendance'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
