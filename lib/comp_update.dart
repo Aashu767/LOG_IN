@@ -24,8 +24,6 @@ class _comp_updateState extends State<comp_update> {
   String selectedDate = 'Tap to select date';
   late File _image;
   final picker = ImagePicker();
-
-  //Image Picker function to get image from gallery
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -36,11 +34,8 @@ class _comp_updateState extends State<comp_update> {
     });
   }
 
-  //Image Picker function to get image from camera
-  
   Future getImageFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
 
     setState(() {
       if (pickedFile != null) {
@@ -49,7 +44,6 @@ class _comp_updateState extends State<comp_update> {
     });
   }
 
-  //Show options to get image from camera or gallery
   Future showOptions() async {
     showCupertinoModalPopup(
       context: context,
@@ -57,20 +51,15 @@ class _comp_updateState extends State<comp_update> {
         actions: [
           CupertinoActionSheetAction(
             child: const Text('Photo Gallery'),
-            
             onPressed: () {
-              // close the options modal
               Navigator.of(context).pop();
-              // get image from gallery
               getImageFromGallery();
             },
           ),
           CupertinoActionSheetAction(
             child: const Text('Camera'),
             onPressed: () {
-              // close the options modal
               Navigator.of(context).pop();
-              // get image from camera
               getImageFromCamera();
             },
           ),
