@@ -27,7 +27,7 @@ class _dashboardState extends State<dashboard> {
   List<MenuDetails> menulist = [];
   void tapped(int index, BuildContext context) {
     if (index == 0) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
+      Navigator.push(context, MaterialPageRoute(builder: (_) => zone()));
     } else if (index == 1) {
       Navigator.push(context, MaterialPageRoute(builder: (_) => Overdue()));
     } else if (index == 2) {

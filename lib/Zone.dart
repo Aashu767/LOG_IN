@@ -10,12 +10,12 @@ import 'package:log_in/models/zone_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 
-class home extends StatefulWidget {
+class zone extends StatefulWidget {
   @override
-  State<home> createState() => _homeState();
+  State<zone> createState() => _zoneState();
 }
 
-class _homeState extends State<home> {
+class _zoneState extends State<zone> {
   bool isLoading = true;
   List<ComplaintsType> zonelist = [];
 
@@ -29,15 +29,6 @@ class _homeState extends State<home> {
     }
   }
 
-  List imgpath = [
-    'assets/image/cp45.jpg',
-    'assets/image/notification.png',
-    'assets/image/food.png',
-    'assets/image/map.png',
-    'assets/image/festival.png',
-    'assets/image/todo.png',
-    'assets/image/setting.png',
-  ];
   @override
   void initState() {
     super.initState();

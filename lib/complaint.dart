@@ -74,7 +74,7 @@ class _ComplaintsState extends State<Complaints> {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => home()));
+            Navigator.push(context, MaterialPageRoute(builder: (_) => zone()));
           },
           color: Colors.white,
         ),
@@ -113,7 +113,7 @@ class _ComplaintsState extends State<Complaints> {
                                   ),
                                   children: [
                                     TextSpan(
-                                        text: '${complist.first.complaintNo}'),
+                                        text: '${complist[index].complaintNo}'),
                                   ]),
                             ),
                             RichText(
@@ -124,7 +124,8 @@ class _ComplaintsState extends State<Complaints> {
                                   ),
                                   children: [
                                     TextSpan(
-                                        text: '${complist.first.customerName}'),
+                                        text:
+                                            '${complist[index].customerName}'),
                                   ]),
                             ),
                             RichText(
@@ -135,7 +136,7 @@ class _ComplaintsState extends State<Complaints> {
                                   ),
                                   children: [
                                     TextSpan(
-                                        text: '${complist.first.mobileNo}'),
+                                        text: '${complist[index].mobileNo}'),
                                   ]),
                             ),
                             RichText(
@@ -145,7 +146,8 @@ class _ComplaintsState extends State<Complaints> {
                                     color: Colors.white,
                                   ),
                                   children: [
-                                    TextSpan(text: '${complist.first.address}'),
+                                    TextSpan(
+                                        text: '${complist[index].address}'),
                                   ]),
                             ),
                             RichText(
@@ -155,7 +157,8 @@ class _ComplaintsState extends State<Complaints> {
                                     color: Colors.white,
                                   ),
                                   children: [
-                                    TextSpan(text: '${complist.first.problem}'),
+                                    TextSpan(
+                                        text: '${complist[index].problem}'),
                                   ]),
                             ),
                           ],
