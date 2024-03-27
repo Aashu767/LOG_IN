@@ -47,16 +47,6 @@ class _dashboardState extends State<dashboard> {
     }
   }
 
-  List imgPath = [
-    'assets/image/cp45.jpg',
-    'assets/image/notification.png',
-    'assets/image/food.png',
-    'assets/image/map.png',
-    'assets/image/festival.png',
-    'assets/image/todo.png',
-    'assets/image/setting.png',
-  ];
-
   @override
   void initState() {
     super.initState();

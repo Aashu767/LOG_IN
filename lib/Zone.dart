@@ -26,6 +26,21 @@ class _zoneState extends State<zone> {
     } else if (index == 1) {
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 2) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 3) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 4) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 5) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 6) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
     }
   }
 
