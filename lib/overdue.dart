@@ -25,18 +25,33 @@ class _OverdueState extends State<Overdue> {
     } else if (index == 1) {
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 2) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 3) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 4) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 5) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 6) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 7) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 8) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
+    } else if (index == 9) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Complaints()));
     }
   }
 
-  List imgpath = [
-    'assets/image/cp45.jpg',
-    'assets/image/notification.png',
-    'assets/image/food.png',
-    'assets/image/map.png',
-    'assets/image/festival.png',
-    'assets/image/todo.png',
-    'assets/image/setting.png',
-  ];
   @override
   void initState() {
     super.initState();
@@ -111,7 +126,7 @@ class _OverdueState extends State<Overdue> {
               child: CircularProgressIndicator(),
             )
           : GridView.count(
-              childAspectRatio: 1.0,
+              childAspectRatio: 3 / 2,
               padding: const EdgeInsets.only(
                   left: 16, right: 16, top: 16, bottom: 16),
               crossAxisCount: 2,
@@ -148,19 +163,27 @@ class _OverdueState extends State<Overdue> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          "${data.zoneName}  [${data.count}]",
-                          style: GoogleFonts.openSans(
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                        const SizedBox(height: 5),
+                        Center(
+                          child: Text(
+                            "  ${data.zoneName}",
+                            style: GoogleFonts.openSans(
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(
                           height: 5,
+                        ),
+                        Text(
+                          "[${data.count}]",
+                          style: GoogleFonts.openSans(
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         )
                       ],
                     ),

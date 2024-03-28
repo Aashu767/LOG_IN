@@ -18,6 +18,7 @@ class Complaints extends StatefulWidget {
 
 class _ComplaintsState extends State<Complaints> {
   bool isLoading = true;
+
   List<ComplaintsList> complist = [];
 
   @override
