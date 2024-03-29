@@ -5,13 +5,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/Zone.dart';
-import 'package:log_in/attandance.dart';
-import 'package:log_in/completed_task.dart';
+// import 'package:log_in/attandance.dart';
+// import 'package:log_in/completed_task.dart';
 import 'package:log_in/models/menu_model.dart';
-import 'package:log_in/overdue.dart';
-import 'package:log_in/pending_task.dart';
-import 'package:log_in/search_complaints.dart';
-import 'package:log_in/today_overdue.dart';
+// import 'package:log_in/overdue.dart';
+// import 'package:log_in/pending_task.dart';
+// import 'package:log_in/search_complaints.dart';
+// import 'package:log_in/today_overdue.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
@@ -26,25 +26,25 @@ class _dashboardState extends State<dashboard> {
   bool isLoading = true;
   List<MenuDetails> menulist = [];
   void tapped(int index, BuildContext context) {
-    if (index == 0) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => zone()));
-    } else if (index == 1) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => Overdue()));
-    } else if (index == 2) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => Today_overdue()));
-    } else if (index == 3) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => completed_task()));
-    } else if (index == 4) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => pending_task()));
-    } else if (index == 5) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => Search_complaints()));
-    } else if (index == 6) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => attandance()));
-    }
+    // if (index == 0) {
+    // Navigator.push(context, MaterialPageRoute(builder: (_) => zone()));
+    // } else if (index == 1) {
+    //   Navigator.push(context, MaterialPageRoute(builder: (_) => Overdue()));
+    // } else if (index == 2) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => Today_overdue()));
+    // } else if (index == 3) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => completed_task()));
+    // } else if (index == 4) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => pending_task()));
+    // } else if (index == 5) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => Search_complaints()));
+    // } else if (index == 6) {
+    //   Navigator.push(context, MaterialPageRoute(builder: (_) => attandance()));
+    // }
   }
 
   @override
@@ -138,7 +138,14 @@ class _dashboardState extends State<dashboard> {
                 int index = menulist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
-                    tapped(index, context),
+                    ///menuname ko match krana h attendance  se aur if match kr gya to attendance pr navigate krna h
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => zone(
+                                  menuid: data.menuId.toString(),
+                                )))
+                    //  tapped(index, context),
                   },
                   child: Container(
                     decoration: BoxDecoration(

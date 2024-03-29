@@ -1,16 +1,18 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element, camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable, file_names
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element, camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable, file_names, must_be_immutable
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:log_in/complaint.dart';
+// import 'package:log_in/complaint.dart';
 import 'package:log_in/dashbord.dart';
 import 'package:log_in/models/zone_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 
 class zone extends StatefulWidget {
+  String menuid;
+  zone({super.key, required this.menuid});
   @override
   State<zone> createState() => _zoneState();
 }
@@ -20,28 +22,28 @@ class _zoneState extends State<zone> {
   List<ComplaintsType> zonelist = [];
 
   void tapped(int index, BuildContext context) {
-    if (index == 0) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 1) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 2) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 3) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 4) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 5) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 6) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    }
+    // if (index == 0) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 1) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 2) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 3) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 4) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 5) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 6) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // }
   }
 
   @override
@@ -53,7 +55,8 @@ class _zoneState extends State<zone> {
   fetchzoneApi() async {
     var t_code = await UserSecureStorage().gettcode();
     var body = {
-      "MenuID": "10005",
+      "MenuID": widget.menuid,
+      //  "MenuID": "10005",
       "UserID": "1192",
       "dt1": "0",
       "dt2": "0",

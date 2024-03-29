@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:log_in/complaint.dart';
 import 'package:log_in/dashbord.dart';
 import 'package:log_in/models/zone_model.dart';
 
@@ -15,16 +14,6 @@ class Search_complaints extends StatefulWidget {
 class _Search_complaintsState extends State<Search_complaints> {
   bool isLoading = true;
   List<ComplaintsType> zonelist = [];
-
-  void tapped(int index, BuildContext context) {
-    if (index == 0) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 1) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
