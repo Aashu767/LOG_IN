@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, unused_element, non_constant_identifier_names, prefer_final_fields, file_names, avoid_unnecessary_containers, unnecessary_brace_in_string_interps, unrelated_type_equality_checks
+// ignore_for_file: camel_case_types, unused_element, non_constant_identifier_names, prefer_final_fields, file_names, avoid_unnecessary_containers, unnecessary_brace_in_string_interps, unrelated_type_equality_checks, must_be_immutable
 
 import 'dart:convert';
 
@@ -12,8 +12,8 @@ import 'package:log_in/payment.dart';
 import 'package:xml2json/xml2json.dart';
 
 class Form_page extends StatefulWidget {
-  const Form_page({super.key});
-
+  String compno;
+  Form_page({super.key, required this.compno});
   @override
   State<Form_page> createState() => _Form_pageState();
 }
@@ -133,7 +133,8 @@ class _Form_pageState extends State<Form_page> {
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: '${complaintlist.first.complaintNo}',
+                                      text:
+                                          '${complaintlist.first.complaintNo}',
                                       style: const TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
@@ -150,7 +151,8 @@ class _Form_pageState extends State<Form_page> {
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: '${complaintlist.first.customerName}',
+                                      text:
+                                          '${complaintlist.first.customerName}',
                                       style: const TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
@@ -235,7 +237,8 @@ class _Form_pageState extends State<Form_page> {
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: '${complaintlist.first.problemSince}',
+                                      text:
+                                          '${complaintlist.first.problemSince}',
                                       style: const TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
@@ -405,7 +408,8 @@ class _Form_pageState extends State<Form_page> {
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: '${complaintlist.first.aSSIGNTOName}',
+                                      text:
+                                          '${complaintlist.first.aSSIGNTOName}',
                                       style: const TextStyle(
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
@@ -561,7 +565,12 @@ class _Form_pageState extends State<Form_page> {
               color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
       onPressed: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: "",menuid: "",)));
+            context,
+            MaterialPageRoute(
+                builder: (_) => Complaints(
+                      zoneid: "",
+                      menuid: "",
+                    )));
       },
     );
     Widget CANCELButton = TextButton(
