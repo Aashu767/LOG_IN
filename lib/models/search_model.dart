@@ -1,15 +1,15 @@
 // ignore_for_file: camel_case_types, unnecessary_new, unnecessary_this, prefer_collection_literals
 
 class Search_model {
-  List<ComplaintsList>? complaintsList;
+  List<ComplaintsList1>? complaintsList;
 
   Search_model({this.complaintsList});
 
   Search_model.fromJson(Map<String, dynamic> json) {
     if (json['Complaints_List'] != null) {
-      complaintsList = <ComplaintsList>[];
+      complaintsList = <ComplaintsList1>[];
       json['Complaints_List'].forEach((v) {
-        complaintsList!.add(new ComplaintsList.fromJson(v));
+        complaintsList!.add(new ComplaintsList1.fromJson(v));
       });
     }
   }
@@ -24,7 +24,7 @@ class Search_model {
   }
 }
 
-class ComplaintsList {
+class ComplaintsList1 {
   String? complaintNo;
   String? customerName;
   String? mobileNo;
@@ -32,7 +32,7 @@ class ComplaintsList {
   Null kNo;
   String? problem;
 
-  ComplaintsList(
+  ComplaintsList1(
       {this.complaintNo,
       this.customerName,
       this.mobileNo,
@@ -40,7 +40,7 @@ class ComplaintsList {
       this.kNo,
       this.problem});
 
-  ComplaintsList.fromJson(Map<String, dynamic> json) {
+  ComplaintsList1.fromJson(Map<String, dynamic> json) {
     complaintNo = json['ComplaintNo'];
     customerName = json['Customer_name'];
     mobileNo = json['MobileNo'];

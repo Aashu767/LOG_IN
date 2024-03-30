@@ -1,44 +1,53 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element, camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable, file_names, must_be_immutable
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:log_in/complaint.dart';
-import 'package:log_in/dashbord.dart';
+// import 'package:log_in/complaint.dart';
+import 'package:log_in/All_MENU.dart/dashbord.dart';
 import 'package:log_in/models/zone_model.dart';
+import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 
-class completed_task extends StatefulWidget {
-  const completed_task({super.key});
+import '../edit_pages.dart/complaint.dart';
 
+class zone extends StatefulWidget {
+  String menuid;
+  zone({super.key, required this.menuid});
   @override
-  State<completed_task> createState() => _completed_taskState();
+  State<zone> createState() => _zoneState();
 }
 
-class _completed_taskState extends State<completed_task> {
+class _zoneState extends State<zone> {
   bool isLoading = true;
   List<ComplaintsType> zonelist = [];
 
   void tapped(int index, BuildContext context) {
-    if (index == 0) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: "",menuid: "",)));
-    } else if (index == 1) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: "",menuid: "",)));
-    }
+    // if (index == 0) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 1) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 2) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 3) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 4) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 5) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // } else if (index == 6) {
+    //   Navigator.push(
+    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
+    // }
   }
 
-  List imgpath = [
-    'assets/image/cp45.jpg',
-    'assets/image/notification.png',
-    'assets/image/food.png',
-    'assets/image/map.png',
-    'assets/image/festival.png',
-    'assets/image/todo.png',
-    'assets/image/setting.png',
-  ];
   @override
   void initState() {
     super.initState();
@@ -46,8 +55,10 @@ class _completed_taskState extends State<completed_task> {
   }
 
   fetchzoneApi() async {
+    var t_code = await UserSecureStorage().gettcode();
     var body = {
-      "MenuID": "10005",
+      "MenuID": widget.menuid,
+      //  "MenuID": "10005",
       "UserID": "1192",
       "dt1": "0",
       "dt2": "0",
@@ -99,21 +110,18 @@ class _completed_taskState extends State<completed_task> {
                 context, MaterialPageRoute(builder: (_) => dashboard()));
           },
         ),
-        backgroundColor: Colors.blue,
-        title: const Text('DISTRICT WISE ACTIVITY'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-        actions: const [
-          Row(
-            children: [],
-          ),
-        ],
+        backgroundColor: Color(color),
+        title: const Text(
+          'DISTRICT WISE ACTIVITY',
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
       ),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : GridView.count(
-              childAspectRatio: 1.0,
+              childAspectRatio: 3 / 2,
               padding: const EdgeInsets.only(
                   left: 16, right: 16, top: 16, bottom: 16),
               crossAxisCount: 2,
@@ -123,7 +131,9 @@ class _completed_taskState extends State<completed_task> {
                 int index = zonelist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
-                    tapped(index, context),
+                    // tapped(index, context),
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: data.zoneId!,menuid: widget.menuid,)))
                   },
                   child: Container(
                     height: 20,
@@ -150,19 +160,27 @@ class _completed_taskState extends State<completed_task> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
-                        Text(
-                          "${data.zoneName}  [${data.count}]",
-                          style: GoogleFonts.openSans(
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                        const SizedBox(height: 5),
+                        Center(
+                          child: Text(
+                            "  ${data.zoneName}",
+                            style: GoogleFonts.openSans(
+                              textStyle: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(
                           height: 5,
+                        ),
+                        Text(
+                          "[${data.count}]",
+                          style: GoogleFonts.openSans(
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         )
                       ],
                     ),

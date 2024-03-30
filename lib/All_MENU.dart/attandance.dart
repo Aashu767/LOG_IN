@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:log_in/checkin.dart';
-import 'package:log_in/checkout.dart';
-import 'package:log_in/feedback.dart';
-import 'package:log_in/leave.dart';
+import 'package:log_in/attendence_data.dart/checkin.dart';
+import 'package:log_in/attendence_data.dart/checkout.dart';
+import 'package:log_in/attendence_data.dart/feedback.dart';
+import 'package:log_in/attendence_data.dart/leave.dart';
 
 class attandance extends StatelessWidget {
   attandance({super.key});

@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/Authentication/login.dart';
-import 'package:log_in/Zone.dart';
+import 'package:log_in/All_MENU.dart/Zone.dart';
 // import 'package:log_in/attandance.dart';
 // import 'package:log_in/completed_task.dart';
 import 'package:log_in/models/menu_model.dart';
+import 'search_complaints.dart';
 // import 'package:log_in/overdue.dart';
 // import 'package:log_in/pending_task.dart';
 // import 'package:log_in/search_complaints.dart';
@@ -27,27 +28,7 @@ class dashboard extends StatefulWidget {
 class _dashboardState extends State<dashboard> {
   bool isLoading = true;
   List<MenuDetails> menulist = [];
-  void tapped(int index, BuildContext context) {
-    // if (index == 0) {
-    // Navigator.push(context, MaterialPageRoute(builder: (_) => zone()));
-    // } else if (index == 1) {
-    //   Navigator.push(context, MaterialPageRoute(builder: (_) => Overdue()));
-    // } else if (index == 2) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => Today_overdue()));
-    // } else if (index == 3) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => completed_task()));
-    // } else if (index == 4) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => pending_task()));
-    // } else if (index == 5) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => Search_complaints()));
-    // } else if (index == 6) {
-    //   Navigator.push(context, MaterialPageRoute(builder: (_) => attandance()));
-    // }
-  }
+  void tapped(int index, BuildContext context) {}
 
   @override
   void initState() {
@@ -97,12 +78,12 @@ class _dashboardState extends State<dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    var color = 0xFF2979FF;
+    //var color = 0xFF2979FF;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Color(color),
+        backgroundColor: Colors.blue,
         title: const Text('DASHBOARD'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
         actions: [
@@ -140,28 +121,38 @@ class _dashboardState extends State<dashboard> {
                 int index = menulist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
-                    ///menuname ko match krana h attendance  se aur if match kr gya to attendance pr navigate krna h
-
-                    if(data.menuName=="Attendance"){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => attandance()))
-                    }
-                    else{
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => zone(
-                                menuid: data.menuId.toString(),
-                              )))
-                    }
-
-                    //  tapped(index, context),
+                    if (data.menuName == "Search Complaints")
+                      {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => Search_complaints()))
+                      }
+                    else if (data.menuName == "Attendance")
+                      {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => attandance()))
+                      }
+                    else
+                      {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => zone(
+                                      menuid: data.menuId.toString(),
+                                    )))
+                      },
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(color),
+                      gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                          colors: [
+                            Color.fromRGBO(230, 230, 250, 1),
+                            Colors.white,
+                            Color.fromRGBO(230, 230, 250, 1)
+                          ]),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
@@ -178,7 +169,7 @@ class _dashboardState extends State<dashboard> {
                           "${data.menuName} ",
                           style: GoogleFonts.openSans(
                             textStyle: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
@@ -188,7 +179,7 @@ class _dashboardState extends State<dashboard> {
                           "[${data.count}]",
                           style: GoogleFonts.openSans(
                             textStyle: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:log_in/complaint.dart';
+import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:image_picker/image_picker.dart';
 
 class comp_update extends StatefulWidget {

@@ -1,19 +1,19 @@
-// ignore_for_file: camel_case_types, unused_element, non_constant_identifier_names, prefer_final_fields, file_names, avoid_unnecessary_containers, unnecessary_brace_in_string_interps, unrelated_type_equality_checks, must_be_immutable
+// ignore_for_file: camel_case_types, unused_element, non_constant_identifier_names, prefer_final_fields, file_names, avoid_unnecessary_containers, unnecessary_brace_in_string_interps, unrelated_type_equality_checks, must_be_immutable, use_super_parameters
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:log_in/comp_update.dart';
-import 'package:log_in/complaint.dart';
+import 'package:log_in/edit_pages.dart/comp_update.dart';
+import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:log_in/models/form_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/models/subordinate_model.dart';
-import 'package:log_in/payment.dart';
+import 'package:log_in/edit_pages.dart/payment.dart';
 import 'package:xml2json/xml2json.dart';
 
 class Form_page extends StatefulWidget {
   String compno;
-  Form_page({super.key, required this.compno});
+  Form_page({Key? key, required this.compno}) : super(key: key);
   @override
   State<Form_page> createState() => _Form_pageState();
 }
@@ -46,17 +46,19 @@ class _Form_pageState extends State<Form_page> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reis${res.body}");
+      debugPrint("reuseris${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
       var userliststring = data['string'];
-      // var userliststring =
-      userliststring.toString().replaceAll("\\r\\\\n", "\n");
+
+      /// var userliststring =
+      userliststring = userliststring.toString().replaceAll("\\r\\\\n", "\n");
       var userobject = json.decode(userliststring.toString());
       var userlistobject = userobject['UserList'];
       Iterable l = userlistobject;
+
       setState(() {
         userlist = l.map((data) => UserList.fromJson(data)).toList();
       });
@@ -69,7 +71,7 @@ class _Form_pageState extends State<Form_page> {
 
   fetchlistApi() async {
     var body = {
-      "Complaint_No": "2403220003",
+      "Complaint_No": widget.compno,
       "Assign_User_ID": "1192",
     };
     var res = await http.post(
@@ -638,13 +640,13 @@ class _Form_pageState extends State<Form_page> {
                     isExpanded: true,
                     iconSize: 30.0,
                     style: const TextStyle(
-                      color: Colors.blue,
+                      color: Color.fromRGBO(191, 195, 197, 1),
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                     items: userlist.map((UserList user) {
                       return DropdownMenuItem<String>(
-                        value: user.eMPLNAME,
+                        value: userlist1,
                         child: Text(
                           user.eMPLNAME!,
                           style: const TextStyle(
@@ -657,52 +659,15 @@ class _Form_pageState extends State<Form_page> {
                     }).toList(),
                     onChanged: (String? val) {
                       dropDownState(() {
-                        userlist1 = val!;
+                        setState(() {
+                          userlist1 = val!;
+                        });
                       });
                     },
                   );
                 },
               ),
             ),
-            // Container(
-            //   decoration: mydecoration(),
-            //   child: StatefulBuilder(
-            //       builder: (BuildContext context, StateSetter dropDownState) {
-            //     return DropdownButton(
-            //       padding: const EdgeInsets.symmetric(horizontal: 8),
-            //       hint: userlist1 == ""
-            //           ? const Text('Select To Assign')
-            //           : Text(
-            //               "${userlist.first.eMPLNAME}",
-            //               style: const TextStyle(
-            //                   color: Colors.black,
-            //                   fontSize: 17,
-            //                   fontWeight: FontWeight.bold),
-            //             ),
-            //       isExpanded: true,
-            //       iconSize: 30.0,
-            //       style: const TextStyle(
-            //           color: Colors.blue,
-            //           fontSize: 17,
-            //           fontWeight: FontWeight.bold),
-            //       items: [userlist.first.eMPLNAME].map(
-            //         (val) {
-            //           return DropdownMenuItem<String>(
-            //             value: "${userlist.first.eMPLNAME}",
-            //             child: Text("${userlist.first.eMPLNAME}"),
-            //           );
-            //         },
-            //       ).toList(),
-            //       onChanged: (val) {
-            //         dropDownState(
-            //           () {
-            //             userlist = val! as List<UserList>;
-            //           },
-            //         );
-            //       },
-            //     );
-            //   }),
-            // ),
           ],
         )),
       ),

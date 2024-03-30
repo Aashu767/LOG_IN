@@ -1,52 +1,34 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element, camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable, file_names, must_be_immutable
+// ignore_for_file: camel_case_types, unused_local_variable
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:log_in/complaint.dart';
-import 'package:log_in/dashbord.dart';
+//import 'package:log_in/complaint.dart';
+import 'package:log_in/All_MENU.dart/dashbord.dart';
 import 'package:log_in/models/zone_model.dart';
-import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 
-import 'complaint.dart';
+class pending_task extends StatefulWidget {
+  const pending_task({super.key});
 
-class zone extends StatefulWidget {
-  String menuid;
-  zone({super.key, required this.menuid});
   @override
-  State<zone> createState() => _zoneState();
+  State<pending_task> createState() => _pending_taskState();
 }
 
-class _zoneState extends State<zone> {
+class _pending_taskState extends State<pending_task> {
   bool isLoading = true;
   List<ComplaintsType> zonelist = [];
 
-  void tapped(int index, BuildContext context) {
-    // if (index == 0) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 1) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 2) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 3) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 4) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 5) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 6) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // }
-  }
+  // void tapped(int index, BuildContext context) {
+  //   if (index == 0) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 1) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   }
+  // }
 
   @override
   void initState() {
@@ -55,10 +37,8 @@ class _zoneState extends State<zone> {
   }
 
   fetchzoneApi() async {
-    var t_code = await UserSecureStorage().gettcode();
     var body = {
-      "MenuID": widget.menuid,
-      //  "MenuID": "10005",
+      "MenuID": "10005",
       "UserID": "1192",
       "dt1": "0",
       "dt2": "0",
@@ -110,18 +90,21 @@ class _zoneState extends State<zone> {
                 context, MaterialPageRoute(builder: (_) => dashboard()));
           },
         ),
-        backgroundColor: Color(color),
-        title: const Text(
-          'DISTRICT WISE ACTIVITY',
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
+        backgroundColor: Colors.blue,
+        title: const Text('DISTRICT WISE ACTIVITY'),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        actions: const [
+          Row(
+            children: [],
+          ),
+        ],
       ),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : GridView.count(
-              childAspectRatio: 3 / 2,
+              childAspectRatio: 1.0,
               padding: const EdgeInsets.only(
                   left: 16, right: 16, top: 16, bottom: 16),
               crossAxisCount: 2,
@@ -131,9 +114,7 @@ class _zoneState extends State<zone> {
                 int index = zonelist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
-                    // tapped(index, context),
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: data.zoneId!,menuid: widget.menuid,)))
+                    //tapped(index, context),
                   },
                   child: Container(
                     height: 20,
@@ -160,27 +141,19 @@ class _zoneState extends State<zone> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 5),
-                        Center(
-                          child: Text(
-                            "  ${data.zoneName}",
-                            style: GoogleFonts.openSans(
-                              textStyle: const TextStyle(
-                                color: Colors.white,
-                              ),
+                        const SizedBox(height: 12),
+                        Text(
+                          "${data.zoneName}  [${data.count}]",
+                          style: GoogleFonts.openSans(
+                            textStyle: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
                         const SizedBox(
                           height: 5,
-                        ),
-                        Text(
-                          "[${data.count}]",
-                          style: GoogleFonts.openSans(
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
                         )
                       ],
                     ),

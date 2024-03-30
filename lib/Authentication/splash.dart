@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:log_in/Authentication/login.dart';
-import 'package:log_in/dashbord.dart';
+import 'package:log_in/All_MENU.dart/dashbord.dart';
 import '../utils/secure_storage.dart';
 
 class Splash extends StatefulWidget {

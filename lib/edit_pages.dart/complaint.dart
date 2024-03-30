@@ -3,7 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:log_in/Form.dart';
+import 'package:log_in/edit_pages.dart/Form.dart';
 //import 'package:log_in/Zone.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/models/complaintlist_model.dart';
@@ -80,12 +80,6 @@ class _ComplaintsState extends State<Complaints> {
         leading: BackButton(
           onPressed: () {
             Navigator.pop(context);
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (_) => zone(
-            //               menuid: widget.zoneid,
-            //             )));
           },
           color: Colors.white,
         ),
@@ -104,7 +98,7 @@ class _ComplaintsState extends State<Complaints> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Form_page(
-                                compno: "",
+                                compno: complist[index].complaintNo!,
                               )));
                     },
                     child: Container(
