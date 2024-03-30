@@ -602,7 +602,7 @@ class _comp_updateState extends State<comp_update> {
                   backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const Complaints()));
+                    MaterialPageRoute(builder: (_) =>  Complaints(zoneid: "",menuid: "",)));
               },
               child: const Text(
                 "UPDATE",

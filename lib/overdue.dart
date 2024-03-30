@@ -17,40 +17,40 @@ class Overdue extends StatefulWidget {
 class _OverdueState extends State<Overdue> {
   bool isLoading = true;
   List<ComplaintsType> zonelist = [];
-
-  void tapped(int index, BuildContext context) {
-    if (index == 0) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 1) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 2) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 3) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 4) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 5) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 6) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 7) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 8) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 9) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    }
-  }
+  //
+  // void tapped(int index, BuildContext context) {
+  //   if (index == 0) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 1) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 2) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 3) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 4) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 5) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 6) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 7) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 8) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 9) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   }
+  // }
 
   @override
   void initState() {
@@ -136,7 +136,7 @@ class _OverdueState extends State<Overdue> {
                 int index = zonelist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
-                    tapped(index, context),
+                    //tapped(index, context),
                   },
                   child: Container(
                     height: 20,

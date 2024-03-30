@@ -20,15 +20,15 @@ class _pending_taskState extends State<pending_task> {
   bool isLoading = true;
   List<ComplaintsType> zonelist = [];
 
-  void tapped(int index, BuildContext context) {
-    if (index == 0) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    } else if (index == 1) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
-    }
-  }
+  // void tapped(int index, BuildContext context) {
+  //   if (index == 0) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   } else if (index == 1) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (_) => const Complaints()));
+  //   }
+  // }
 
   List imgpath = [
     'assets/image/cp45.jpg',
@@ -123,7 +123,7 @@ class _pending_taskState extends State<pending_task> {
                 int index = zonelist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
-                    tapped(index, context),
+                    //tapped(index, context),
                   },
                   child: Container(
                     height: 20,

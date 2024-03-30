@@ -10,6 +10,8 @@ import 'package:log_in/models/zone_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 
+import 'complaint.dart';
+
 class zone extends StatefulWidget {
   String menuid;
   zone({super.key, required this.menuid});
@@ -129,7 +131,9 @@ class _zoneState extends State<zone> {
                 int index = zonelist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
-                    tapped(index, context),
+                    // tapped(index, context),
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: data.zoneId!,menuid: widget.menuid,)))
                   },
                   child: Container(
                     height: 20,

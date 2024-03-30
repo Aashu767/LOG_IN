@@ -10,7 +10,9 @@ import 'package:log_in/models/complaintlist_model.dart';
 import 'package:xml2json/xml2json.dart';
 
 class Complaints extends StatefulWidget {
-  const Complaints({super.key});
+  String zoneid;
+  String menuid;
+  Complaints({Key? key, required this.zoneid,required this.menuid}):super(key: key);
 
   @override
   State<Complaints> createState() => _ComplaintsState();
@@ -31,8 +33,10 @@ class _ComplaintsState extends State<Complaints> {
     var body = {
       "UserID": "1192",
       "TypeID": "0",
-      "MenuID": "10005",
-      "ZoneID": "A00011",
+      "MenuID": widget.menuid,
+      "ZoneID": widget.zoneid,
+      // "MenuID": "10005",
+      // "ZoneID": "A00011",
       "dt1": "0",
       "dt2": "0",
     };

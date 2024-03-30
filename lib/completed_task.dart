@@ -23,10 +23,10 @@ class _completed_taskState extends State<completed_task> {
   void tapped(int index, BuildContext context) {
     if (index == 0) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
+          context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: "",menuid: "",)));
     } else if (index == 1) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Complaints()));
+          context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: "",menuid: "",)));
     }
   }
 
