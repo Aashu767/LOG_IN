@@ -17,6 +17,8 @@ import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'attandance.dart';
+
 class dashboard extends StatefulWidget {
   @override
   State<dashboard> createState() => _dashboardState();
@@ -139,12 +141,22 @@ class _dashboardState extends State<dashboard> {
                 return GestureDetector(
                   onTap: () => {
                     ///menuname ko match krana h attendance  se aur if match kr gya to attendance pr navigate krna h
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => zone(
-                                  menuid: data.menuId.toString(),
-                                )))
+
+                    if(data.menuName=="Attendance"){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => attandance()))
+                    }
+                    else{
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => zone(
+                                menuid: data.menuId.toString(),
+                              )))
+                    }
+
                     //  tapped(index, context),
                   },
                   child: Container(
