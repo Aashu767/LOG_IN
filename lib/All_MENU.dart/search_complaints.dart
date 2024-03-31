@@ -24,12 +24,12 @@ class _Search_complaintsState extends State<Search_complaints> {
   @override
   void initState() {
     super.initState();
-    fetchsearchApi();
+    // fetchsearchApi();
   }
 
   fetchsearchApi() async {
     var body = {
-      "SearchString": "9711991585",
+      "SearchString": _controller.text,
     };
 
     var res = await http.post(
@@ -79,7 +79,10 @@ class _Search_complaintsState extends State<Search_complaints> {
             },
           ),
           backgroundColor: Colors.blue,
-          title: const Text('   Complaints Search '),
+          title: const Text(
+            ' Complaints Search',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         body: Column(
           children: [
@@ -87,10 +90,16 @@ class _Search_complaintsState extends State<Search_complaints> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _controller,
-                onChanged: (value) => searchData,
-                decoration: const InputDecoration(
-                  hintText: 'Search...',
-                ),
+                // onEditingComplete: fetchsearchApi,
+
+                // onChanged: (value) => fetchsearchApi,
+                decoration: InputDecoration(
+                    hintText: 'Search...',
+                    suffixIcon: IconButton(
+                        onPressed: () {
+                          fetchsearchApi();
+                        },
+                        icon: const Icon(Icons.search))),
               ),
             ),
             Expanded(

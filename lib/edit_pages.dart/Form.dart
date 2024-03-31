@@ -1,14 +1,16 @@
-// ignore_for_file: camel_case_types, unused_element, non_constant_identifier_names, prefer_final_fields, file_names, avoid_unnecessary_containers, unnecessary_brace_in_string_interps, unrelated_type_equality_checks, must_be_immutable, use_super_parameters
+// ignore_for_file: camel_case_types, unused_element, non_constant_identifier_names, prefer_final_fields, file_names, avoid_unnecessary_containers, unnecessary_brace_in_string_interps, unrelated_type_equality_checks, must_be_immutable, use_super_parameters, use_build_context_synchronously
 
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/edit_pages.dart/comp_update.dart';
-import 'package:log_in/edit_pages.dart/complaint.dart';
+//import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:log_in/models/form_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/models/subordinate_model.dart';
 import 'package:log_in/edit_pages.dart/payment.dart';
+import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 
 class Form_page extends StatefulWidget {
@@ -23,6 +25,7 @@ class _Form_pageState extends State<Form_page> {
   List<ComplaintDetail> complaintlist = [];
   List<UserList> userlist = [];
   String userlist1 = "";
+  UserList? userval;
 
   @override
   void initState() {
@@ -32,8 +35,9 @@ class _Form_pageState extends State<Form_page> {
   }
 
   fetchAssignApi() async {
+     var staffId = await UserSecureStorage().getStaffId();
     var body = {
-      "USER_ID": "1192",
+      "USER_ID": staffId,
     };
     var res = await http.post(
         Uri.parse(
@@ -70,9 +74,10 @@ class _Form_pageState extends State<Form_page> {
   }
 
   fetchlistApi() async {
+     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "Complaint_No": widget.compno,
-      "Assign_User_ID": "1192",
+      "Assign_User_ID": staffId,
     };
     var res = await http.post(
         Uri.parse(
@@ -100,6 +105,40 @@ class _Form_pageState extends State<Form_page> {
             l.map((data) => ComplaintDetail.fromJson(data)).toList();
         isLoading = false;
       });
+    }
+  }
+
+  Assigntoupdate() async {
+    var body = {
+      "Complaint_No": widget.compno,
+      "Assign_USER_ID": userlist1,
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/WS_UPdate_Complaint_Assign"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      debugPrint("reis${res.body}");
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var complliststring = data['string'];
+      complliststring = complliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var response = data['string'];
+      if (response == "Data Update Successfully.") {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Assigned Successfully")));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(response)));
+      }
     }
   }
 
@@ -566,13 +605,9 @@ class _Form_pageState extends State<Form_page> {
           style: TextStyle(
               color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
       onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => Complaints(
-                      zoneid: "",
-                      menuid: "",
-                    )));
+         Navigator.pop(context);
+        Assigntoupdate();
+        
       },
     );
     Widget CANCELButton = TextButton(
@@ -635,7 +670,9 @@ class _Form_pageState extends State<Form_page> {
               decoration: mydecoration(),
               child: StatefulBuilder(
                 builder: (BuildContext context, StateSetter dropDownState) {
-                  return DropdownButton<String>(
+                  return DropdownButton<UserList>(
+                    value: userval,
+                    //value: userlist1,
                     hint: const Text(' Select to Assign'),
                     isExpanded: true,
                     iconSize: 30.0,
@@ -645,8 +682,8 @@ class _Form_pageState extends State<Form_page> {
                       fontWeight: FontWeight.bold,
                     ),
                     items: userlist.map((UserList user) {
-                      return DropdownMenuItem<String>(
-                        value: userlist1,
+                      return DropdownMenuItem<UserList>(
+                        value: user,
                         child: Text(
                           user.eMPLNAME!,
                           style: const TextStyle(
@@ -657,10 +694,14 @@ class _Form_pageState extends State<Form_page> {
                         ),
                       );
                     }).toList(),
-                    onChanged: (String? val) {
+                    onChanged: (UserList? val) {
                       dropDownState(() {
                         setState(() {
-                          userlist1 = val!;
+                          userlist1 = val!.eMPLID!;
+                          userval = val;
+                          if (kDebugMode) {
+                            print("Vlalll${val.eMPLID} $userlist1");
+                          }
                         });
                       });
                     },

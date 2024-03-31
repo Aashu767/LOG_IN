@@ -7,6 +7,7 @@ import 'package:log_in/edit_pages.dart/Form.dart';
 //import 'package:log_in/Zone.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/models/complaintlist_model.dart';
+import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 
 class Complaints extends StatefulWidget {
@@ -30,8 +31,10 @@ class _ComplaintsState extends State<Complaints> {
   }
 
   fetchcompApi() async {
+     var staffId = await UserSecureStorage().getStaffId();
     var body = {
-      "UserID": "1192",
+      
+      "UserID": staffId,
       "TypeID": "0",
       "MenuID": widget.menuid,
       "ZoneID": widget.zoneid,

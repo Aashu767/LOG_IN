@@ -9,6 +9,8 @@ import 'package:log_in/All_MENU.dart/dashbord.dart';
 import 'package:log_in/models/zone_model.dart';
 import 'package:xml2json/xml2json.dart';
 
+import '../utils/secure_storage.dart';
+
 class completed_task extends StatefulWidget {
   const completed_task({super.key});
 
@@ -46,9 +48,10 @@ class _completed_taskState extends State<completed_task> {
   }
 
   fetchzoneApi() async {
+     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "MenuID": "10005",
-      "UserID": "1192",
+      "UserID": staffId,
       "dt1": "0",
       "dt2": "0",
     };

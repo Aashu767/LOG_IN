@@ -38,8 +38,11 @@ class _dashboardState extends State<dashboard> {
 
   fetchmenuApi() async {
     var t_code = await UserSecureStorage().gettcode();
+    var staffId = await UserSecureStorage().getStaffId();
+    print("staffId$staffId");
     var body = {
-      "UserID": "1192",
+      "UserID": staffId,
+      //"UserID": "1192",
       "dt1": "0",
       "dt2": "0",
     };

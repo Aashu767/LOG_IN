@@ -56,10 +56,11 @@ class _zoneState extends State<zone> {
 
   fetchzoneApi() async {
     var t_code = await UserSecureStorage().gettcode();
+     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "MenuID": widget.menuid,
       //  "MenuID": "10005",
-      "UserID": "1192",
+      "UserID": staffId,
       "dt1": "0",
       "dt2": "0",
     };
