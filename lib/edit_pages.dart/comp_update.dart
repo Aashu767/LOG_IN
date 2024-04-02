@@ -99,7 +99,7 @@ class _comp_updateState extends State<comp_update> {
         child: Column(
           children: [
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               child: const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Row(children: [
@@ -130,7 +130,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               child: DropdownButton(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 hint: _dropDownValue == ""
@@ -169,7 +169,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(8.0),
               child: const Row(children: [
                 Expanded(
@@ -188,7 +188,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               child: DropdownButton(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 hint: _dropDownValue1 == ""
@@ -266,7 +266,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(8.0),
               child: const Row(children: [
                 Expanded(
@@ -285,7 +285,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               child: DropdownButton(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 hint: _dropDownValue2 == ""
@@ -334,7 +334,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               child: DropdownButton(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 hint: _dropDownValue3 == ""
@@ -378,7 +378,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               child: DropdownButton(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 hint: _dropDownValue4 == ""
@@ -427,7 +427,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               child: DropdownButton(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 hint: _dropDownValue5 == ""
@@ -471,7 +471,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(5.0),
               child: Row(children: [
                 IconButton(
@@ -497,7 +497,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(5.0),
               child: Row(children: [
                 IconButton(
@@ -523,7 +523,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(5.0),
               child: Row(children: [
                 IconButton(
@@ -549,7 +549,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(5.0),
               child: Row(children: [
                 IconButton(
@@ -575,7 +575,7 @@ class _comp_updateState extends State<comp_update> {
               height: 10,
             ),
             Container(
-              decoration: mydecoration(),
+              decoration: BoxDecoration(border: Border.all()),
               padding: const EdgeInsets.all(5.0),
               child: Row(children: [
                 IconButton(
@@ -601,8 +601,13 @@ class _comp_updateState extends State<comp_update> {
               style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) =>  Complaints(zoneid: "",menuid: "",)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => Complaints(
+                              zoneid: "",
+                              menuid: "",
+                            )));
               },
               child: const Text(
                 "UPDATE",
@@ -637,11 +642,4 @@ class _comp_updateState extends State<comp_update> {
       print("Date is not selected");
     }
   }
-}
-
-BoxDecoration mydecoration() {
-  return BoxDecoration(
-    border:
-        Border.all(style: BorderStyle.solid, color: Colors.black, width: 2.0),
-  );
 }

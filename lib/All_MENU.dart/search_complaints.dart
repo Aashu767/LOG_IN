@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:log_in/All_MENU.dart/dashbord.dart';
+import 'package:log_in/edit_pages.dart/Form.dart';
 import 'package:log_in/models/search_model.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
@@ -105,7 +106,14 @@ class _Search_complaintsState extends State<Search_complaints> {
                     return Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => Form_page(
+                                        compno: searchlist[index].complaintNo!,
+                                      ))));
+                        },
                         child: Container(
                           height: 150,
                           decoration: BoxDecoration(
