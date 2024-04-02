@@ -7,9 +7,14 @@ import 'package:log_in/attendence_data.dart/checkout.dart';
 import 'package:log_in/attendence_data.dart/feedback.dart';
 import 'package:log_in/attendence_data.dart/leave.dart';
 
-class attandance extends StatelessWidget {
-  attandance({super.key});
+class attandance extends StatefulWidget {
+  const attandance({super.key});
 
+  @override
+  State<attandance> createState() => _attandanceState();
+}
+
+class _attandanceState extends State<attandance> {
   void tapped(int index, BuildContext context) {
     if (index == 0) {
       Navigator.push(
@@ -36,11 +41,13 @@ class attandance extends StatelessWidget {
     event: "",
     img: 'assets/image/check-out.png',
   );
+
   Items item3 = new Items(
     title: "Leave Request",
     event: "",
     img: 'assets/image/schedule.png',
   );
+
   Items item4 = new Items(
     title: "Day FeedBack",
     event: "",
@@ -55,21 +62,20 @@ class attandance extends StatelessWidget {
       item3,
       item4,
     ];
-    var color = 0xFF2979FF;
+
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: const BackButton(
-          color: Colors.white,
+          color: Colors.black,
         ),
         automaticallyImplyLeading: false,
-        backgroundColor: Color(color),
+        backgroundColor: Colors.white,
         title: const Text('Attendance'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
       ),
       body: Flexible(
         child: GridView.count(
-          childAspectRatio: 1.0,
+          childAspectRatio: 3 / 2,
           padding:
               const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
           crossAxisCount: 2,
@@ -78,9 +84,19 @@ class attandance extends StatelessWidget {
           children: myList.map((data) {
             int index = myList.indexOf(data);
             return GestureDetector(
+              onTap: () {
+                tapped(index, context);
+              },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(color),
+                  gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.topRight,
+                      colors: [
+                        Color.fromRGBO(230, 230, 250, 1),
+                        Colors.white,
+                        Color.fromRGBO(230, 230, 250, 1)
+                      ]),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(
@@ -93,19 +109,10 @@ class attandance extends StatelessWidget {
                       data.title,
                       style: GoogleFonts.openSans(
                         textStyle: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () => {
-                        tapped(index, context),
-                      },
-                      icon: const Icon(
-                        Icons.arrow_circle_right_outlined,
-                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 5),

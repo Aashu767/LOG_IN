@@ -5,19 +5,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/All_MENU.dart/Zone.dart';
-// import 'package:log_in/attandance.dart';
-// import 'package:log_in/completed_task.dart';
 import 'package:log_in/models/menu_model.dart';
 import 'search_complaints.dart';
-// import 'package:log_in/overdue.dart';
-// import 'package:log_in/pending_task.dart';
-// import 'package:log_in/search_complaints.dart';
-// import 'package:log_in/today_overdue.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'attandance.dart';
 
 class dashboard extends StatefulWidget {
@@ -29,6 +22,15 @@ class _dashboardState extends State<dashboard> {
   bool isLoading = true;
   List<MenuDetails> menulist = [];
   void tapped(int index, BuildContext context) {}
+  final List<String> images = [
+    'assets/image/complaints.png',
+    'assets/image/overdue.png',
+    'assets/image/today_overdue.png',
+    'assets/image/completed.png',
+    'assets/image/pending.png',
+    'assets/image/search_com.png',
+    'assets/image/attandance.png',
+  ];
 
   @override
   void initState() {
@@ -42,7 +44,6 @@ class _dashboardState extends State<dashboard> {
     print("staffId$staffId");
     var body = {
       "UserID": staffId,
-      //"UserID": "1192",
       "dt1": "0",
       "dt2": "0",
     };
@@ -81,20 +82,18 @@ class _dashboardState extends State<dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    //var color = 0xFF2979FF;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         title: const Text('DASHBOARD'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
         actions: [
           Row(
             children: [
               const Text(
                 'DATE FILTER',
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(color: Colors.black, fontSize: 17),
               ),
               IconButton(
                 onPressed: () async => {
@@ -104,7 +103,7 @@ class _dashboardState extends State<dashboard> {
                 },
                 icon: const Icon(
                   Icons.power_settings_new,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -163,11 +162,11 @@ class _dashboardState extends State<dashboard> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/image/calendar.png',
-                          height: 50,
-                          width: 50,
+                          images[index],
+                          height: 30,
+                          width: 80,
                         ),
-                        const SizedBox(height: 8),
+                        // const SizedBox(height: 8),
                         Text(
                           "${data.menuName} ",
                           style: GoogleFonts.openSans(

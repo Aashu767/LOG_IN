@@ -31,15 +31,12 @@ class _ComplaintsState extends State<Complaints> {
   }
 
   fetchcompApi() async {
-     var staffId = await UserSecureStorage().getStaffId();
+    var staffId = await UserSecureStorage().getStaffId();
     var body = {
-      
       "UserID": staffId,
       "TypeID": "0",
       "MenuID": widget.menuid,
       "ZoneID": widget.zoneid,
-      // "MenuID": "10005",
-      // "ZoneID": "A00011",
       "dt1": "0",
       "dt2": "0",
     };
@@ -84,11 +81,11 @@ class _ComplaintsState extends State<Complaints> {
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Colors.white,
+          color: Colors.black,
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         title: const Text('COMPLAINTS'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -107,8 +104,16 @@ class _ComplaintsState extends State<Complaints> {
                     child: Container(
                       height: 150,
                       decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(8)),
+                        gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.topRight,
+                            colors: [
+                              Color.fromRGBO(230, 230, 250, 1),
+                              Colors.white,
+                              Color.fromRGBO(230, 230, 250, 1)
+                            ]),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -119,7 +124,7 @@ class _ComplaintsState extends State<Complaints> {
                               text: TextSpan(
                                   text: 'Complaint No. :  ',
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   ),
                                   children: [
                                     TextSpan(
@@ -130,7 +135,7 @@ class _ComplaintsState extends State<Complaints> {
                               text: TextSpan(
                                   text: 'Customer Name :  ',
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   ),
                                   children: [
                                     TextSpan(
@@ -142,7 +147,7 @@ class _ComplaintsState extends State<Complaints> {
                               text: TextSpan(
                                   text: 'Mobile No. :  ',
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   ),
                                   children: [
                                     TextSpan(
@@ -153,7 +158,7 @@ class _ComplaintsState extends State<Complaints> {
                               text: TextSpan(
                                   text: 'Address :  ',
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   ),
                                   children: [
                                     TextSpan(
@@ -164,7 +169,7 @@ class _ComplaintsState extends State<Complaints> {
                               text: TextSpan(
                                   text: 'Problem  :  ',
                                   style: const TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                   ),
                                   children: [
                                     TextSpan(

@@ -35,7 +35,7 @@ class _Form_pageState extends State<Form_page> {
   }
 
   fetchAssignApi() async {
-     var staffId = await UserSecureStorage().getStaffId();
+    var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "USER_ID": staffId,
     };
@@ -56,8 +56,6 @@ class _Form_pageState extends State<Form_page> {
       var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
       var userliststring = data['string'];
-
-      /// var userliststring =
       userliststring = userliststring.toString().replaceAll("\\r\\\\n", "\n");
       var userobject = json.decode(userliststring.toString());
       var userlistobject = userobject['UserList'];
@@ -74,7 +72,7 @@ class _Form_pageState extends State<Form_page> {
   }
 
   fetchlistApi() async {
-     var staffId = await UserSecureStorage().getStaffId();
+    var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "Complaint_No": widget.compno,
       "Assign_User_ID": staffId,
@@ -133,8 +131,8 @@ class _Form_pageState extends State<Form_page> {
       complliststring = complliststring.toString().replaceAll("\\r\\\\n", "\n");
       var response = data['string'];
       if (response == "Data Update Successfully.") {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Assigned Successfully")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Assigned Successfully")));
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response)));
@@ -147,11 +145,11 @@ class _Form_pageState extends State<Form_page> {
     return Scaffold(
         appBar: AppBar(
           leading: const BackButton(
-            color: Colors.white,
+            color: Colors.black,
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
           title: const Text('COMPLAINTS'),
-          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+          titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
@@ -159,441 +157,455 @@ class _Form_pageState extends State<Form_page> {
                 child: Card(
                     margin: const EdgeInsets.all(16),
                     elevation: 10,
-                    child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                            child: Column(
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                  text: 'ComplaintNo: ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${complaintlist.first.complaintNo}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Customer_Name: ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${complaintlist.first.customerName}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Mobile No: ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.mobileNo}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Address : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.address}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'zone : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.zone}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Problem : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.problem}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Problem_Since: ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${complaintlist.first.problemSince}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Nature : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.nature}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'type : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.type}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'KNo : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.kNo}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'eMail : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.eMail}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'PinCode : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.pinCode}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'MrCode : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.mrCode}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Colony : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.colony}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'AREA : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.aREA}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Status : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.status}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'ASSIGN_TO_Name : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${complaintlist.first.aSSIGNTOName}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Assign_To : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complaintlist.first.assignTo}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Registration_Date : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${complaintlist.first.registrationDate}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Completion_Date : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${complaintlist.first.completionDate}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'ButtonDisplay : ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          '${complaintlist.first.buttonDisplay}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ]),
-                            ),
-                          ],
-                        )),
-                      ),
-                      const SizedBox(
-                        height: 55,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                        Colors.yellow)),
-                                onPressed: () async {
-                                  showAlertDialog(context);
-                                },
-                                child: const Text(
-                                  "Assign To",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                        Colors.yellow)),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => const comp_update()));
-                                },
-                                child: const Text(
-                                  "UPDATE",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
-                                        Colors.yellow)),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => const payment()));
-                                },
-                                child: const Text(
-                                  "Add Payment",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.topRight,
+                            colors: [
+                              Color.fromRGBO(230, 230, 250, 1),
+                              Colors.white,
+                              Color.fromRGBO(230, 230, 250, 1)
                             ]),
-                      )
-                    ])),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                              child: Column(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                    text: 'ComplaintNo: ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${complaintlist.first.complaintNo}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Customer_Name: ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${complaintlist.first.customerName}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Mobile No: ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.mobileNo}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Address : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.address}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'zone : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.zone}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Problem : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.problem}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Problem_Since: ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${complaintlist.first.problemSince}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Nature : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.nature}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'type : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.type}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'KNo : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.kNo}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'eMail : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.eMail}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'PinCode : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.pinCode}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'MrCode : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.mrCode}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Colony : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.colony}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'AREA : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.aREA}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Status : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.status}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'ASSIGN_TO_Name : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${complaintlist.first.aSSIGNTOName}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Assign_To : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: '${complaintlist.first.assignTo}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Registration_Date : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${complaintlist.first.registrationDate}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Completion_Date : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${complaintlist.first.completionDate}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'ButtonDisplay : ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${complaintlist.first.buttonDisplay}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ]),
+                              ),
+                            ],
+                          )),
+                        ),
+                        const SizedBox(
+                          height: 55,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton(
+                                  style: const ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          Colors.yellow)),
+                                  onPressed: () async {
+                                    showAlertDialog(context);
+                                  },
+                                  child: const Text(
+                                    "Assign To",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  style: const ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          Colors.yellow)),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                const comp_update()));
+                                  },
+                                  child: const Text(
+                                    "UPDATE",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  style: const ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          Colors.yellow)),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => const payment()));
+                                  },
+                                  child: const Text(
+                                    "Add Payment",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                        )
+                      ]),
+                    )),
               ));
   }
 
@@ -605,9 +617,8 @@ class _Form_pageState extends State<Form_page> {
           style: TextStyle(
               color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
       onPressed: () {
-         Navigator.pop(context);
+        Navigator.pop(context);
         Assigntoupdate();
-        
       },
     );
     Widget CANCELButton = TextButton(
@@ -673,7 +684,7 @@ class _Form_pageState extends State<Form_page> {
                   return DropdownButton<UserList>(
                     value: userval,
                     //value: userlist1,
-                    hint: const Text(' Select to Assign'),
+                    hint: const Text('   Select to Assign'),
                     isExpanded: true,
                     iconSize: 30.0,
                     style: const TextStyle(
@@ -688,8 +699,7 @@ class _Form_pageState extends State<Form_page> {
                           user.eMPLNAME!,
                           style: const TextStyle(
                             color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       );

@@ -22,31 +22,17 @@ class zone extends StatefulWidget {
 class _zoneState extends State<zone> {
   bool isLoading = true;
   List<ComplaintsType> zonelist = [];
+  final List<String> images = [
+    'assets/image/complaints.png',
+    'assets/image/overdue.png',
+    'assets/image/today_overdue.png',
+    'assets/image/completed.png',
+    'assets/image/pending.png',
+    'assets/image/search_com.png',
+    'assets/image/attandance.png',
+  ];
 
-  void tapped(int index, BuildContext context) {
-    // if (index == 0) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 1) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 2) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 3) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 4) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 5) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // } else if (index == 6) {
-    //   Navigator.push(
-    //       context, MaterialPageRoute(builder: (_) => const Complaints()));
-    // }
-  }
+  void tapped(int index, BuildContext context) {}
 
   @override
   void initState() {
@@ -56,10 +42,9 @@ class _zoneState extends State<zone> {
 
   fetchzoneApi() async {
     var t_code = await UserSecureStorage().gettcode();
-     var staffId = await UserSecureStorage().getStaffId();
+    var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "MenuID": widget.menuid,
-      //  "MenuID": "10005",
       "UserID": staffId,
       "dt1": "0",
       "dt2": "0",
@@ -99,22 +84,20 @@ class _zoneState extends State<zone> {
 
   @override
   Widget build(BuildContext context) {
-    var color = 0xFF2979FF;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: BackButton(
-          color: Colors.white,
+          color: Colors.black,
           onPressed: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => dashboard()));
           },
         ),
-        backgroundColor: Color(color),
+        backgroundColor: Colors.white,
         title: const Text(
           'DISTRICT WISE ACTIVITY',
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: Colors.black, fontSize: 17),
         ),
       ),
       body: isLoading
@@ -132,15 +115,24 @@ class _zoneState extends State<zone> {
                 int index = zonelist.indexOf(data);
                 return GestureDetector(
                   onTap: () => {
-                    // tapped(index, context),
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (_) =>  Complaints(zoneid: data.zoneId!,menuid: widget.menuid,)))
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => Complaints(
+                                  zoneid: data.zoneId!,
+                                  menuid: widget.menuid,
+                                )))
                   },
                   child: Container(
-                    height: 20,
-                    width: 5,
                     decoration: BoxDecoration(
-                      color: Color(color),
+                      gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                          colors: [
+                            Color.fromRGBO(230, 230, 250, 1),
+                            Colors.white,
+                            Color.fromRGBO(230, 230, 250, 1)
+                          ]),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
@@ -151,23 +143,22 @@ class _zoneState extends State<zone> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Image.asset(data.imgpath, width: 42,),
-                            IconButton(
-                              onPressed: () => {},
-                              icon: const Icon(
-                                Icons.arrow_circle_right_outlined,
-                                color: Colors.black,
-                              ),
+                            Image.asset(
+                              images[index],
+                              height: 30,
+                              width: 80,
                             ),
                           ],
                         ),
-                        const SizedBox(height: 5),
+                        //const SizedBox(height: 5),
                         Center(
                           child: Text(
                             "  ${data.zoneName}",
                             style: GoogleFonts.openSans(
                               textStyle: const TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -179,7 +170,9 @@ class _zoneState extends State<zone> {
                           "[${data.count}]",
                           style: GoogleFonts.openSans(
                             textStyle: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         )

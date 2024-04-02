@@ -24,7 +24,6 @@ class _Search_complaintsState extends State<Search_complaints> {
   @override
   void initState() {
     super.initState();
-    // fetchsearchApi();
   }
 
   fetchsearchApi() async {
@@ -68,20 +67,19 @@ class _Search_complaintsState extends State<Search_complaints> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: BackButton(
-            color: Colors.white,
+            color: Colors.black,
             onPressed: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (_) => dashboard()));
             },
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
           title: const Text(
             ' Complaints Search',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black, fontSize: 17),
           ),
         ),
         body: Column(
@@ -90,10 +88,8 @@ class _Search_complaintsState extends State<Search_complaints> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _controller,
-                // onEditingComplete: fetchsearchApi,
-
-                // onChanged: (value) => fetchsearchApi,
                 decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Search...',
                     suffixIcon: IconButton(
                         onPressed: () {
@@ -113,8 +109,16 @@ class _Search_complaintsState extends State<Search_complaints> {
                         child: Container(
                           height: 150,
                           decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(8)),
+                            gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.topRight,
+                                colors: [
+                                  Color.fromRGBO(230, 230, 250, 1),
+                                  Colors.white,
+                                  Color.fromRGBO(230, 230, 250, 1)
+                                ]),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.all(8),
                             child: Column(
@@ -125,7 +129,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                                   text: TextSpan(
                                       text: 'Complaint No. :  ',
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                       children: [
                                         TextSpan(
@@ -137,7 +141,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                                   text: TextSpan(
                                       text: 'Customer Name :  ',
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                       children: [
                                         TextSpan(
@@ -149,7 +153,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                                   text: TextSpan(
                                       text: 'Mobile No. :  ',
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                       children: [
                                         TextSpan(
@@ -161,7 +165,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                                   text: TextSpan(
                                       text: 'kNO :  ',
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                       children: [
                                         TextSpan(
@@ -172,7 +176,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                                   text: TextSpan(
                                       text: 'Problem  :  ',
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                       children: [
                                         TextSpan(
@@ -184,7 +188,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                                   text: TextSpan(
                                       text: 'Address :  ',
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                       children: [
                                         TextSpan(
@@ -196,7 +200,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                                   text: TextSpan(
                                       text: 'Problem  :  ',
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                       children: [
                                         TextSpan(

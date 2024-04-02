@@ -1,9 +1,69 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, use_build_context_synchronously
+
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:log_in/All_MENU.dart/attandance.dart';
+import 'package:log_in/utils/secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:xml2json/xml2json.dart';
 
-class feedback extends StatelessWidget {
+class feedback extends StatefulWidget {
   const feedback({super.key});
+
+  @override
+  State<feedback> createState() => _feedbackState();
+}
+
+class _feedbackState extends State<feedback> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    feedback();
+  }
+
+  feedback() async {
+    var staffId = await UserSecureStorage().getStaffId();
+    var body = {
+      "_StaffId": staffId,
+      "_Remarks": "",
+      "Fromdate": "",
+      "_VisitCode": "01",
+      "_TenantCode": "101",
+      "_Location": "110001",
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Day_Feedback"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      debugPrint("reuseris${res.body}");
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var checkinliststring = data['string'];
+      checkinliststring =
+          checkinliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var response = data['string'];
+      if (response == "true") {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("CheckIn Successfully")));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(response)));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,118 +73,115 @@ class feedback extends StatelessWidget {
         leading: const BackButton(
           color: Colors.black,
         ),
-        title: const Text('Day FeedBack'),
-        backgroundColor: Colors.blue,
+        title: const Text(
+          'Day FeedBack',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
       ),
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
+          child: Form(
+        key: _formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(
-              left: 16,
-              right: 16,
-              top: 16,
-            ),
-            child: Text(
-              " Date",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-          const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter Date dd-mm-yy',
-                ),
-              )),
-          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                  child: Divider(
-                thickness: 3,
-                indent: 25,
-                endIndent: 25,
-                color: Colors.black,
+              const Text(
+                " Date",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  hintText: ' Enter Date dd-mm-yyyy',
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Divider(
+                thickness: 1,
+                indent: 0,
+                endIndent: 0,
+                color: Colors.blue,
                 height: 5,
-              )),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Day FeedBack",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  hintText: ' Enter Day FeedBack',
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Divider(
+                thickness: 1,
+                indent: 0,
+                endIndent: 0,
+                color: Colors.blue,
+                height: 5,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                ElevatedButton(
+                  style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                  onPressed: () {},
+                  child: const Text(
+                    "Save",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                ElevatedButton(
+                  style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const attandance()));
+                  },
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )
+              ]),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.only(
-              left: 16,
-              right: 16,
-              top: 16,
-            ),
-            child: Text(
-              "Day FeedBack",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-          const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter DayFeedBack',
-                ),
-              )),
-          const Row(
-            children: [
-              Expanded(
-                  child: Divider(
-                thickness: 3,
-                indent: 25,
-                endIndent: 25,
-                color: Colors.black,
-                height: 5,
-              )),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            ElevatedButton(
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
-              onPressed: () {},
-              child: const Text(
-                "Save",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            ElevatedButton(
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
-              onPressed: () {},
-              child: const Text(
-                "Cancel",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            )
-          ]),
-          const SizedBox(
-            height: 50,
-          ),
-        ],
+        ),
       )),
     );
   }
