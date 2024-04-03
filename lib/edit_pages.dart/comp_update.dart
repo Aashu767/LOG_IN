@@ -88,536 +88,559 @@ class _comp_updateState extends State<comp_update> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(
-          color: Colors.white,
+          color: Colors.black,
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         title: const Text('Complaints Update'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
       ),
       body: SingleChildScrollView(
           child: Card(
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(children: [
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Complain No. :-',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      ' 2311290001',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+        margin: const EdgeInsets.all(16),
+        elevation: 10,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.topRight,
+                colors: [
+                  Color.fromRGBO(230, 230, 250, 1),
+                  Colors.white,
+                  Color.fromRGBO(230, 230, 250, 1)
                 ]),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              child: DropdownButton(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                hint: _dropDownValue == ""
-                    ? const Text('Item Name')
-                    : Text(
-                        _dropDownValue,
-                        style: const TextStyle(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                  ),
+                  child: const Row(children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Complain No. :-',
+                        style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
-                isExpanded: true,
-                iconSize: 30.0,
-                style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold),
-                items: ['One', 'Two', 'Three', 'four'].map(
-                  (val) {
-                    return DropdownMenuItem<String>(
-                      value: val,
-                      child: Text(val),
-                    );
-                  },
-                ).toList(),
-                onChanged: (val) {
-                  setState(
-                    () {
-                      _dropDownValue = val!;
-                    },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              padding: const EdgeInsets.all(8.0),
-              child: const Row(children: [
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Actual Problem',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              child: DropdownButton(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                hint: _dropDownValue1 == ""
-                    ? const Text('Action Taken ')
-                    : Text(
-                        _dropDownValue1,
-                        style: const TextStyle(
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        ' 2311290001',
+                        style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
-                isExpanded: true,
-                iconSize: 30.0,
-                style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold),
-                items: [
-                  'Customer Not Found',
-                  'Not Reachable',
-                  'Issue Fixed',
-                  'Bill Revised',
-                  'Bill Found Correct',
-                ].map(
-                  (val) {
-                    return DropdownMenuItem<String>(
-                      value: val,
-                      child: Text(val),
-                    );
-                  },
-                ).toList(),
-                onChanged: (val) {
-                  setState(
-                    () {
-                      _dropDownValue1 = val!;
-                    },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                    style: BorderStyle.solid, color: Colors.black, width: 2.0),
-              ),
-              padding: const EdgeInsets.all(5.0),
-              child: Row(children: [
-                IconButton(
-                  onPressed: () => {
-                    _selectdate(context),
-                  },
-                  icon: const Icon(
-                    Icons.calendar_today,
-                    color: Colors.black,
-                  ),
+                    ),
+                  ]),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    dateController.text == ""
-                        ? 'Visit Date'
-                        : dateController.text,
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: DropdownButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    hint: _dropDownValue == ""
+                        ? const Text('Item Name')
+                        : Text(
+                            _dropDownValue,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                    isExpanded: true,
+                    iconSize: 30.0,
                     style: const TextStyle(
-                        color: Colors.black,
+                        color: Colors.blue,
                         fontSize: 17,
                         fontWeight: FontWeight.bold),
+                    items: ['One', 'Two', 'Three', 'four'].map(
+                      (val) {
+                        return DropdownMenuItem<String>(
+                          value: val,
+                          child: Text(val),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          _dropDownValue = val!;
+                        },
+                      );
+                    },
                   ),
                 ),
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              padding: const EdgeInsets.all(8.0),
-              child: const Row(children: [
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Actual Closer',
-                    style: TextStyle(
-                        color: Colors.black,
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Row(children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Actual Problem',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: DropdownButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    hint: _dropDownValue1 == ""
+                        ? const Text('Action Taken ')
+                        : Text(
+                            _dropDownValue1,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                    isExpanded: true,
+                    iconSize: 30.0,
+                    style: const TextStyle(
+                        color: Colors.blue,
                         fontSize: 17,
                         fontWeight: FontWeight.bold),
+                    items: [
+                      'Customer Not Found',
+                      'Not Reachable',
+                      'Issue Fixed',
+                      'Bill Revised',
+                      'Bill Found Correct',
+                    ].map(
+                      (val) {
+                        return DropdownMenuItem<String>(
+                          value: val,
+                          child: Text(val),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          _dropDownValue1 = val!;
+                        },
+                      );
+                    },
                   ),
                 ),
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              child: DropdownButton(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                hint: _dropDownValue2 == ""
-                    ? const Text('Select Status ')
-                    : Text(
-                        _dropDownValue2,
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        style: BorderStyle.solid,
+                        color: Colors.black,
+                        width: 2.0),
+                  ),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(children: [
+                    IconButton(
+                      onPressed: () => {
+                        _selectdate(context),
+                      },
+                      icon: const Icon(
+                        Icons.calendar_today,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        dateController.text == ""
+                            ? 'Visit Date'
+                            : dateController.text,
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
-                isExpanded: true,
-                iconSize: 30.0,
-                style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold),
-                items: [
-                  'Completed',
-                  'Pending',
-                  'Active',
-                  'Approved',
-                  'Lost',
-                  'Rejected',
-                  'Force Closed',
-                  'Approved',
-                  'Wrong Allocation',
-                ].map(
-                  (val) {
-                    return DropdownMenuItem<String>(
-                      value: val,
-                      child: Text(val),
-                    );
-                  },
-                ).toList(),
-                onChanged: (val) {
-                  setState(
-                    () {
-                      _dropDownValue2 = val!;
-                    },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              child: DropdownButton(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                hint: _dropDownValue3 == ""
-                    ? const Text('Select Service Location')
-                    : Text(
-                        _dropDownValue3,
-                        style: const TextStyle(
+                    ),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Row(children: [
+                    Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Actual Closer',
+                        style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
-                isExpanded: true,
-                iconSize: 30.0,
-                style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold),
-                items: [
-                  'In CIty',
-                  'Out City (25-40)',
-                  'Out City (Above 40)',
-                  'Out City Actual',
-                ].map(
-                  (val) {
-                    return DropdownMenuItem<String>(
-                      value: val,
-                      child: Text(val),
-                    );
-                  },
-                ).toList(),
-                onChanged: (val) {
-                  setState(
-                    () {
-                      _dropDownValue3 = val!;
+                    ),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: DropdownButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    hint: _dropDownValue2 == ""
+                        ? const Text('Select Status ')
+                        : Text(
+                            _dropDownValue2,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                    isExpanded: true,
+                    iconSize: 30.0,
+                    style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
+                    items: [
+                      'Completed',
+                      'Pending',
+                      'Active',
+                      'Approved',
+                      'Lost',
+                      'Rejected',
+                      'Force Closed',
+                      'Approved',
+                      'Wrong Allocation',
+                    ].map(
+                      (val) {
+                        return DropdownMenuItem<String>(
+                          value: val,
+                          child: Text(val),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          _dropDownValue2 = val!;
+                        },
+                      );
                     },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              child: DropdownButton(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                hint: _dropDownValue4 == ""
-                    ? const Text('Select Defected Type-Code')
-                    : Text(
-                        _dropDownValue4,
-                        style: const TextStyle(
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: DropdownButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    hint: _dropDownValue3 == ""
+                        ? const Text('Select Service Location')
+                        : Text(
+                            _dropDownValue3,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                    isExpanded: true,
+                    iconSize: 30.0,
+                    style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
+                    items: [
+                      'In CIty',
+                      'Out City (25-40)',
+                      'Out City (Above 40)',
+                      'Out City Actual',
+                    ].map(
+                      (val) {
+                        return DropdownMenuItem<String>(
+                          value: val,
+                          child: Text(val),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          _dropDownValue3 = val!;
+                        },
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: DropdownButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    hint: _dropDownValue4 == ""
+                        ? const Text('Select Defected Type-Code')
+                        : Text(
+                            _dropDownValue4,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                    isExpanded: true,
+                    iconSize: 30.0,
+                    style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
+                    items: [
+                      'Batt Low-10',
+                      'Break-10',
+                      'Damage-10',
+                      'Helter Damage-53',
+                      'Low Batter-53',
+                      'New Part-30',
+                      'New Part-39',
+                      'New Part-42',
+                      'Not Working-10',
+                    ].map(
+                      (val) {
+                        return DropdownMenuItem<String>(
+                          value: val,
+                          child: Text(val),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          _dropDownValue4 = val!;
+                        },
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: DropdownButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    hint: _dropDownValue5 == ""
+                        ? const Text('Select Call Catogery')
+                        : Text(
+                            _dropDownValue5,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold),
+                          ),
+                    isExpanded: true,
+                    iconSize: 30.0,
+                    style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
+                    items: [
+                      'Transit Damage',
+                      'Fresh Defective',
+                      'Used',
+                      'Inspection',
+                    ].map(
+                      (val) {
+                        return DropdownMenuItem<String>(
+                          value: val,
+                          child: Text(val),
+                        );
+                      },
+                    ).toList(),
+                    onChanged: (val) {
+                      setState(
+                        () {
+                          _dropDownValue5 = val!;
+                        },
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(children: [
+                    IconButton(
+                      onPressed: () => {},
+                      icon: const Icon(
+                        CupertinoIcons.pencil,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Signature',
+                        style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
-                isExpanded: true,
-                iconSize: 30.0,
-                style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold),
-                items: [
-                  'Batt Low-10',
-                  'Break-10',
-                  'Damage-10',
-                  'Helter Damage-53',
-                  'Low Batter-53',
-                  'New Part-30',
-                  'New Part-39',
-                  'New Part-42',
-                  'Not Working-10',
-                ].map(
-                  (val) {
-                    return DropdownMenuItem<String>(
-                      value: val,
-                      child: Text(val),
-                    );
-                  },
-                ).toList(),
-                onChanged: (val) {
-                  setState(
-                    () {
-                      _dropDownValue4 = val!;
-                    },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              child: DropdownButton(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                hint: _dropDownValue5 == ""
-                    ? const Text('Select Call Catogery')
-                    : Text(
-                        _dropDownValue5,
-                        style: const TextStyle(
+                    ),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(children: [
+                    IconButton(
+                      onPressed: showOptions,
+                      icon: const Icon(
+                        (Icons.add_a_photo),
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Picture Taken',
+                        style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
                       ),
-                isExpanded: true,
-                iconSize: 30.0,
-                style: const TextStyle(
-                    color: Colors.blue,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold),
-                items: [
-                  'Transit Damage',
-                  'Fresh Defective',
-                  'Used',
-                  'Inspection',
-                ].map(
-                  (val) {
-                    return DropdownMenuItem<String>(
-                      value: val,
-                      child: Text(val),
-                    );
+                    ),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(children: [
+                    IconButton(
+                      onPressed: () => {},
+                      icon: const Icon(
+                        Icons.thumb_up_alt_outlined,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'FeedBack(Remark)',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(children: [
+                    IconButton(
+                      onPressed: () => {},
+                      icon: const Icon(
+                        Icons.thumb_up_alt_outlined,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Tech Remark',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(children: [
+                    IconButton(
+                      onPressed: () => {},
+                      icon: const Icon(
+                        Icons.thumb_up_alt_outlined,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Expanded(
+                      flex: 2,
+                      child: Text(
+                        'Happy Code',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ]),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => Complaints(
+                                  zoneid: "",
+                                  menuid: "",
+                                )));
                   },
-                ).toList(),
-                onChanged: (val) {
-                  setState(
-                    () {
-                      _dropDownValue5 = val!;
-                    },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              padding: const EdgeInsets.all(5.0),
-              child: Row(children: [
-                IconButton(
-                  onPressed: () => {},
-                  icon: const Icon(
-                    CupertinoIcons.pencil,
-                    color: Colors.black,
-                  ),
-                ),
-                const Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Signature',
+                  child: const Text(
+                    "UPDATE",
                     style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.black,
+                      fontSize: 17,
+                    ),
                   ),
-                ),
-              ]),
+                )
+              ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              padding: const EdgeInsets.all(5.0),
-              child: Row(children: [
-                IconButton(
-                  onPressed: showOptions,
-                  icon: const Icon(
-                    (Icons.add_a_photo),
-                    color: Colors.black,
-                  ),
-                ),
-                const Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Picture Taken',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              padding: const EdgeInsets.all(5.0),
-              child: Row(children: [
-                IconButton(
-                  onPressed: () => {},
-                  icon: const Icon(
-                    Icons.thumb_up_alt_outlined,
-                    color: Colors.black,
-                  ),
-                ),
-                const Expanded(
-                  flex: 2,
-                  child: Text(
-                    'FeedBack(Remark)',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              padding: const EdgeInsets.all(5.0),
-              child: Row(children: [
-                IconButton(
-                  onPressed: () => {},
-                  icon: const Icon(
-                    Icons.thumb_up_alt_outlined,
-                    color: Colors.black,
-                  ),
-                ),
-                const Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Tech Remark',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ]),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-              padding: const EdgeInsets.all(5.0),
-              child: Row(children: [
-                IconButton(
-                  onPressed: () => {},
-                  icon: const Icon(
-                    Icons.thumb_up_alt_outlined,
-                    color: Colors.black,
-                  ),
-                ),
-                const Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Happy Code',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ]),
-            ),
-            ElevatedButton(
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => Complaints(
-                              zoneid: "",
-                              menuid: "",
-                            )));
-              },
-              child: const Text(
-                "UPDATE",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
+          ),
         ),
       )),
     );
