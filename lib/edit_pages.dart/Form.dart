@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/edit_pages.dart/comp_update.dart';
-//import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:log_in/models/form_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/models/subordinate_model.dart';
@@ -171,390 +170,71 @@ class _Form_pageState extends State<Form_page> {
                       ),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                  child: Column(
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'ComplaintNo: ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.complaintNo}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Customer_Name: ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.customerName}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Mobile No: ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.mobileNo}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Address : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.address}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'zone : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: '${complaintlist.first.zone}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Problem : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.problem}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Problem_Since: ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.problemSince}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Nature : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.nature}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'type : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: '${complaintlist.first.type}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'KNo : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: '${complaintlist.first.kNo}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'eMail : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.eMail}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'PinCode : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.pinCode}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'MrCode : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.mrCode}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Colony : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.colony}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'AREA : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: '${complaintlist.first.aREA}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Status : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.status}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'ASSIGN_TO_Name : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.aSSIGNTOName}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Assign_To : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.assignTo}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Registration_Date : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.registrationDate}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Completion_Date : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.completionDate}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'ButtonDisplay : ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${complaintlist.first.buttonDisplay}',
-                                            style: const TextStyle(
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ],
-                              )),
-                            ),
+                            RichTextWidget(
+                                title: 'Complaint No:',
+                                value: '${complaintlist.first.complaintNo}'),
+                            RichTextWidget(
+                                title: 'Customer_Name : ',
+                                value: '${complaintlist.first.customerName}'),
+                            RichTextWidget(
+                                title: 'Mobile No : ',
+                                value: '${complaintlist.first.mobileNo}'),
+                            RichTextWidget(
+                                title: 'Address : ',
+                                value: '${complaintlist.first.address}'),
+                            RichTextWidget(
+                                title: 'zone : ',
+                                value: '${complaintlist.first.zone}'),
+                            RichTextWidget(
+                                title: 'Problem : ',
+                                value: '${complaintlist.first.problem}'),
+                            RichTextWidget(
+                                title: 'Problem_Since : ',
+                                value: '${complaintlist.first.problemSince}'),
+                            RichTextWidget(
+                                title: 'Nature : ',
+                                value: '${complaintlist.first.nature}'),
+                            RichTextWidget(
+                                title: 'type : ',
+                                value: '${complaintlist.first.type}'),
+                            RichTextWidget(
+                                title: 'KNo : ',
+                                value: '${complaintlist.first.kNo}'),
+                            RichTextWidget(
+                                title: 'eMail : ',
+                                value: '${complaintlist.first.eMail}'),
+                            RichTextWidget(
+                                title: 'PinCode : ',
+                                value: '${complaintlist.first.pinCode}'),
+                            RichTextWidget(
+                                title: 'MrCode : ',
+                                value: '${complaintlist.first.mrCode}'),
+                            RichTextWidget(
+                                title: 'Colony : ',
+                                value: '${complaintlist.first.colony}'),
+                            RichTextWidget(
+                                title: 'AREA : ',
+                                value: '${complaintlist.first.aREA}'),
+                            RichTextWidget(
+                                title: 'Status : ',
+                                value: '${complaintlist.first.status}'),
+                            RichTextWidget(
+                                title: 'ASSIGN_TO_Name : ',
+                                value: '${complaintlist.first.aSSIGNTOName}'),
+                            RichTextWidget(
+                                title: 'Assign_To : ',
+                                value: '${complaintlist.first.assignTo}'),
+                            RichTextWidget(
+                                title: 'Registration_Date : ',
+                                value:
+                                    '${complaintlist.first.registrationDate}'),
+                            RichTextWidget(
+                                title: 'Completion_Date : ',
+                                value: '${complaintlist.first.completionDate}'),
+                            RichTextWidget(
+                                title: 'ButtonDisplay : ',
+                                value: '${complaintlist.first.buttonDisplay}'),
                             const SizedBox(
                               height: 55,
                             ),
@@ -759,4 +439,33 @@ class _Form_pageState extends State<Form_page> {
 TextStyle tstyle() {
   return const TextStyle(
       color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold);
+}
+
+class RichTextWidget extends StatelessWidget {
+  String title, value;
+  RichTextWidget({required this.title, required this.value, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: RichText(
+        text: TextSpan(
+            text: title,
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+            children: [
+              TextSpan(
+                text: value,
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ]),
+      ),
+    );
+  }
 }

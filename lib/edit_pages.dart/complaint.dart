@@ -126,7 +126,11 @@ class _ComplaintsState extends State<Complaints> {
                                   ),
                                   children: [
                                     TextSpan(
-                                        text: '${complist[index].complaintNo}'),
+                                      text: '${complist[index].complaintNo}',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
                                   ]),
                             ),
                             RichText(
@@ -137,8 +141,11 @@ class _ComplaintsState extends State<Complaints> {
                                   ),
                                   children: [
                                     TextSpan(
-                                        text:
-                                            '${complist[index].customerName}'),
+                                      text: '${complist[index].customerName}',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
                                   ]),
                             ),
                             RichText(
@@ -149,7 +156,11 @@ class _ComplaintsState extends State<Complaints> {
                                   ),
                                   children: [
                                     TextSpan(
-                                        text: '${complist[index].mobileNo}'),
+                                      text: '${complist[index].mobileNo}',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
                                   ]),
                             ),
                             RichText(
@@ -160,7 +171,11 @@ class _ComplaintsState extends State<Complaints> {
                                   ),
                                   children: [
                                     TextSpan(
-                                        text: '${complist[index].address}'),
+                                      text: '${complist[index].address}',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
                                   ]),
                             ),
                             RichText(
@@ -171,7 +186,11 @@ class _ComplaintsState extends State<Complaints> {
                                   ),
                                   children: [
                                     TextSpan(
-                                        text: '${complist[index].problem}'),
+                                      text: '${complist[index].problem}',
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                      ),
+                                    ),
                                   ]),
                             ),
                           ],
@@ -180,10 +199,7 @@ class _ComplaintsState extends State<Complaints> {
                     ),
                   ),
                 );
-              }
-
-              //
-              ),
+              }),
     );
   }
 }
