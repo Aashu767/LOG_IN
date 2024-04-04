@@ -11,6 +11,8 @@ class payment extends StatefulWidget {
   @override
   State<payment> createState() => _paymentState();
 }
+//http://140.238.162.89/ServiceWebAPI/Service.asmx/WS_Insert_PaymentSR
+//http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_Customer_PaymentSR
 
 class _paymentState extends State<payment> {
   String _dropDownValue = "";
