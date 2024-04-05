@@ -139,25 +139,19 @@ class _zoneState extends State<zone> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              images[index],
-                              height: 30,
-                              width: 80,
-                            ),
-                          ],
+                        Image.asset(
+                          images[index],
+                          height: 30,
+                          width: 80,
                         ),
-                        //const SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Center(
                           child: Text(
-                            "  ${data.zoneName}",
+                            "${data.zoneName}",
                             style: GoogleFonts.openSans(
                               textStyle: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
