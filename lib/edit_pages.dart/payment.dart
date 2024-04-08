@@ -1,9 +1,15 @@
 // ignore_for_file: camel_case_types, avoid_print
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:log_in/models/paymendropdown_model.dart';
+import 'package:log_in/utils/secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:xml2json/xml2json.dart';
 
 class payment extends StatefulWidget {
   const payment({super.key});
@@ -11,15 +17,59 @@ class payment extends StatefulWidget {
   @override
   State<payment> createState() => _paymentState();
 }
-//http://140.238.162.89/ServiceWebAPI/Service.asmx/WS_Insert_PaymentSR
-//http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_Customer_PaymentSR
 
 class _paymentState extends State<payment> {
-  String _dropDownValue = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _amountController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   final picker = ImagePicker();
+  bool isLoading = true;
+  List<PaymentMode> paymentMode = [];
+  String paymentlist1 = "";
+  PaymentMode? paymentval;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDDApi();
+  }
+
+  fetchDDApi() async {
+    var staffId = await UserSecureStorage().getStaffId();
+    var body = {
+      "USER_ID": staffId,
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_DropDownValue"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      debugPrint("reuseris${res.body}");
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var valueliststring = data['string'];
+      valueliststring = valueliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var valueobject = json.decode(valueliststring.toString());
+      var valuelistobject = valueobject['Payment_Mode'];
+      Iterable l = valuelistobject;
+      // print(res.body);
+      setState(() {
+        paymentMode = l.map((data) => PaymentMode.fromJson(data)).toList();
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -131,47 +181,85 @@ class _paymentState extends State<payment> {
                             },
                           ),
                           const SizedBox(height: 20),
+                          // Container(
+                          //   decoration: BoxDecoration(border: Border.all()),
+                          //   child: StatefulBuilder(builder:
+                          //       (BuildContext context,
+                          //           StateSetter dropDownState) {
+                          //     return DropdownButton<PaymentMode>(
+                          //       value: paymentval,
+                          //       hint: const Text(
+                          //         ' Payment Mode*',
+                          //         style: TextStyle(color: Colors.black),
+                          //       ),
+                          //       isExpanded: true,
+                          //       iconSize: 30.0,
+                          //       style: const TextStyle(
+                          //         fontSize: 16,
+                          //       ),
+                          //       items: paymentMode.map((PaymentMode payment) {
+                          //         return DropdownMenuItem<PaymentMode>(
+                          //           value: payment,
+                          //           child: Text(
+                          //             payment.name!,
+                          //             style: const TextStyle(
+                          //               color: Colors.black,
+                          //               fontSize: 16,
+                          //             ),
+                          //           ),
+                          //         );
+                          //       }).toList(),
+                          //       onChanged: (PaymentMode? val) {
+                          //         dropDownState(() {
+                          //           setState(() {
+                          //             paymentlist1 = val!
+                          //                 .id!; // Assuming paymentlist1 is defined and appropriate
+                          //             paymentval =
+                          //                 val; // Assuming paymentval is defined
+                          //           });
+                          //         });
+                          //       },
+                          //     );
+                          //   }),
+                          // ),
                           Container(
                             decoration: BoxDecoration(border: Border.all()),
-                            child: DropdownButton(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              hint: _dropDownValue == ""
-                                  ? const Text('Payment Mode *')
-                                  : Text(
-                                      _dropDownValue,
+                            child: StatefulBuilder(builder:
+                                (BuildContext context,
+                                    StateSetter dropDownState) {
+                              return DropdownButton<PaymentMode>(
+                                value: paymentval,
+                                hint: const Text(
+                                  ' Payment Mode*',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                isExpanded: true,
+                                iconSize: 30.0,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                                items: paymentMode.map((PaymentMode payment) {
+                                  return DropdownMenuItem<PaymentMode>(
+                                    value: payment,
+                                    child: Text(
+                                      payment.name!,
                                       style: const TextStyle(
+                                        color: Colors.black,
                                         fontSize: 16,
                                       ),
                                     ),
-                              isExpanded: true,
-                              iconSize: 30.0,
-                              style: const TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold),
-                              items: [
-                                'Cash Deposite',
-                                'Debit/Credit Card',
-                                'IMPS',
-                                'NEFT',
-                                'RTGS',
-                              ].map(
-                                (val) {
-                                  return DropdownMenuItem<String>(
-                                    value: val,
-                                    child: Text(val),
                                   );
+                                }).toList(),
+                                onChanged: (PaymentMode? val) {
+                                  dropDownState(() {
+                                    setState(() {
+                                      paymentlist1 = val!.id!;
+                                      paymentval = val;
+                                    });
+                                  });
                                 },
-                              ).toList(),
-                              onChanged: (val) {
-                                setState(
-                                  () {
-                                    _dropDownValue = val!;
-                                  },
-                                );
-                              },
-                            ),
+                              );
+                            }),
                           ),
                           const SizedBox(height: 10),
                           TextFormField(

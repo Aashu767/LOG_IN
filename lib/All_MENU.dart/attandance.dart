@@ -102,7 +102,7 @@ class _attandanceState extends State<attandance> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
+                  children: [
                     Image.asset(data.img, width: 42),
                     const SizedBox(height: 14),
                     Text(
