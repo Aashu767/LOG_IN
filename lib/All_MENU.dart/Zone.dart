@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:log_in/complaint.dart';
 import 'package:log_in/All_MENU.dart/dashbord.dart';
 import 'package:log_in/models/zone_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
@@ -23,13 +22,13 @@ class _zoneState extends State<zone> {
   bool isLoading = true;
   List<ComplaintsType> zonelist = [];
   final List<String> images = [
-    'assets/image/complaints.png',
-    'assets/image/overdue.png',
-    'assets/image/today_overdue.png',
-    'assets/image/completed.png',
-    'assets/image/pending.png',
-    'assets/image/search_com.png',
-    'assets/image/attandance.png',
+    'assets/image/Complaint.png',
+    'assets/image/time.png',
+    'assets/image/overdue1.png',
+    'assets/image/completed1.png',
+    'assets/image/pending1.png',
+    'assets/image/search1.png',
+    'assets/image/attandance1.png',
   ];
 
   void tapped(int index, BuildContext context) {}
