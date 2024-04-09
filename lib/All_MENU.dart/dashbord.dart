@@ -1,8 +1,8 @@
 //  ignore_for_file: camel_case_types, sort_child_properties_last, must_be_immutable, unnecessary_new, prefer_typing_uninitialized_variables, unused_local_variable, avoid_print, prefer_const_constructors, use_build_context_synchronously, non_constant_identifier_names, avoid_web_libraries_in_flutter, unused_element, unnecessary_null_comparison, use_key_in_widget_constructors, sized_box_for_whitespace, body_might_complete_normally_nullable
 
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:log_in/Authentication/login.dart';
@@ -24,7 +24,7 @@ class _dashboardState extends State<dashboard> {
   bool isLoading = true;
   List<MenuDetails> menulist = [];
 
-  var staffId ;
+  var staffId;
   void tapped(int index, BuildContext context) {}
   final List<String> images = [
     'assets/image/Complaint.png',
@@ -43,7 +43,7 @@ class _dashboardState extends State<dashboard> {
     getstaffid();
   }
 
-  Future<String> getstaffid() async{
+  Future<String> getstaffid() async {
     staffId = await UserSecureStorage().getStaffId();
     return staffId;
   }
@@ -93,7 +93,7 @@ class _dashboardState extends State<dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+        // backgroundColor: Colors.grey.shade200,
         // appBar: AppBar(
         //   automaticallyImplyLeading: false,
         //   backgroundColor: Color(0xffFF9800),
@@ -114,14 +114,11 @@ class _dashboardState extends State<dashboard> {
           preferredSize: Size.fromHeight(90.0),
           child: AppBar(
             backgroundColor: Color(0xffFF9800),
-            title: 
-            Container(
+            title: Container(
               width: MediaQuery.sizeOf(context).width,
-
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey,width: 1)
-              ),
-              color: Colors.white,
+                  border: Border.all(color: Colors.grey, width: 1)),
+              //  color: Color(0xffFF9800),
               margin: EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 children: [
@@ -143,7 +140,7 @@ class _dashboardState extends State<dashboard> {
                     },
                     icon: const Icon(
                       Icons.power_settings_new,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -196,148 +193,168 @@ class _dashboardState extends State<dashboard> {
             //     ),
             isLoading
                 ? const Center(child: CircularProgressIndicator())
-                :
-            Column(
-              children: menulist.map((data) {
-                int index = menulist.indexOf(data);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 10),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width,
-                    margin: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey,width: 1)
-                    ),
-                    color: Colors.white,
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-Flexible(
-  flex: 5,
-  child: Row(
-    children: [
-                    Image.asset(
-                      images[index],
-                      height: 30,
-                      width: 80,
-                    ),
-                    Text(
-                      "${data.menuName} ",
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                : Column(
+                    children: menulist.map((data) {
+                      int index = menulist.indexOf(data);
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 10),
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          margin: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1)),
+                          //  color: Colors.white,
+                          child: InkWell(
+                            onTap: () {
+                              if (data.menuName == "Search Complaints") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => Search_complaints()));
+                              } else if (data.menuName == "Attendance") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => attandance()));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => zone(
+                                              menuid: data.menuId.toString(),
+                                            )));
+                              }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  flex: 5,
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        images[index],
+                                        height: 30,
+                                        width: 80,
+                                      ),
+                                      Text(
+                                        "${data.menuName} ",
+                                        style: GoogleFonts.openSans(
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: Text(
+                                    "[${data.count}]",
+                                    style: GoogleFonts.openSans(
+                                      textStyle: const TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-    ],
-  ),
-),
-                                  Flexible(
-                                    flex: 1,
-                                    child: Text(
-                                         "[${data.count}]",
-                                         style: GoogleFonts.openSans(
-                                           textStyle: const TextStyle(
-                                             color: Colors.red,
-                                             fontSize: 16,
-                                             fontWeight: FontWeight.w600,
-                                           ),
-                                         ),
-                                       ),
-                                  )
-                     ],
-                   ),
-                  ),
-                );
-              }).toList(),
-            )
+                      );
+                    }).toList(),
+                  )
 
-
-                // : GridView.count(
-                //     childAspectRatio: 3 / 2,
-                //     padding: const EdgeInsets.only(
-                //         left: 16, right: 16, top: 16, bottom: 16),
-                //     crossAxisCount: 2,
-                //     crossAxisSpacing: 18,
-                //     mainAxisSpacing: 18,
-                //     children: menulist.map((data) {
-                //       int index = menulist.indexOf(data);
-                //       return GestureDetector(
-                //         onTap: () => {
-                //           if (data.menuName == "Search Complaints")
-                //             {
-                //               Navigator.push(
-                //                   context,
-                //                   MaterialPageRoute(
-                //                       builder: (_) => Search_complaints()))
-                //             }
-                //           else if (data.menuName == "Attendance")
-                //             {
-                //               Navigator.push(
-                //                   context,
-                //                   MaterialPageRoute(
-                //                       builder: (_) => attandance()))
-                //             }
-                //           else
-                //             {
-                //               Navigator.push(
-                //                   context,
-                //                   MaterialPageRoute(
-                //                       builder: (_) => zone(
-                //                             menuid: data.menuId.toString(),
-                //                           )))
-                //             },
-                //         },
-                //         child: Container(
-                //           decoration: BoxDecoration(
-                //             gradient: const LinearGradient(
-                //                 begin: Alignment.topLeft,
-                //                 end: Alignment.topRight,
-                //                 colors: [
-                //                   Color.fromRGBO(230, 230, 250, 1),
-                //                   Colors.white,
-                //                   Color.fromRGBO(230, 230, 250, 1)
-                //                 ]),
-                //             borderRadius: BorderRadius.circular(15),
-                //           ),
-                //           child: Column(
-                //             mainAxisAlignment: MainAxisAlignment.center,
-                //             crossAxisAlignment: CrossAxisAlignment.center,
-                //             children: [
-                //               Image.asset(
-                //                 images[index],
-                //                 height: 30,
-                //                 width: 80,
-                //               ),
-                //               const SizedBox(height: 5),
-                //               Text(
-                //                 "${data.menuName} ",
-                //                 style: GoogleFonts.openSans(
-                //                   textStyle: const TextStyle(
-                //                     color: Colors.black,
-                //                     fontSize: 16,
-                //                     fontWeight: FontWeight.w600,
-                //                   ),
-                //                 ),
-                //               ),
-                //               Text(
-                //                 "[${data.count}]",
-                //                 style: GoogleFonts.openSans(
-                //                   textStyle: const TextStyle(
-                //                     color: Colors.black,
-                //                     fontSize: 16,
-                //                     fontWeight: FontWeight.w600,
-                //                   ),
-                //                 ),
-                //               )
-                //             ],
-                //           ),
-                //         ),
-                //       );
-                //     }).toList(),
-                //   )
-    );
+        // : GridView.count(
+        //     childAspectRatio: 3 / 2,
+        //     padding: const EdgeInsets.only(
+        //         left: 16, right: 16, top: 16, bottom: 16),
+        //     crossAxisCount: 2,
+        //     crossAxisSpacing: 18,
+        //     mainAxisSpacing: 18,
+        //     children: menulist.map((data) {
+        //       int index = menulist.indexOf(data);
+        //       return GestureDetector(
+        //         onTap: () => {
+        //           if (data.menuName == "Search Complaints")
+        //             {
+        //               Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                       builder: (_) => Search_complaints()))
+        //             }
+        //           else if (data.menuName == "Attendance")
+        //             {
+        //               Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                       builder: (_) => attandance()))
+        //             }
+        //           else
+        //             {
+        //               Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                       builder: (_) => zone(
+        //                             menuid: data.menuId.toString(),
+        //                           )))
+        //             },
+        //         },
+        //         child: Container(
+        //           decoration: BoxDecoration(
+        //             gradient: const LinearGradient(
+        //                 begin: Alignment.topLeft,
+        //                 end: Alignment.topRight,
+        //                 colors: [
+        //                   Color.fromRGBO(230, 230, 250, 1),
+        //                   Colors.white,
+        //                   Color.fromRGBO(230, 230, 250, 1)
+        //                 ]),
+        //             borderRadius: BorderRadius.circular(15),
+        //           ),
+        //           child: Column(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             crossAxisAlignment: CrossAxisAlignment.center,
+        //             children: [
+        //               Image.asset(
+        //                 images[index],
+        //                 height: 30,
+        //                 width: 80,
+        //               ),
+        //               const SizedBox(height: 5),
+        //               Text(
+        //                 "${data.menuName} ",
+        //                 style: GoogleFonts.openSans(
+        //                   textStyle: const TextStyle(
+        //                     color: Colors.black,
+        //                     fontSize: 16,
+        //                     fontWeight: FontWeight.w600,
+        //                   ),
+        //                 ),
+        //               ),
+        //               Text(
+        //                 "[${data.count}]",
+        //                 style: GoogleFonts.openSans(
+        //                   textStyle: const TextStyle(
+        //                     color: Colors.black,
+        //                     fontSize: 16,
+        //                     fontWeight: FontWeight.w600,
+        //                   ),
+        //                 ),
+        //               )
+        //             ],
+        //           ),
+        //         ),
+        //       );
+        //     }).toList(),
+        //   )
+        );
   }
 }
