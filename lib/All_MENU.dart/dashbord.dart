@@ -197,6 +197,7 @@ class _dashboardState extends State<dashboard> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 10),
                   child: Container(
+                    width: MediaQuery.sizeOf(context).width,
                     margin: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey,width: 1)
