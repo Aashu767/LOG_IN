@@ -116,6 +116,12 @@ class _dashboardState extends State<dashboard> {
             backgroundColor: Color(0xffFF9800),
             title: 
             Container(
+              width: MediaQuery.sizeOf(context).width,
+
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey,width: 1)
+              ),
+              color: Colors.white,
               margin: EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
                 children: [
