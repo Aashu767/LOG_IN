@@ -25,7 +25,7 @@ class _paymentState extends State<payment> {
   final picker = ImagePicker();
   bool isLoading = true;
   List<PaymentMode> paymentMode = [];
-  String paymentlist1 = "";
+  String paymentlist1 = "__  ";
   PaymentMode? paymentval;
 
   @override
@@ -230,7 +230,7 @@ class _paymentState extends State<payment> {
                               return DropdownButton<PaymentMode>(
                                 value: paymentval,
                                 hint: const Text(
-                                  ' Payment Mode*',
+                                  '   Payment Mode*',
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 isExpanded: true,
@@ -242,7 +242,7 @@ class _paymentState extends State<payment> {
                                   return DropdownMenuItem<PaymentMode>(
                                     value: payment,
                                     child: Text(
-                                      payment.name!,
+                                      payment.id!,
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
