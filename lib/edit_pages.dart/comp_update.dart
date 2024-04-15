@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field
+// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters
 
 import 'dart:convert';
 import 'dart:io';
@@ -8,14 +8,13 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:log_in/models/All_dropdown_model.dart';
-import 'package:log_in/models/form_model.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
 
 class comp_update extends StatefulWidget {
-  const comp_update({super.key});
+  String compno;
+  comp_update({Key? key, required this.compno}) : super(key: key);
 
   @override
   State<comp_update> createState() => _comp_updateState();
@@ -32,7 +31,6 @@ class _comp_updateState extends State<comp_update> {
   late File _image;
   final picker = ImagePicker();
   List<ServiceAction> serviceact = [];
-  List<ComplaintDetail> complaintlist = [];
   bool isLoading = true;
   ServiceAction? actionval;
 
@@ -58,7 +56,7 @@ class _comp_updateState extends State<comp_update> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reuseris${res.body}");
+      // debugPrint("reuseris${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
@@ -182,7 +180,7 @@ class _comp_updateState extends State<comp_update> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        "${complaintlist.first.complaintNo}",
+                        widget.compno,
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 17,
@@ -271,7 +269,7 @@ class _comp_updateState extends State<comp_update> {
                         return DropdownMenuItem<ServiceAction>(
                           value: serviceact,
                           child: Text(
-                            serviceact.id!,
+                            serviceact.name!,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,
@@ -680,7 +678,7 @@ class _comp_updateState extends State<comp_update> {
                   child: const Text(
                     "UPDATE",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 17,
                     ),
                   ),

@@ -1,7 +1,8 @@
 // ignore_for_file: camel_case_types, unused_field, use_build_context_synchronously, unused_element
 
 import 'dart:convert';
-
+import 'dart:io';
+import 'dart:io' as io;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,21 +23,23 @@ class _check_inState extends State<check_in> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final picker = ImagePicker();
   bool isLoading = true;
+  File? _imgFile;
+  String img64 = "";
+  Future getImageFromGallery(ImageSource source) async {
+    final pickedFile = await picker.pickImage(source: source);
 
-  Future getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
+    if (pickedFile == null) return;
     setState(() {
-      if (pickedFile != null) {}
+      _imgFile = File(pickedFile.path);
+      imagetobase64(_imgFile!);
     });
   }
 
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+  imagetobase64(File img) {
+    final bytes = io.File(img.path).readAsBytesSync();
 
-    setState(() {
-      if (pickedFile != null) {}
-    });
+    img64 = base64Encode(bytes);
+    print("imgg64$img64");
   }
 
   Future showOptions() async {
@@ -48,14 +51,14 @@ class _check_inState extends State<check_in> {
             child: const Text('Photo Gallery'),
             onPressed: () {
               Navigator.of(context).pop();
-              getImageFromGallery();
+              getImageFromGallery(ImageSource.gallery);
             },
           ),
           CupertinoActionSheetAction(
             child: const Text('Camera'),
             onPressed: () {
               Navigator.of(context).pop();
-              getImageFromCamera();
+              getImageFromGallery(ImageSource.camera);
             },
           ),
         ],
@@ -66,16 +69,17 @@ class _check_inState extends State<check_in> {
   @override
   void initState() {
     super.initState();
-    fetchcheckin();
-    fetchcheckinwithreading();
+    // fetchcheckin();
+    // fetchcheckinwithreading();
   }
 
   fetchcheckinwithreading() async {
     var staffId = await UserSecureStorage().getStaffId();
+    
     var body = {
       "_StaffId": staffId,
       "_Reading": "",
-      "_Image": "",
+      "_Image": img64,
       "_buffer": "",
       "_Extension": "",
       "_VisitCode": "01",
@@ -98,11 +102,10 @@ class _check_inState extends State<check_in> {
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
-      var checkinliststring = data['string'];
-      checkinliststring =
-          checkinliststring.toString().replaceAll("\\r\\\\n", "\n");
-      var response = data['string'];
-      if (response == "true") {
+      var response = data['boolean'];
+      response = response.toString().replaceAll("\\r\\\\n", "\n");
+
+      if (response == true) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("CheckIn Successfully")));
       } else {
@@ -131,16 +134,15 @@ class _check_inState extends State<check_in> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reuseris${res.body}");
+      debugPrint("reuseriscccc${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
-      var checkinliststring = data['string'];
-      checkinliststring =
-          checkinliststring.toString().replaceAll("\\r\\\\n", "\n");
-      var response = data['string'];
-      if (response == "true") {
+      var response = data['boolean'];
+      response = response.toString().replaceAll("\\r\\\\n", "\n");
+
+      if (response == true) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("CheckIn Successfully")));
       } else {
@@ -222,12 +224,19 @@ class _check_inState extends State<check_in> {
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
                 onPressed: () {
-                  if (_formKey.currentState != null &&
-                      _formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Reading Entered')),
-                    );
+                  // if (_formKey.currentState != null &&
+                  //     _formKey.currentState!.validate()) {
+                  //if image64 == "" // checkin
+                  //else reading
+
+                  if (img64 == "") {
+                    print("null");
+                    fetchcheckin();
+                  } else {
+                    print("notnull");
+                    fetchcheckinwithreading();
                   }
+                  // }
                 },
                 child: const Text(
                   "Save",
@@ -282,6 +291,13 @@ class _check_inState extends State<check_in> {
                 ),
               ),
             ),
+            _imgFile == null
+                ? Container()
+                : Image.file(
+                    _imgFile!,
+                    width: 100,
+                    height: 100,
+                  )
           ],
         ),
       ),

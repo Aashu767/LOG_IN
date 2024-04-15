@@ -265,8 +265,9 @@ class _Form_pageState extends State<Form_page> {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (_) =>
-                                                    const comp_update()));
+                                                builder: (_) => comp_update(
+                                                      compno: widget.compno,
+                                                    )));
                                       },
                                       child: const Text(
                                         "UPDATE",
@@ -371,7 +372,7 @@ class _Form_pageState extends State<Form_page> {
                       Expanded(
                         flex: 2,
                         child: Text(
-                          "${complaintlist.first.complaintNo}",
+                          widget.compno,
                           style: const TextStyle(
                             fontSize: 16,
                           ),
@@ -401,11 +402,14 @@ class _Form_pageState extends State<Form_page> {
                     items: userlist.map((UserList user) {
                       return DropdownMenuItem<UserList>(
                         value: user,
-                        child: Text(
-                          user.eMPLNAME!,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            user.eMPLNAME!,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       );
