@@ -91,182 +91,140 @@ class _dashboardState extends State<dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: PreferredSize(
-        //   preferredSize: Size.fromHeight(90.0),
-        //   child: AppBar(
-        //     backgroundColor: Color(0xffFF9800),
-        //     automaticallyImplyLeading: false,
-        //     title: Column(
-        //       children: [
-        //         Row(
-        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //             children: const [
-        //               Text('DashBoard',
-        //                   style: TextStyle(fontSize: 20, color: Colors.white)),
-        //               Text('Date Filter',
-        //                   style: TextStyle(fontSize: 16, color: Colors.white))
-        //             ]),
-        //         Container(
-        //           width: MediaQuery.sizeOf(context).width,
-        //           height: MediaQuery.sizeOf(context).height * 0.07,
-        //           decoration: BoxDecoration(
-        //               color: Colors.white,
-        //               borderRadius: BorderRadius.circular(15)),
-        //           margin: EdgeInsets.symmetric(horizontal: 10.0),
-        //           child: Row(
-        //             children: [
-        //               Padding(
-        //                 padding: const EdgeInsets.all(8.0),
-        //                 child: CircleAvatar(
-        //                   backgroundColor: Colors.black,
-        //                   radius: 20,
-        //                   backgroundImage:
-        //                       AssetImage('assets/image/Ellipse95.png'),
-        //                 ),
-        //               ),
-        //               SizedBox(width: 20),
-        //               Text(
-        //                 'Hi, $staffId',
-        //                 style: TextStyle(color: Colors.black, fontSize: 18),
-        //               ),
-        //               SizedBox(width: 160),
-        //               IconButton(
-        //                 onPressed: () async => {
-        //                   await FlutterSecureStorage().deleteAll(),
-        //                   Navigator.push(context,
-        //                       MaterialPageRoute(builder: (_) => const Login())),
-        //                 },
-        //                 icon: const Icon(
-        //                   Icons.power_settings_new,
-        //                   color: Colors.black,
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+        backgroundColor: Color(0xffF9FAFF),
         appBar: AppBar(
-          backgroundColor: Colors.orange[700],
           automaticallyImplyLeading: false,
-          centerTitle: false,
-          title: const Padding(
-            padding: EdgeInsets.all(8.0),
+          backgroundColor: Color(0xffFF9800),
+          title: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 Text(
                   'DashBoard',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 Text(
                   'Date Filter',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ],
             ),
           ),
-        ),
-        body: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(color: Colors.orange[700]),
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage('assets/image/Ellipse95.png'),
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(55.0),
+            child: Container(
+              height: MediaQuery.sizeOf(context).height * 0.06,
+              decoration: BoxDecoration(
+                  color: Color(0xffF0F4FF),
+                  borderRadius: BorderRadius.circular(10)),
+              padding: EdgeInsets.all(5),
+              margin: const EdgeInsets.all(15),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    radius: 20.0,
+                    backgroundImage: AssetImage('assets/image/Ellipse95.png'),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.10,
+                  ),
+                  Text(
+                    'Hi,',
+                    style: TextStyle(
+                      fontSize: 20,
                     ),
-                    SizedBox(width: 20),
-                    Text('Hi, $staffId'),
-                    SizedBox(width: 190),
-                    IconButton(
-                      onPressed: () async => {
-                        await FlutterSecureStorage().deleteAll(),
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const Login())),
-                      },
-                      icon: const Icon(
-                        Icons.power_settings_new,
-                        color: Colors.black,
-                      ),
+                  ),
+                  Text(
+                    '$staffId',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(width: MediaQuery.sizeOf(context).width * 0.40),
+                  IconButton(
+                    onPressed: () async => {
+                      await FlutterSecureStorage().deleteAll(),
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => const Login())),
+                    },
+                    icon: const Icon(
+                      Icons.power_settings_new,
+                      color: Colors.black,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Column(
-                    children: menulist.map((data) {
-                      int index = menulist.indexOf(data);
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 10),
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          margin: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 1)),
-                          child: InkWell(
-                            onTap: () {
-                              if (data.menuName == "Search Complaints") {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => Search_complaints()));
-                              } else if (data.menuName == "Attendance") {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => attandance()));
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => zone(
-                                              menuid: data.menuId.toString(),
-                                            )));
-                              }
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  flex: 5,
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        images[index],
-                                        height: 30,
-                                        width: 80,
-                                      ),
-                                      Text(
-                                        "${data.menuName} ",
-                                        style: GoogleFonts.openSans(
-                                          textStyle: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+          ),
+        ),
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: menulist.map((data) {
+                  int index = menulist.indexOf(data);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      height: MediaQuery.sizeOf(context).height * 0.07,
+                      margin: EdgeInsets.only(
+                        left: 10,
+                        right: 10,
+                      ),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(width: 2, color: Colors.grey)),
+                      child: InkWell(
+                        onTap: () {
+                          if (data.menuName == "Search Complaints") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => Search_complaints()));
+                          } else if (data.menuName == "Attendance") {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => attandance()));
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => zone(
+                                          menuid: data.menuId.toString(),
+                                        )));
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              images[index],
+                              height: 30,
+                              width: 80,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 100),
+                              child: Text(
+                                "${data.menuName} ",
+                                style: GoogleFonts.openSans(
+                                  textStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                Flexible(
-                                  flex: 1,
-                                  child: Text(
-                                    "${data.count}",
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "[${data.count}]",
                                     style: GoogleFonts.openSans(
                                       textStyle: const TextStyle(
                                         color: Colors.red,
@@ -275,15 +233,15 @@ class _dashboardState extends State<dashboard> {
                                       ),
                                     ),
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      );
-                    }).toList(),
-                  ),
-          ],
-        ));
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ));
   }
 }

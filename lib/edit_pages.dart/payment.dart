@@ -25,7 +25,7 @@ class _paymentState extends State<payment> {
   final picker = ImagePicker();
   bool isLoading = true;
   List<PaymentMode> paymentMode = [];
-  String paymentlist1 = "__  ";
+  String paymentlist1 = "";
   PaymentMode? paymentval;
 
   @override
@@ -60,7 +60,6 @@ class _paymentState extends State<payment> {
       var valueobject = json.decode(valueliststring.toString());
       var valuelistobject = valueobject['Payment_Mode'];
       Iterable l = valuelistobject;
-      // print(res.body);
       setState(() {
         paymentMode = l.map((data) => PaymentMode.fromJson(data)).toList();
       });
@@ -114,30 +113,24 @@ class _paymentState extends State<payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color(0xffF9FAFF),
         appBar: AppBar(
+          backgroundColor: const Color(0xffFF9800),
           leading: const BackButton(
-            color: Colors.black,
+            color: Colors.white,
           ),
-          backgroundColor: Colors.white,
           title: const Text('Payment Details'),
-          titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
         ),
         body: SingleChildScrollView(
             child: Card(
                 margin: const EdgeInsets.all(16),
-                elevation: 5,
+                elevation: 10,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.topRight,
-                          colors: [
-                            Color.fromRGBO(230, 230, 250, 1),
-                            Colors.white,
-                            Color.fromRGBO(230, 230, 250, 1)
-                          ]),
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Form(
@@ -181,47 +174,6 @@ class _paymentState extends State<payment> {
                             },
                           ),
                           const SizedBox(height: 20),
-                          // Container(
-                          //   decoration: BoxDecoration(border: Border.all()),
-                          //   child: StatefulBuilder(builder:
-                          //       (BuildContext context,
-                          //           StateSetter dropDownState) {
-                          //     return DropdownButton<PaymentMode>(
-                          //       value: paymentval,
-                          //       hint: const Text(
-                          //         ' Payment Mode*',
-                          //         style: TextStyle(color: Colors.black),
-                          //       ),
-                          //       isExpanded: true,
-                          //       iconSize: 30.0,
-                          //       style: const TextStyle(
-                          //         fontSize: 16,
-                          //       ),
-                          //       items: paymentMode.map((PaymentMode payment) {
-                          //         return DropdownMenuItem<PaymentMode>(
-                          //           value: payment,
-                          //           child: Text(
-                          //             payment.name!,
-                          //             style: const TextStyle(
-                          //               color: Colors.black,
-                          //               fontSize: 16,
-                          //             ),
-                          //           ),
-                          //         );
-                          //       }).toList(),
-                          //       onChanged: (PaymentMode? val) {
-                          //         dropDownState(() {
-                          //           setState(() {
-                          //             paymentlist1 = val!
-                          //                 .id!; // Assuming paymentlist1 is defined and appropriate
-                          //             paymentval =
-                          //                 val; // Assuming paymentval is defined
-                          //           });
-                          //         });
-                          //       },
-                          //     );
-                          //   }),
-                          // ),
                           Container(
                             decoration: BoxDecoration(border: Border.all()),
                             child: StatefulBuilder(builder:
@@ -230,7 +182,7 @@ class _paymentState extends State<payment> {
                               return DropdownButton<PaymentMode>(
                                 value: paymentval,
                                 hint: const Text(
-                                  '   Payment Mode*',
+                                  ' Payment Mode*',
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 isExpanded: true,
@@ -328,8 +280,9 @@ class _paymentState extends State<payment> {
                           Center(
                             child: ElevatedButton(
                               style: const ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStatePropertyAll(Colors.yellow)),
+                                  backgroundColor: MaterialStatePropertyAll(
+                                Color(0xffFF9800),
+                              )),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -340,7 +293,7 @@ class _paymentState extends State<payment> {
                               },
                               child: const Text('Save',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.white,
                                     fontSize: 16,
                                   )),
                             ),

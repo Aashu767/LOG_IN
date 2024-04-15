@@ -1,11 +1,18 @@
 // ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:log_in/models/All_dropdown_model.dart';
+import 'package:log_in/models/form_model.dart';
+import 'package:log_in/models/paymendropdown_model.dart';
+import 'package:log_in/utils/secure_storage.dart';
+import 'package:xml2json/xml2json.dart';
 
 class comp_update extends StatefulWidget {
   const comp_update({super.key});
@@ -24,6 +31,53 @@ class _comp_updateState extends State<comp_update> {
   String selectedDate = 'Tap to select date';
   late File _image;
   final picker = ImagePicker();
+  List<ServiceAction> serviceact = [];
+  List<ComplaintDetail> complaintlist = [];
+  bool isLoading = true;
+  ServiceAction? actionval;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDDUApi();
+  }
+
+  fetchDDUApi() async {
+    var staffId = await UserSecureStorage().getStaffId();
+    var body = {
+      "USER_ID": staffId,
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_DropDownValue"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      debugPrint("reuseris${res.body}");
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var ddliststring = data['string'];
+      ddliststring = ddliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var ddobject = json.decode(ddliststring.toString());
+      var ddlistobject = ddobject['SERVICE_ACTION'];
+      Iterable l = ddlistobject;
+      setState(() {
+        serviceact = l.map((data) => ServiceAction.fromJson(data)).toList();
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -86,13 +140,14 @@ class _comp_updateState extends State<comp_update> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
+        backgroundColor: const Color(0xffFF9800),
         leading: const BackButton(
-          color: Colors.black,
+          color: Colors.white,
         ),
-        backgroundColor: Colors.white,
         title: const Text('Complaints Update'),
-        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
       body: SingleChildScrollView(
           child: Card(
@@ -100,15 +155,8 @@ class _comp_updateState extends State<comp_update> {
         elevation: 10,
         child: Container(
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.topRight,
-                colors: [
-                  Color.fromRGBO(230, 230, 250, 1),
-                  Colors.white,
-                  Color.fromRGBO(230, 230, 250, 1)
-                ]),
-            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -118,12 +166,13 @@ class _comp_updateState extends State<comp_update> {
                   height: 40,
                   decoration: BoxDecoration(
                     border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Row(children: [
-                    Expanded(
+                  child: Row(children: [
+                    const Expanded(
                       flex: 2,
                       child: Text(
-                        'Complain No. :-',
+                        'Complain No   :-',
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,
@@ -133,8 +182,8 @@ class _comp_updateState extends State<comp_update> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        ' 2311290001',
-                        style: TextStyle(
+                        "${complaintlist.first.complaintNo}",
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
@@ -205,45 +254,41 @@ class _comp_updateState extends State<comp_update> {
                 ),
                 Container(
                   decoration: BoxDecoration(border: Border.all()),
-                  child: DropdownButton(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    hint: _dropDownValue1 == ""
-                        ? const Text('Action Taken ')
-                        : Text(
-                            _dropDownValue1,
+                  child: StatefulBuilder(builder:
+                      (BuildContext context, StateSetter dropDownState) {
+                    return DropdownButton<ServiceAction>(
+                      value: actionval,
+                      hint: const Text(
+                        'Action Taken ',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      isExpanded: true,
+                      iconSize: 30.0,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      items: serviceact.map((ServiceAction serviceact) {
+                        return DropdownMenuItem<ServiceAction>(
+                          value: serviceact,
+                          child: Text(
+                            serviceact.id!,
                             style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
                           ),
-                    isExpanded: true,
-                    iconSize: 30.0,
-                    style: const TextStyle(
-                        color: Colors.blue,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                    items: [
-                      'Customer Not Found',
-                      'Not Reachable',
-                      'Issue Fixed',
-                      'Bill Revised',
-                      'Bill Found Correct',
-                    ].map(
-                      (val) {
-                        return DropdownMenuItem<String>(
-                          value: val,
-                          child: Text(val),
                         );
+                      }).toList(),
+                      onChanged: (ServiceAction? val) {
+                        dropDownState(() {
+                          setState(() {
+                            _dropDownValue1 = val!.id!;
+                            actionval = val;
+                          });
+                        });
                       },
-                    ).toList(),
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          _dropDownValue1 = val!;
-                        },
-                      );
-                    },
-                  ),
+                    );
+                  }),
                 ),
                 const SizedBox(
                   height: 10,
@@ -620,7 +665,9 @@ class _comp_updateState extends State<comp_update> {
                 ),
                 ElevatedButton(
                   style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                      backgroundColor: MaterialStatePropertyAll(
+                    Color(0xffFF9800),
+                  )),
                   onPressed: () {
                     Navigator.push(
                         context,

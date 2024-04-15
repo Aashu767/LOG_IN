@@ -74,16 +74,17 @@ class _ComplaintsState extends State<Complaints> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
+        backgroundColor: const Color(0xffFF9800),
         leading: BackButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          color: Colors.black,
+          color: Colors.white,
         ),
-        backgroundColor: Colors.white,
         title: const Text('COMPLAINTS'),
-        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -99,101 +100,97 @@ class _ComplaintsState extends State<Complaints> {
                                 compno: complist[index].complaintNo!,
                               )));
                     },
-                    child: Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.topRight,
-                            colors: [
-                              Color.fromRGBO(230, 230, 250, 1),
-                              Colors.white,
-                              Color.fromRGBO(230, 230, 250, 1)
-                            ]),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Complaint No. :  ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complist[index].complaintNo}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                      ),
+                    child: Card(
+                      elevation: 5,
+                      child: Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Complaint No. :  ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
                                     ),
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Customer Name :  ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complist[index].customerName}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
+                                    children: [
+                                      TextSpan(
+                                        text: '${complist[index].complaintNo}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                        ),
                                       ),
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Customer Name :  ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
                                     ),
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Mobile No. :  ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complist[index].mobileNo}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
+                                    children: [
+                                      TextSpan(
+                                        text: '${complist[index].customerName}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                        ),
                                       ),
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Mobile No. :  ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
                                     ),
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Address :  ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complist[index].address}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
+                                    children: [
+                                      TextSpan(
+                                        text: '${complist[index].mobileNo}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                        ),
                                       ),
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Address :  ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
                                     ),
-                                  ]),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Problem  :  ',
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '${complist[index].problem}',
-                                      style: const TextStyle(
-                                        color: Colors.grey,
+                                    children: [
+                                      TextSpan(
+                                        text: '${complist[index].address}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                        ),
                                       ),
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Problem  :  ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
                                     ),
-                                  ]),
-                            ),
-                          ],
+                                    children: [
+                                      TextSpan(
+                                        text: '${complist[index].problem}',
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ]),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

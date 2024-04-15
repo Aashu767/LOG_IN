@@ -84,97 +84,94 @@ class _zoneState extends State<zone> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: BackButton(
-          color: Colors.black,
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => dashboard()));
-          },
+        backgroundColor: const Color(0xffF9FAFF),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: BackButton(
+            color: Colors.white,
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => dashboard()));
+            },
+          ),
+          backgroundColor: const Color(0xffFF9800),
+          title: const Text(
+            'DISTRICT WISE ACTIVITY',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
         ),
-        backgroundColor: Colors.white,
-        title: const Text(
-          'DISTRICT WISE ACTIVITY',
-          style: TextStyle(color: Colors.black, fontSize: 17),
-        ),
-      ),
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : GridView.count(
-              childAspectRatio: 3 / 2,
-              padding: const EdgeInsets.only(
-                  left: 16, right: 16, top: 16, bottom: 16),
-              crossAxisCount: 2,
-              crossAxisSpacing: 18,
-              mainAxisSpacing: 18,
-              children: zonelist.map((data) {
-                int index = zonelist.indexOf(data);
-                return GestureDetector(
-                  onTap: () => {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => Complaints(
-                                  zoneid: data.zoneId!,
-                                  menuid: widget.menuid,
-                                )))
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.topRight,
-                          colors: [
-                            Color.fromRGBO(230, 230, 250, 1),
-                            Colors.white,
-                            Color.fromRGBO(230, 230, 250, 1)
-                          ]),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          images[index],
-                          height: 30,
-                          width: 80,
-                        ),
-                        const SizedBox(height: 5),
-                        Center(
-                          child: Text(
-                            "${data.zoneName}",
-                            style: GoogleFonts.openSans(
-                              textStyle: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+        body: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: zonelist.map((data) {
+                  int index = zonelist.indexOf(data);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10),
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width,
+                      height: MediaQuery.sizeOf(context).height * 0.07,
+                      margin: const EdgeInsets.only(
+                        left: 10,
+                        right: 10,
+                      ),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(width: 2, color: Colors.grey)),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => Complaints(
+                                        zoneid: data.zoneId!,
+                                        menuid: widget.menuid,
+                                      )));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              images[index],
+                              height: 30,
+                              width: 80,
+                            ),
+                            Text(
+                              "${data.zoneName} ",
+                              style: GoogleFonts.openSans(
+                                textStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "[${data.count}]",
-                          style: GoogleFonts.openSans(
-                            textStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "[${data.count}]",
+                                    style: GoogleFonts.openSans(
+                                      textStyle: const TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
-            ),
-    );
+                  );
+                }).toList(),
+              ));
   }
 }

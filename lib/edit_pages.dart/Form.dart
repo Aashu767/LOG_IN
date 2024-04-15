@@ -142,13 +142,14 @@ class _Form_pageState extends State<Form_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color(0xffF9FAFF),
         appBar: AppBar(
+          backgroundColor: const Color(0xffFF9800),
           leading: const BackButton(
-            color: Colors.black,
+            color: Colors.white,
           ),
-          backgroundColor: Colors.white,
           title: const Text('COMPLAINTS'),
-          titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
@@ -158,14 +159,7 @@ class _Form_pageState extends State<Form_page> {
                     elevation: 10,
                     child: Container(
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.topRight,
-                            colors: [
-                              Color.fromRGBO(230, 230, 250, 1),
-                              Colors.white,
-                              Color.fromRGBO(230, 230, 250, 1)
-                            ]),
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Column(
@@ -248,14 +242,15 @@ class _Form_pageState extends State<Form_page> {
                                       style: const ButtonStyle(
                                           backgroundColor:
                                               MaterialStatePropertyAll(
-                                                  Colors.yellow)),
+                                        Color(0xffFF9800),
+                                      )),
                                       onPressed: () async {
                                         showAlertDialog(context);
                                       },
                                       child: const Text(
                                         "Assign To",
                                         style: TextStyle(
-                                          color: Colors.black,
+                                          color: Colors.white,
                                           fontSize: 15,
                                         ),
                                       ),
@@ -264,7 +259,8 @@ class _Form_pageState extends State<Form_page> {
                                       style: const ButtonStyle(
                                           backgroundColor:
                                               MaterialStatePropertyAll(
-                                                  Colors.yellow)),
+                                        Color(0xffFF9800),
+                                      )),
                                       onPressed: () {
                                         Navigator.push(
                                             context,
@@ -275,7 +271,7 @@ class _Form_pageState extends State<Form_page> {
                                       child: const Text(
                                         "UPDATE",
                                         style: TextStyle(
-                                          color: Colors.black,
+                                          color: Colors.white,
                                           fontSize: 15,
                                         ),
                                       ),
@@ -284,7 +280,8 @@ class _Form_pageState extends State<Form_page> {
                                       style: const ButtonStyle(
                                           backgroundColor:
                                               MaterialStatePropertyAll(
-                                                  Colors.yellow)),
+                                        Color(0xffFF9800),
+                                      )),
                                       onPressed: () {
                                         Navigator.push(
                                             context,
@@ -295,7 +292,7 @@ class _Form_pageState extends State<Form_page> {
                                       child: const Text(
                                         "Add Payment",
                                         style: TextStyle(
-                                          color: Colors.black,
+                                          color: Colors.white,
                                           fontSize: 15,
                                         ),
                                       ),
@@ -310,10 +307,12 @@ class _Form_pageState extends State<Form_page> {
   showAlertDialog(BuildContext context) async {
     Widget ASSIGNButton = TextButton(
       style: const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+          backgroundColor: MaterialStatePropertyAll(
+        Color(0xffFF9800),
+      )),
       child: const Text("ASSIGN",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 16,
           )),
       onPressed: () {
@@ -321,15 +320,20 @@ class _Form_pageState extends State<Form_page> {
         Assigntoupdate();
       },
     );
+    const SizedBox(
+      width: 25,
+    );
     Widget CANCELButton = TextButton(
       style: const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+          backgroundColor: MaterialStatePropertyAll(
+        Color(0xffFF9800),
+      )),
       onPressed: () {
         Navigator.pop(context);
       },
       child: const Text("CANCEL",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontSize: 16,
           )),
     );
@@ -349,14 +353,16 @@ class _Form_pageState extends State<Form_page> {
             child: Column(
           children: [
             Container(
-                decoration: BoxDecoration(border: Border.all()),
+                decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(children: [
                       const Expanded(
                         flex: 2,
                         child: Text(
-                          'Comp No.:',
+                          'Comp No  :',
                           style: TextStyle(
                             fontSize: 17,
                           ),
@@ -376,7 +382,9 @@ class _Form_pageState extends State<Form_page> {
               height: 10,
             ),
             Container(
-              decoration: BoxDecoration(border: Border.all()),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all()),
               child: StatefulBuilder(
                 builder: (BuildContext context, StateSetter dropDownState) {
                   return DropdownButton<UserList>(
