@@ -126,22 +126,24 @@ class _paymentState extends State<payment> {
             child: Card(
                 margin: const EdgeInsets.all(16),
                 elevation: 10,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Form(
                       key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormField(
-                            decoration: const InputDecoration(
-                                labelText: 'Enter Transaction ID',
-                                border: OutlineInputBorder()),
+                            decoration: InputDecoration(
+                              labelText: 'Enter Transaction ID',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter ID';
@@ -151,9 +153,10 @@ class _paymentState extends State<payment> {
                           ),
                           const SizedBox(height: 20),
                           TextFormField(
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 labelText: 'Enter Customer Name',
-                                border: OutlineInputBorder()),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10))),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter Name';
@@ -163,9 +166,10 @@ class _paymentState extends State<payment> {
                           ),
                           const SizedBox(height: 20),
                           TextFormField(
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 labelText: 'Enter Bank Name',
-                                border: OutlineInputBorder()),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10))),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please Bank enter Name';
@@ -175,14 +179,16 @@ class _paymentState extends State<payment> {
                           ),
                           const SizedBox(height: 20),
                           Container(
-                            decoration: BoxDecoration(border: Border.all()),
+                            decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(10)),
                             child: StatefulBuilder(builder:
                                 (BuildContext context,
                                     StateSetter dropDownState) {
                               return DropdownButton<PaymentMode>(
                                 value: paymentval,
                                 hint: const Text(
-                                  ' Payment Mode*',
+                                  '   Payment Mode*',
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 isExpanded: true,
@@ -193,11 +199,14 @@ class _paymentState extends State<payment> {
                                 items: paymentMode.map((PaymentMode payment) {
                                   return DropdownMenuItem<PaymentMode>(
                                     value: payment,
-                                    child: Text(
-                                      payment.id!,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        payment.id!,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -217,10 +226,10 @@ class _paymentState extends State<payment> {
                           TextFormField(
                             controller: _amountController,
                             keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              labelText: 'Enter Amount',
-                              border: OutlineInputBorder(),
-                            ),
+                            decoration: InputDecoration(
+                                labelText: 'Enter Amount',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10))),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter amount';
@@ -231,8 +240,8 @@ class _paymentState extends State<payment> {
                           const SizedBox(height: 10),
                           Container(
                             decoration: BoxDecoration(
-                              border: Border.all(),
-                            ),
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(10)),
                             child: Row(children: [
                               IconButton(
                                 onPressed: () => {
@@ -257,7 +266,9 @@ class _paymentState extends State<payment> {
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            decoration: BoxDecoration(border: Border.all()),
+                            decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(10)),
                             child: Row(children: [
                               IconButton(
                                 onPressed: showOptions,

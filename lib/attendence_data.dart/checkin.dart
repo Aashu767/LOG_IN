@@ -39,7 +39,6 @@ class _check_inState extends State<check_in> {
     final bytes = io.File(img.path).readAsBytesSync();
 
     img64 = base64Encode(bytes);
-    print("imgg64$img64");
   }
 
   Future showOptions() async {
@@ -69,13 +68,11 @@ class _check_inState extends State<check_in> {
   @override
   void initState() {
     super.initState();
-    // fetchcheckin();
-    // fetchcheckinwithreading();
   }
 
-  fetchcheckinwithreading() async {
+  checkinwithreading() async {
     var staffId = await UserSecureStorage().getStaffId();
-    
+
     var body = {
       "_StaffId": staffId,
       "_Reading": "",
@@ -104,7 +101,6 @@ class _check_inState extends State<check_in> {
       var data = jsonDecode(jsonString);
       var response = data['boolean'];
       response = response.toString().replaceAll("\\r\\\\n", "\n");
-
       if (response == true) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("CheckIn Successfully")));
@@ -115,7 +111,7 @@ class _check_inState extends State<check_in> {
     }
   }
 
-  fetchcheckin() async {
+  checkin() async {
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "_StaffId": staffId,
@@ -141,7 +137,6 @@ class _check_inState extends State<check_in> {
       var data = jsonDecode(jsonString);
       var response = data['boolean'];
       response = response.toString().replaceAll("\\r\\\\n", "\n");
-
       if (response == true) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("CheckIn Successfully")));
@@ -224,19 +219,11 @@ class _check_inState extends State<check_in> {
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
                 onPressed: () {
-                  // if (_formKey.currentState != null &&
-                  //     _formKey.currentState!.validate()) {
-                  //if image64 == "" // checkin
-                  //else reading
-
                   if (img64 == "") {
-                    print("null");
-                    fetchcheckin();
+                    checkin();
                   } else {
-                    print("notnull");
-                    fetchcheckinwithreading();
+                    checkinwithreading();
                   }
-                  // }
                 },
                 child: const Text(
                   "Save",
@@ -295,8 +282,8 @@ class _check_inState extends State<check_in> {
                 ? Container()
                 : Image.file(
                     _imgFile!,
-                    width: 100,
-                    height: 100,
+                    width: 300,
+                    height: 150,
                   )
           ],
         ),

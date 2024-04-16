@@ -99,13 +99,13 @@ class ComplaintStatus {
 
   ComplaintStatus.fromJson(Map<String, dynamic> json) {
     id = json['ID'];
-    name = json['Name'];
+    name = json['NAME'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['ID'] = id;
-    data['Name'] = name;
+    data['NAME'] = name;
     return data;
   }
 }

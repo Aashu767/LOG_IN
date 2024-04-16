@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters
+// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters, non_constant_identifier_names
 
 import 'dart:convert';
 import 'dart:io';
@@ -30,17 +30,22 @@ class _comp_updateState extends State<comp_update> {
   String selectedDate = 'Tap to select date';
   late File _image;
   final picker = ImagePicker();
+  List<ItemDetails> itemdetail = [];
   List<ServiceAction> serviceact = [];
+  List<ComplaintStatus> Compstatus = [];
+
   bool isLoading = true;
   ServiceAction? actionval;
+  ItemDetails? itemval;
+  ComplaintStatus? statusval;
 
   @override
   void initState() {
     super.initState();
-    fetchDDUApi();
+    DDUApi();
   }
 
-  fetchDDUApi() async {
+  DDUApi() async {
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "USER_ID": staffId,
@@ -56,18 +61,27 @@ class _comp_updateState extends State<comp_update> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      // debugPrint("reuseris${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
-      var ddliststring = data['string'];
-      ddliststring = ddliststring.toString().replaceAll("\\r\\\\n", "\n");
-      var ddobject = json.decode(ddliststring.toString());
-      var ddlistobject = ddobject['SERVICE_ACTION'];
-      Iterable l = ddlistobject;
+
+      var itemliststring = data['string'];
+      itemliststring = itemliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var itemobject = json.decode(itemliststring.toString());
+      var itmelistobject = itemobject['ITEM_DETAILS'];
+      Iterable item = itmelistobject;
+      var actionlistobject = itemobject['SERVICE_ACTION'];
+      Iterable service = actionlistobject;
+      var statuslistobject = itemobject['COMPLAINT_STATUS'];
+      Iterable status = statuslistobject;
+
       setState(() {
-        serviceact = l.map((data) => ServiceAction.fromJson(data)).toList();
+        itemdetail = item.map((data) => ItemDetails.fromJson(data)).toList();
+        serviceact =
+            service.map((data) => ServiceAction.fromJson(data)).toList();
+        Compstatus =
+            status.map((data) => ComplaintStatus.fromJson(data)).toList();
       });
     } else {
       setState(() {
@@ -157,7 +171,7 @@ class _comp_updateState extends State<comp_update> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 Container(
@@ -170,11 +184,11 @@ class _comp_updateState extends State<comp_update> {
                     const Expanded(
                       flex: 2,
                       child: Text(
-                        'Complain No   :-',
+                        '   Complain No  :-',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                     Expanded(
@@ -182,9 +196,9 @@ class _comp_updateState extends State<comp_update> {
                       child: Text(
                         widget.compno,
                         style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ]),
@@ -193,46 +207,58 @@ class _comp_updateState extends State<comp_update> {
                   height: 10,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
-                  child: DropdownButton(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    hint: _dropDownValue == ""
-                        ? const Text('Item Name')
-                        : Text(
-                            _dropDownValue,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
-                          ),
-                    isExpanded: true,
-                    iconSize: 30.0,
-                    style: const TextStyle(
-                        color: Colors.blue,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                    items: ['One', 'Two', 'Three', 'four'].map(
-                      (val) {
-                        return DropdownMenuItem<String>(
-                          value: val,
-                          child: Text(val),
-                        );
-                      },
-                    ).toList(),
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          _dropDownValue = val!;
-                        },
-                      );
-                    },
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
                   ),
+                  child: StatefulBuilder(builder:
+                      (BuildContext context, StateSetter dropDownState) {
+                    return DropdownButton<ItemDetails>(
+                        value: itemval,
+                        hint: const Text(
+                          "   Item Name",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        items: itemdetail.map(
+                          (ItemDetails itemdetail) {
+                            return DropdownMenuItem<ItemDetails>(
+                              value: itemdetail,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  itemdetail.name!,
+                                  style: const TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                ),
+                              ),
+                            );
+                          },
+                        ).toList(),
+                        onChanged: (ItemDetails? val) {
+                          dropDownState(() {
+                            setState(() {
+                              _dropDownValue = val!.id!;
+                              itemval = val;
+                            });
+                          });
+                        });
+                  }),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   padding: const EdgeInsets.all(8.0),
                   child: const Row(children: [
                     Expanded(
@@ -240,9 +266,9 @@ class _comp_updateState extends State<comp_update> {
                       child: Text(
                         'Actual Problem',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ]),
@@ -251,13 +277,16 @@ class _comp_updateState extends State<comp_update> {
                   height: 10,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: StatefulBuilder(builder:
                       (BuildContext context, StateSetter dropDownState) {
                     return DropdownButton<ServiceAction>(
                       value: actionval,
                       hint: const Text(
-                        'Action Taken ',
+                        '  Action Taken ',
                         style: TextStyle(color: Colors.black),
                       ),
                       isExpanded: true,
@@ -268,11 +297,14 @@ class _comp_updateState extends State<comp_update> {
                       items: serviceact.map((ServiceAction serviceact) {
                         return DropdownMenuItem<ServiceAction>(
                           value: serviceact,
-                          child: Text(
-                            serviceact.name!,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              serviceact.name!,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         );
@@ -293,10 +325,8 @@ class _comp_updateState extends State<comp_update> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(
-                        style: BorderStyle.solid,
-                        color: Colors.black,
-                        width: 2.0),
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
@@ -316,9 +346,9 @@ class _comp_updateState extends State<comp_update> {
                             ? 'Visit Date'
                             : dateController.text,
                         style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ]),
@@ -327,17 +357,20 @@ class _comp_updateState extends State<comp_update> {
                   height: 10,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   padding: const EdgeInsets.all(8.0),
                   child: const Row(children: [
                     Expanded(
                       flex: 2,
                       child: Text(
-                        'Actual Closer',
+                        '  Actual Closer',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ]),
@@ -346,50 +379,48 @@ class _comp_updateState extends State<comp_update> {
                   height: 10,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
-                  child: DropdownButton(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    hint: _dropDownValue2 == ""
-                        ? const Text('Select Status ')
-                        : Text(
-                            _dropDownValue2,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
-                          ),
-                    isExpanded: true,
-                    iconSize: 30.0,
-                    style: const TextStyle(
-                        color: Colors.blue,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                    items: [
-                      'Completed',
-                      'Pending',
-                      'Active',
-                      'Approved',
-                      'Lost',
-                      'Rejected',
-                      'Force Closed',
-                      'Approved',
-                      'Wrong Allocation',
-                    ].map(
-                      (val) {
-                        return DropdownMenuItem<String>(
-                          value: val,
-                          child: Text(val),
-                        );
-                      },
-                    ).toList(),
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          _dropDownValue2 = val!;
-                        },
-                      );
-                    },
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
                   ),
+                  child: StatefulBuilder(builder:
+                      (BuildContext context, StateSetter dropDownState) {
+                    return DropdownButton<ComplaintStatus>(
+                      value: statusval,
+                      hint: const Text(
+                        '  Select Status',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      isExpanded: true,
+                      iconSize: 30.0,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      items: Compstatus.map((ComplaintStatus Compstatusval) {
+                        return DropdownMenuItem<ComplaintStatus>(
+                          value: Compstatusval,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              Compstatusval.name!,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (ComplaintStatus? val) {
+                        dropDownState(() {
+                          setState(() {
+                            _dropDownValue2 = val!.id!;
+                            statusval = val;
+                          });
+                        });
+                      },
+                    );
+                  }),
                 ),
                 const SizedBox(
                   height: 10,
