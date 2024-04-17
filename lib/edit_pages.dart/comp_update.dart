@@ -155,9 +155,14 @@ class _comp_updateState extends State<comp_update> {
       backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
         backgroundColor: const Color(0xffFF9800),
-        leading: const BackButton(
-          color: Colors.white,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            )),
         title: const Text('Complaints Update'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
@@ -171,7 +176,7 @@ class _comp_updateState extends State<comp_update> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(25),
             child: Column(
               children: [
                 Container(
@@ -184,7 +189,7 @@ class _comp_updateState extends State<comp_update> {
                     const Expanded(
                       flex: 2,
                       child: Text(
-                        '   Complain No  :-',
+                        '   Complaint No  :-',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -214,6 +219,10 @@ class _comp_updateState extends State<comp_update> {
                   child: StatefulBuilder(builder:
                       (BuildContext context, StateSetter dropDownState) {
                     return DropdownButton<ItemDetails>(
+                        underline: Container(
+                          height: 0,
+                          color: Colors.transparent,
+                        ),
                         value: itemval,
                         hint: const Text(
                           "   Item Name",
@@ -284,9 +293,13 @@ class _comp_updateState extends State<comp_update> {
                   child: StatefulBuilder(builder:
                       (BuildContext context, StateSetter dropDownState) {
                     return DropdownButton<ServiceAction>(
+                      underline: Container(
+                        height: 0,
+                        color: Colors.transparent,
+                      ),
                       value: actionval,
                       hint: const Text(
-                        '  Action Taken ',
+                        '  Action Taken',
                         style: TextStyle(color: Colors.black),
                       ),
                       isExpanded: true,
@@ -386,6 +399,10 @@ class _comp_updateState extends State<comp_update> {
                   child: StatefulBuilder(builder:
                       (BuildContext context, StateSetter dropDownState) {
                     return DropdownButton<ComplaintStatus>(
+                      underline: Container(
+                        height: 0,
+                        color: Colors.transparent,
+                      ),
                       value: statusval,
                       hint: const Text(
                         '  Select Status',
@@ -428,6 +445,10 @@ class _comp_updateState extends State<comp_update> {
                 Container(
                   decoration: BoxDecoration(border: Border.all()),
                   child: DropdownButton(
+                    underline: Container(
+                      height: 0,
+                      color: Colors.transparent,
+                    ),
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     hint: _dropDownValue3 == ""
                         ? const Text('Select Service Location')
@@ -472,6 +493,10 @@ class _comp_updateState extends State<comp_update> {
                 Container(
                   decoration: BoxDecoration(border: Border.all()),
                   child: DropdownButton(
+                    underline: Container(
+                      height: 0,
+                      color: Colors.transparent,
+                    ),
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     hint: _dropDownValue4 == ""
                         ? const Text('Select Defected Type-Code')
@@ -521,6 +546,10 @@ class _comp_updateState extends State<comp_update> {
                 Container(
                   decoration: BoxDecoration(border: Border.all()),
                   child: DropdownButton(
+                    underline: Container(
+                      height: 0,
+                      color: Colors.transparent,
+                    ),
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     hint: _dropDownValue5 == ""
                         ? const Text('Select Call Catogery')

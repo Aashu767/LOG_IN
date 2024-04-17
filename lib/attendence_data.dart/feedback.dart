@@ -68,16 +68,21 @@ class _feedbackState extends State<feedback> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: const BackButton(
-          color: Colors.black,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            )),
         title: const Text(
           'Day FeedBack',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xffFF9800),
       ),
       body: SingleChildScrollView(
           child: Form(
@@ -151,19 +156,21 @@ class _feedbackState extends State<feedback> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 ElevatedButton(
                   style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                      backgroundColor:
+                          MaterialStatePropertyAll(Color(0xffFF9800))),
                   onPressed: () {},
                   child: const Text(
                     "Save",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
                 ElevatedButton(
                   style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                      backgroundColor:
+                          MaterialStatePropertyAll(Color(0xffFF9800))),
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -173,7 +180,7 @@ class _feedbackState extends State<feedback> {
                   child: const Text(
                     "Cancel",
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),

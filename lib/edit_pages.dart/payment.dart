@@ -14,6 +14,7 @@ import 'package:xml2json/xml2json.dart';
 class payment extends StatefulWidget {
   const payment({super.key});
 
+  //PE0003
   @override
   State<payment> createState() => _paymentState();
 }
@@ -32,6 +33,8 @@ class _paymentState extends State<payment> {
   void initState() {
     super.initState();
     fetchDDApi();
+    updatepayment();
+    savepdata();
   }
 
   fetchDDApi() async {
@@ -42,6 +45,85 @@ class _paymentState extends State<payment> {
     var res = await http.post(
         Uri.parse(
             "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_DropDownValue"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      debugPrint("reuseris${res.body}");
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var valueliststring = data['string'];
+      valueliststring = valueliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var valueobject = json.decode(valueliststring.toString());
+      var valuelistobject = valueobject['Payment_Mode'];
+      Iterable l = valuelistobject;
+      setState(() {
+        paymentMode = l.map((data) => PaymentMode.fromJson(data)).toList();
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  updatepayment() async {
+    var body = {
+      "CustomerCode": "PE0003",
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_Customer_PaymentSR"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      debugPrint("reuseris${res.body}");
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var valueliststring = data['string'];
+      valueliststring = valueliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var valueobject = json.decode(valueliststring.toString());
+      var valuelistobject = valueobject['SchemeSKU'];
+      Iterable l = valuelistobject;
+      setState(() {
+        paymentMode = l.map((data) => PaymentMode.fromJson(data)).toList();
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  savepdata() async {
+    var body = {
+      "Customer_Code": "PE0003",
+      "TransactionID": "",
+      "PaymentMode": "",
+      "TransactionAmt": "",
+      "InvoiceNo": "",
+      "TransactionDate": "",
+      "Remarks": "",
+      "PartyName": "",
+      "BankName": "",
+      "AttachDocument": "",
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/WS_Insert_PaymentSR"),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
@@ -116,9 +198,14 @@ class _paymentState extends State<payment> {
         backgroundColor: const Color(0xffF9FAFF),
         appBar: AppBar(
           backgroundColor: const Color(0xffFF9800),
-          leading: const BackButton(
-            color: Colors.white,
-          ),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.white,
+              )),
           title: const Text('Payment Details'),
           titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
         ),
@@ -132,50 +219,59 @@ class _paymentState extends State<payment> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(25.0),
                     child: Form(
                       key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Enter Transaction ID',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Enter Transaction ID',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter ID';
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter ID';
-                              }
-                              return null;
-                            },
                           ),
                           const SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Enter Customer Name',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter Name';
-                              }
-                              return null;
-                            },
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  labelText: 'Enter Customer Name',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10))),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter Name';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                           const SizedBox(height: 20),
-                          TextFormField(
-                            decoration: InputDecoration(
-                                labelText: 'Enter Bank Name',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please Bank enter Name';
-                              }
-                              return null;
-                            },
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                  labelText: 'Enter Bank Name',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10))),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please Bank enter Name';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                           const SizedBox(height: 20),
                           Container(
@@ -186,6 +282,10 @@ class _paymentState extends State<payment> {
                                 (BuildContext context,
                                     StateSetter dropDownState) {
                               return DropdownButton<PaymentMode>(
+                                underline: Container(
+                                  height: 0,
+                                  color: Colors.transparent,
+                                ),
                                 value: paymentval,
                                 hint: const Text(
                                   '   Payment Mode*',
@@ -222,22 +322,25 @@ class _paymentState extends State<payment> {
                               );
                             }),
                           ),
-                          const SizedBox(height: 10),
-                          TextFormField(
-                            controller: _amountController,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                                labelText: 'Enter Amount',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter amount';
-                              }
-                              return null;
-                            },
+                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            child: TextFormField(
+                              controller: _amountController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                  labelText: 'Enter Amount',
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10))),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter amount';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(),
@@ -264,7 +367,7 @@ class _paymentState extends State<payment> {
                               ),
                             ]),
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(),
@@ -289,24 +392,28 @@ class _paymentState extends State<payment> {
                           ),
                           const SizedBox(height: 20),
                           Center(
-                            child: ElevatedButton(
-                              style: const ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                Color(0xffFF9800),
-                              )),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Form Submitted')),
-                                  );
-                                }
-                              },
-                              child: const Text('Save',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  )),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.05,
+                              width: MediaQuery.of(context).size.width * 0.38,
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                  Color(0xffFF9800),
+                                )),
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Form Submitted')),
+                                    );
+                                  }
+                                },
+                                child: const Text('Save',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    )),
+                              ),
                             ),
                           ),
                         ],

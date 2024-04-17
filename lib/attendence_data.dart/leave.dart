@@ -16,18 +16,22 @@ class _leaveState extends State<leave> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: const BackButton(
-          color: Colors.black,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            )),
         title: const Text(
           'Leave Request',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xffFF9800),
       ),
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -194,7 +198,7 @@ class _leaveState extends State<leave> {
                       ElevatedButton(
                         style: const ButtonStyle(
                             backgroundColor:
-                                MaterialStatePropertyAll(Colors.yellow)),
+                                MaterialStatePropertyAll(Color(0xffFF9800))),
                         onPressed: () {
                           if (_formKey.currentState != null &&
                               _formKey.currentState!.validate()) {
@@ -207,7 +211,7 @@ class _leaveState extends State<leave> {
                         child: const Text(
                           "Save",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold),
                         ),
@@ -215,7 +219,7 @@ class _leaveState extends State<leave> {
                       ElevatedButton(
                         style: const ButtonStyle(
                             backgroundColor:
-                                MaterialStatePropertyAll(Colors.yellow)),
+                                MaterialStatePropertyAll(Color(0xffFF9800))),
                         onPressed: () {
                           Navigator.push(
                               context,
@@ -225,7 +229,7 @@ class _leaveState extends State<leave> {
                         child: const Text(
                           "Cancel",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold),
                         ),

@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:log_in/All_MENU.dart/dashbord.dart';
 import 'package:log_in/edit_pages.dart/Form.dart';
 import 'package:log_in/models/search_model.dart';
 import 'package:xml2json/xml2json.dart';
@@ -72,13 +71,14 @@ class _Search_complaintsState extends State<Search_complaints> {
         appBar: AppBar(
           backgroundColor: const Color(0xffFF9800),
           automaticallyImplyLeading: false,
-          leading: BackButton(
-            color: Colors.white,
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => dashboard()));
-            },
-          ),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.white,
+              )),
           title: const Text(
             ' Complaints Search',
             style: TextStyle(color: Colors.white, fontSize: 20),

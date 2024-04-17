@@ -145,9 +145,14 @@ class _Form_pageState extends State<Form_page> {
         backgroundColor: const Color(0xffF9FAFF),
         appBar: AppBar(
           backgroundColor: const Color(0xffFF9800),
-          leading: const BackButton(
-            color: Colors.white,
-          ),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.white,
+              )),
           title: const Text('COMPLAINTS'),
           titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
         ),
@@ -156,7 +161,7 @@ class _Form_pageState extends State<Form_page> {
             : SingleChildScrollView(
                 child: Card(
                     margin: const EdgeInsets.all(16),
-                    elevation: 10,
+                    elevation: 5,
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -389,6 +394,10 @@ class _Form_pageState extends State<Form_page> {
               child: StatefulBuilder(
                 builder: (BuildContext context, StateSetter dropDownState) {
                   return DropdownButton<UserList>(
+                    underline: Container(
+                      height: 0,
+                      color: Colors.transparent,
+                    ),
                     value: userval,
                     hint: const Text(
                       '  Select to Assign',
@@ -459,20 +468,18 @@ class RichTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(6.0),
+      padding: const EdgeInsets.all(9),
       child: RichText(
         text: TextSpan(
             text: title,
             style: const TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.bold,
             ),
             children: [
               TextSpan(
                 text: value,
                 style: const TextStyle(
                   color: Colors.grey,
-                  fontWeight: FontWeight.bold,
                 ),
               )
             ]),

@@ -1,10 +1,9 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element, camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable, file_names, must_be_immutable
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, unused_element, camel_case_types, non_constant_identifier_names, prefer_typing_uninitialized_variables, unused_local_variable, file_names, must_be_immutable, sized_box_for_whitespace
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:log_in/All_MENU.dart/dashbord.dart';
 import 'package:log_in/models/zone_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
@@ -87,13 +86,14 @@ class _zoneState extends State<zone> {
         backgroundColor: const Color(0xffF9FAFF),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          leading: BackButton(
-            color: Colors.white,
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => dashboard()));
-            },
-          ),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.white,
+              )),
           backgroundColor: const Color(0xffFF9800),
           title: const Text(
             'DISTRICT WISE ACTIVITY',
@@ -109,55 +109,57 @@ class _zoneState extends State<zone> {
                   int index = zonelist.indexOf(data);
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 10),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width,
-                      height: MediaQuery.sizeOf(context).height * 0.07,
-                      margin: const EdgeInsets.only(
-                        left: 10,
-                        right: 10,
-                      ),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.grey)),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => Complaints(
-                                        zoneid: data.zoneId!,
-                                        menuid: widget.menuid,
-                                      )));
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.asset(
-                              images[index],
-                              height: 30,
-                              width: 80,
-                            ),
-                            Text(
-                              "${data.zoneName} ",
-                              style: GoogleFonts.openSans(
-                                textStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
+                        horizontal: 12, vertical: 10),
+                    child: PhysicalModel(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      elevation: 5,
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        height: MediaQuery.sizeOf(context).height * 0.07,
+                        margin: const EdgeInsets.only(
+                          right: 10,
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => Complaints(
+                                          zoneid: data.zoneId!,
+                                          menuid: widget.menuid,
+                                        )));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
                                 children: [
+                                  PhysicalModel(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    elevation: 5,
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.16,
+                                      height:
+                                          MediaQuery.sizeOf(context).height *
+                                              0.07,
+                                      child: Image.asset(
+                                        images[index],
+                                        height: 60,
+                                        width: 80,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
                                   Text(
-                                    "[${data.count}]",
+                                    "${data.zoneName} ",
                                     style: GoogleFonts.openSans(
                                       textStyle: const TextStyle(
-                                        color: Colors.red,
+                                        color: Colors.black,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -165,8 +167,18 @@ class _zoneState extends State<zone> {
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+                              Text(
+                                "[${data.count}]",
+                                style: GoogleFonts.openSans(
+                                  textStyle: const TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

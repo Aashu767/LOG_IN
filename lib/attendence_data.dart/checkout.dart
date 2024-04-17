@@ -150,16 +150,22 @@ class _check_outState extends State<check_out> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: const BackButton(
-          color: Colors.black,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            )),
         title: const Text(
           'Day Check out',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xffFF9800),
       ),
       body: Form(
         key: _formKey,
@@ -217,7 +223,8 @@ class _check_outState extends State<check_out> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               ElevatedButton(
                 style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                    backgroundColor:
+                        MaterialStatePropertyAll(Color(0xffFF9800))),
                 onPressed: () {
                   if (img64 == "") {
                     checkout();
@@ -228,21 +235,22 @@ class _check_outState extends State<check_out> {
                 child: const Text(
                   "Save",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
               ),
               ElevatedButton(
                 style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                    backgroundColor:
+                        MaterialStatePropertyAll(Color(0xffFF9800))),
                 onPressed: () {
                   showOptions();
                 },
                 child: const Text(
                   "Camera",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
@@ -263,7 +271,7 @@ class _check_outState extends State<check_out> {
             ),
             ElevatedButton(
               style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                  backgroundColor: MaterialStatePropertyAll(Color(0xffFF9800))),
               onPressed: () {
                 Navigator.push(
                     context,
@@ -273,7 +281,7 @@ class _check_outState extends State<check_out> {
               child: const Text(
                 "Cancel",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 18,
                 ),
               ),

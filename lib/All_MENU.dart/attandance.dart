@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, avoid_print, unnecessary_new, must_be_immutable
+// ignore_for_file: camel_case_types, avoid_print, unnecessary_new, must_be_immutable, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,25 +32,21 @@ class _attandanceState extends State<attandance> {
 
   Items item1 = new Items(
     title: "Day Check IN",
-    event: "",
     img: 'assets/image/check-in.png',
   );
 
   Items item2 = new Items(
     title: "Day Check OUT",
-    event: "",
     img: 'assets/image/check-out.png',
   );
 
   Items item3 = new Items(
     title: "Leave Request",
-    event: "",
     img: 'assets/image/schedule.png',
   );
 
   Items item4 = new Items(
     title: "Day FeedBack",
-    event: "",
     img: 'assets/image/feedback.png',
   );
 
@@ -64,14 +60,20 @@ class _attandanceState extends State<attandance> {
     ];
 
     return Scaffold(
+      backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
-        leading: const BackButton(
-          color: Colors.black,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            )),
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xffFF9800),
         title: const Text('Attendance'),
-        titleTextStyle: const TextStyle(color: Colors.black, fontSize: 17),
+        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
       body: Flexible(
         child: GridView.count(
@@ -83,50 +85,34 @@ class _attandanceState extends State<attandance> {
           mainAxisSpacing: 18,
           children: myList.map((data) {
             int index = myList.indexOf(data);
-            return GestureDetector(
+            return InkWell(
               onTap: () {
                 tapped(index, context);
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.topRight,
-                      colors: [
-                        Color.fromRGBO(230, 230, 250, 1),
-                        Colors.white,
-                        Color.fromRGBO(230, 230, 250, 1)
-                      ]),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(data.img, width: 42),
-                    const SizedBox(height: 14),
-                    Text(
-                      data.title,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+              child: PhysicalModel(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                elevation: 5,
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(data.img, width: 35),
+                      const SizedBox(height: 14),
+                      Text(
+                        data.title,
+                        style: GoogleFonts.openSans(
+                          textStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      data.event,
-                      style: GoogleFonts.openSans(
-                        textStyle: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
+                      const SizedBox(height: 5),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -139,12 +125,10 @@ class _attandanceState extends State<attandance> {
 
 class Items {
   String title;
-  String event;
   String img;
 
   Items({
     required this.title,
-    required this.event,
     required this.img,
   });
 }

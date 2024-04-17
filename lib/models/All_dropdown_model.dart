@@ -1,6 +1,7 @@
-// ignore_for_file: file_names
+// // ignore_for_file: camel_case_types, unnecessary_new, prefer_collection_literals, unnecessary_this
+// // ignore_for_file: file_names
 // class All_dropdown {
-//   List<Null>? iTEMDETAILS;
+//   List<ItemDetails>? iTEMDETAILS;
 //   List<SERVICEACTION>? sERVICEACTION;
 //   List<COMPLAINTSTATUS>? cOMPLAINTSTATUS;
 //   List<REDRESSALSTATUS>? rEDRESSALSTATUS;

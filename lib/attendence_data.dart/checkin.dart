@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, unused_field, use_build_context_synchronously, unused_element
+// ignore_for_file: camel_case_types, unused_field, use_build_context_synchronously, unused_element, avoid_print
 
 import 'dart:convert';
 import 'dart:io';
@@ -150,16 +150,22 @@ class _check_inState extends State<check_in> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: const BackButton(
-          color: Colors.black,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            )),
         title: const Text(
           'Day Check In',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xffFF9800),
       ),
       body: Form(
         key: _formKey,
@@ -217,7 +223,9 @@ class _check_inState extends State<check_in> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               ElevatedButton(
                 style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                    backgroundColor: MaterialStatePropertyAll(
+                  Color(0xffFF9800),
+                )),
                 onPressed: () {
                   if (img64 == "") {
                     checkin();
@@ -228,21 +236,23 @@ class _check_inState extends State<check_in> {
                 child: const Text(
                   "Save",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
               ),
               ElevatedButton(
                 style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                    backgroundColor: MaterialStatePropertyAll(
+                  Color(0xffFF9800),
+                )),
                 onPressed: () {
                   showOptions();
                 },
                 child: const Text(
                   "Camera",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
@@ -263,7 +273,9 @@ class _check_inState extends State<check_in> {
             ),
             ElevatedButton(
               style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.yellow)),
+                  backgroundColor: MaterialStatePropertyAll(
+                Color(0xffFF9800),
+              )),
               onPressed: () {
                 Navigator.push(
                     context,
@@ -273,7 +285,7 @@ class _check_inState extends State<check_in> {
               child: const Text(
                 "Cancel",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 18,
                 ),
               ),

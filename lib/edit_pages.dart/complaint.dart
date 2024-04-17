@@ -77,12 +77,14 @@ class _ComplaintsState extends State<Complaints> {
       backgroundColor: const Color(0xffF9FAFF),
       appBar: AppBar(
         backgroundColor: const Color(0xffFF9800),
-        leading: BackButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          color: Colors.white,
-        ),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.white,
+            )),
         title: const Text('COMPLAINTS'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
