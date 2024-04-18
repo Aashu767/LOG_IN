@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters, non_constant_identifier_names
+// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters, non_constant_identifier_names, unnecessary_string_interpolations
 
 import 'dart:convert';
 import 'dart:io';
@@ -11,6 +11,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
+
+class AddedItem {
+  final String name;
+  final int quantity;
+  final double rate;
+
+  AddedItem({
+    required this.name,
+    required this.quantity,
+    required this.rate,
+  });
+}
 
 class comp_update extends StatefulWidget {
   String compno;
@@ -33,7 +45,9 @@ class _comp_updateState extends State<comp_update> {
   List<ItemDetails> itemdetail = [];
   List<ServiceAction> serviceact = [];
   List<ComplaintStatus> Compstatus = [];
-
+  TextEditingController Qty = TextEditingController();
+  TextEditingController Rate = TextEditingController();
+  List<AddedItem> addedItems = [];
   bool isLoading = true;
   ServiceAction? actionval;
   ItemDetails? itemval;
@@ -180,7 +194,7 @@ class _comp_updateState extends State<comp_update> {
             child: Column(
               children: [
                 Container(
-                  height: 40,
+                  height: MediaQuery.of(context).size.height * 0.06,
                   decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
@@ -212,58 +226,226 @@ class _comp_updateState extends State<comp_update> {
                   height: 10,
                 ),
                 Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  width: MediaQuery.of(context).size.width * 1,
                   decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: StatefulBuilder(builder:
-                      (BuildContext context, StateSetter dropDownState) {
-                    return DropdownButton<ItemDetails>(
-                        underline: Container(
-                          height: 0,
-                          color: Colors.transparent,
-                        ),
-                        value: itemval,
-                        hint: const Text(
-                          "   Item Name",
-                          style: TextStyle(
-                            color: Colors.black,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide.none,
+                            bottom: BorderSide.none,
+                            left: BorderSide.none,
+                            right: BorderSide(),
                           ),
                         ),
-                        isExpanded: true,
-                        iconSize: 30.0,
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                        items: itemdetail.map(
-                          (ItemDetails itemdetail) {
-                            return DropdownMenuItem<ItemDetails>(
-                              value: itemdetail,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  itemdetail.name!,
-                                  style: const TextStyle(
-                                      fontSize: 16, color: Colors.black),
+                        child: StatefulBuilder(builder:
+                            (BuildContext context, StateSetter dropDownState) {
+                          return DropdownButton<ItemDetails>(
+                              underline: Container(
+                                height: 0,
+                                color: Colors.transparent,
+                              ),
+                              value: itemval,
+                              hint: const Text(
+                                "   Item Name",
+                                style: TextStyle(
+                                  color: Colors.black,
                                 ),
                               ),
-                            );
-                          },
-                        ).toList(),
-                        onChanged: (ItemDetails? val) {
-                          dropDownState(() {
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                              items: itemdetail.map(
+                                (ItemDetails itemdetail) {
+                                  return DropdownMenuItem<ItemDetails>(
+                                    value: itemdetail,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Text(
+                                        itemdetail.name!,
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.black),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ).toList(),
+                              onChanged: (ItemDetails? val) {
+                                dropDownState(() {
+                                  setState(() {
+                                    _dropDownValue = val!.id!;
+                                    itemval = val;
+                                  });
+                                });
+                              });
+                        }),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide.none,
+                            bottom: BorderSide.none,
+                            left: BorderSide.none,
+                            right: BorderSide(),
+                          ),
+                        ),
+                        child: TextField(
+                          controller: Qty,
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(hintText: 'Qty'),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.15,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide.none,
+                            bottom: BorderSide.none,
+                            left: BorderSide.none,
+                            right: BorderSide(),
+                          ),
+                        ),
+                        child: TextField(
+                          controller: Rate,
+                          textAlign: TextAlign.center,
+                          decoration: const InputDecoration(hintText: 'Rate'),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          if (itemval != null &&
+                              Qty.text.isNotEmpty &&
+                              Rate.text.isNotEmpty) {
                             setState(() {
-                              _dropDownValue = val!.id!;
-                              itemval = val;
+                              addedItems.add(AddedItem(
+                                name: itemval!.name!,
+                                quantity: int.parse(Qty.text),
+                                rate: double.parse(Rate.text),
+                              ));
                             });
-                          });
-                        });
-                  }),
+                            Qty.clear();
+                            Rate.clear();
+                          }
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.145,
+                          decoration: const BoxDecoration(
+                            color: Color(0xffFF9800),
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(0),
+                                bottomRight: Radius.circular(10),
+                                topRight: Radius.circular(10)),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Add',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  child: ListView.builder(
+                    itemCount: addedItems.length,
+                    itemBuilder: (context, index) {
+                      final item = addedItems[index];
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  top: BorderSide.none,
+                                  bottom: BorderSide.none,
+                                  left: BorderSide.none,
+                                  right: BorderSide(),
+                                ),
+                              ),
+                              child: Center(child: Text(' ${item.name}')),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  top: BorderSide.none,
+                                  bottom: BorderSide.none,
+                                  left: BorderSide.none,
+                                  right: BorderSide(),
+                                ),
+                              ),
+                              child: Center(child: Text('${item.quantity}')),
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              width: MediaQuery.of(context).size.width * 0.15,
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  top: BorderSide.none,
+                                  bottom: BorderSide.none,
+                                  left: BorderSide.none,
+                                  right: BorderSide(),
+                                ),
+                              ),
+                              child: Center(child: Text('${item.rate}')),
+                            ),
+                            Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.06,
+                                width: MediaQuery.of(context).size.width * 0.13,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      bottomRight: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                ),
+                                child: Center(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        addedItems.removeAt(index);
+                                      });
+                                    },
+                                    icon: const Icon(Icons.delete,
+                                        color: Colors.red),
+                                  ),
+                                )),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
                   decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
@@ -282,8 +464,8 @@ class _comp_updateState extends State<comp_update> {
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -333,10 +515,11 @@ class _comp_updateState extends State<comp_update> {
                     );
                   }),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
                   decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
@@ -349,7 +532,6 @@ class _comp_updateState extends State<comp_update> {
                       },
                       icon: const Icon(
                         Icons.calendar_today,
-                        color: Colors.black,
                       ),
                     ),
                     Expanded(
@@ -366,10 +548,11 @@ class _comp_updateState extends State<comp_update> {
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
                   decoration: BoxDecoration(
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
@@ -388,8 +571,8 @@ class _comp_updateState extends State<comp_update> {
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -439,11 +622,14 @@ class _comp_updateState extends State<comp_update> {
                     );
                   }),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: DropdownButton(
                     underline: Container(
                       height: 0,
@@ -487,11 +673,14 @@ class _comp_updateState extends State<comp_update> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: DropdownButton(
                     underline: Container(
                       height: 0,
@@ -540,11 +729,14 @@ class _comp_updateState extends State<comp_update> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   child: DropdownButton(
                     underline: Container(
                       height: 0,
@@ -588,18 +780,21 @@ class _comp_updateState extends State<comp_update> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
                     IconButton(
                       onPressed: () => {},
                       icon: const Icon(
                         CupertinoIcons.pencil,
-                        color: Colors.black,
                       ),
                     ),
                     const Expanded(
@@ -607,18 +802,22 @@ class _comp_updateState extends State<comp_update> {
                       child: Text(
                         'Signature',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
                     IconButton(
@@ -633,25 +832,27 @@ class _comp_updateState extends State<comp_update> {
                       child: Text(
                         'Picture Taken',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
                     IconButton(
                       onPressed: () => {},
                       icon: const Icon(
                         Icons.thumb_up_alt_outlined,
-                        color: Colors.black,
                       ),
                     ),
                     const Expanded(
@@ -659,25 +860,28 @@ class _comp_updateState extends State<comp_update> {
                       child: Text(
                         'FeedBack(Remark)',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
                     IconButton(
                       onPressed: () => {},
                       icon: const Icon(
                         Icons.thumb_up_alt_outlined,
-                        color: Colors.black,
                       ),
                     ),
                     const Expanded(
@@ -685,25 +889,28 @@ class _comp_updateState extends State<comp_update> {
                       child: Text(
                         'Tech Remark',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Container(
-                  decoration: BoxDecoration(border: Border.all()),
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
                     IconButton(
                       onPressed: () => {},
                       icon: const Icon(
                         Icons.thumb_up_alt_outlined,
-                        color: Colors.black,
                       ),
                     ),
                     const Expanded(
@@ -711,15 +918,15 @@ class _comp_updateState extends State<comp_update> {
                       child: Text(
                         'Happy Code',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ]),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 ElevatedButton(
                   style: const ButtonStyle(

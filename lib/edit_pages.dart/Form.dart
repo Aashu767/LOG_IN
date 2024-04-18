@@ -170,103 +170,303 @@ class _Form_pageState extends State<Form_page> {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RichTextWidget(
-                                title: 'Complaint No:',
-                                value: '${complaintlist.first.complaintNo}'),
-                            RichTextWidget(
-                                title: 'Customer_Name : ',
-                                value: '${complaintlist.first.customerName}'),
-                            RichTextWidget(
-                                title: 'Mobile No : ',
-                                value: '${complaintlist.first.mobileNo}'),
-                            RichTextWidget(
-                                title: 'Address : ',
-                                value: '${complaintlist.first.address}'),
-                            RichTextWidget(
-                                title: 'zone : ',
-                                value: '${complaintlist.first.zone}'),
-                            RichTextWidget(
-                                title: 'Problem : ',
-                                value: '${complaintlist.first.problem}'),
-                            RichTextWidget(
-                                title: 'Problem_Since : ',
-                                value: '${complaintlist.first.problemSince}'),
-                            RichTextWidget(
-                                title: 'Nature : ',
-                                value: '${complaintlist.first.nature}'),
-                            RichTextWidget(
-                                title: 'type : ',
-                                value: '${complaintlist.first.type}'),
-                            RichTextWidget(
-                                title: 'KNo : ',
-                                value: '${complaintlist.first.kNo}'),
-                            RichTextWidget(
-                                title: 'eMail : ',
-                                value: '${complaintlist.first.eMail}'),
-                            RichTextWidget(
-                                title: 'PinCode : ',
-                                value: '${complaintlist.first.pinCode}'),
-                            RichTextWidget(
-                                title: 'MrCode : ',
-                                value: '${complaintlist.first.mrCode}'),
-                            RichTextWidget(
-                                title: 'Colony : ',
-                                value: '${complaintlist.first.colony}'),
-                            RichTextWidget(
-                                title: 'AREA : ',
-                                value: '${complaintlist.first.aREA}'),
-                            RichTextWidget(
-                                title: 'Status : ',
-                                value: '${complaintlist.first.status}'),
-                            RichTextWidget(
-                                title: 'ASSIGN_TO_Name : ',
-                                value: '${complaintlist.first.aSSIGNTOName}'),
-                            RichTextWidget(
-                                title: 'Assign_To : ',
-                                value: '${complaintlist.first.assignTo}'),
-                            RichTextWidget(
-                                title: 'Registration_Date : ',
-                                value:
-                                    '${complaintlist.first.registrationDate}'),
-                            RichTextWidget(
-                                title: 'Completion_Date : ',
-                                value: '${complaintlist.first.completionDate}'),
-                            RichTextWidget(
-                                title: 'ButtonDisplay : ',
-                                value: '${complaintlist.first.buttonDisplay}'),
-                            const SizedBox(
-                              height: 55,
+                            Row(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 10.0,
+                                      bottom: 10.0,
+                                      right: 10.0,
+                                      left: 20.0),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Complaint No'),
+                                        Text('Customer_Name '),
+                                        Text('Mobile No.'),
+                                        Text('Address '),
+                                        Text('Zone '),
+                                        Text('Problem '),
+                                        Text('Problem_since '),
+                                        Text('Nature '),
+                                        Text('Type '),
+                                        Text('kno '),
+                                        Text('Email '),
+                                        Text('PinCode '),
+                                        Text('MrCode '),
+                                        Text('Colony '),
+                                        Text('Area '),
+                                        Text('Status '),
+                                        Text('Assign_To_Name '),
+                                        Text('Assign_To '),
+                                        Text('Registration Date '),
+                                        Text('Completion Date '),
+                                        Text('Button Display '),
+                                      ]),
+                                ),
+                                const Column(
+                                  children: [
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                    Text(":"),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${complaintlist.first.complaintNo}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.customerName}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.mobileNo}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.address}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.zone}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.problem}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.problemSince}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.nature}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.type}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.kNo}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.eMail}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.pinCode}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.mrCode}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.colony}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.aREA}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.status}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.aSSIGNTOName}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.assignTo}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.registrationDate}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.completionDate}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${complaintlist.first.buttonDisplay}',
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ]),
+                                ),
+                              ],
                             ),
+
+                            // RichTextWidget(
+                            //     title: 'Complaint No:',
+                            //     value: '${complaintlist.first.complaintNo}'),
+                            // RichTextWidget(
+                            //     title: 'Customer_Name : ',
+                            //     value: '${complaintlist.first.customerName}'),
+                            // RichTextWidget(
+                            //     title: 'Mobile No : ',
+                            //     value: '${complaintlist.first.mobileNo}'),
+                            // RichTextWidget(
+                            //     title: 'Address : ',
+                            //     value: '${complaintlist.first.address}'),
+                            // RichTextWidget(
+                            //     title: 'zone : ',
+                            //     value: '${complaintlist.first.zone}'),
+                            // RichTextWidget(
+                            //     title: 'Problem : ',
+                            //     value: '${complaintlist.first.problem}'),
+                            // RichTextWidget(
+                            //     title: 'Problem_Since : ',
+                            //     value: '${complaintlist.first.problemSince}'),
+                            // RichTextWidget(
+                            //     title: 'Nature : ',
+                            //     value: '${complaintlist.first.nature}'),
+                            // RichTextWidget(
+                            //     title: 'type : ',
+                            //     value: '${complaintlist.first.type}'),
+                            // RichTextWidget(
+                            //     title: 'KNo : ',
+                            //     value: '${complaintlist.first.kNo}'),
+                            // RichTextWidget(
+                            //     title: 'eMail : ',
+                            //     value: '${complaintlist.first.eMail}'),
+                            // RichTextWidget(
+                            //     title: 'PinCode : ',
+                            //     value: '${complaintlist.first.pinCode}'),
+                            // RichTextWidget(
+                            //     title: 'MrCode : ',
+                            //     value: '${complaintlist.first.mrCode}'),
+                            // RichTextWidget(
+                            //     title: 'Colony : ',
+                            //     value: '${complaintlist.first.colony}'),
+                            // RichTextWidget(
+                            //     title: 'AREA : ',
+                            //     value: '${complaintlist.first.aREA}'),
+                            // RichTextWidget(
+                            //     title: 'Status : ',
+                            //     value: '${complaintlist.first.status}'),
+                            // RichTextWidget(
+                            //     title: 'ASSIGN_TO_Name : ',
+                            //     value: '${complaintlist.first.aSSIGNTOName}'),
+                            // RichTextWidget(
+                            //     title: 'Assign_To : ',
+                            //     value: '${complaintlist.first.assignTo}'),
+                            // RichTextWidget(
+                            //     title: 'Registration_Date : ',
+                            //     value:
+                            //         '${complaintlist.first.registrationDate}'),
+                            // RichTextWidget(
+                            //     title: 'Completion_Date : ',
+                            //     value: '${complaintlist.first.completionDate}'),
+                            // RichTextWidget(
+                            //     title: 'ButtonDisplay : ',
+                            //     value: '${complaintlist.first.buttonDisplay}'),
+                            // const SizedBox(
+                            //   height: 55,
+                            // ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    ElevatedButton(
-                                      style: const ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStatePropertyAll(
-                                        Color(0xffFF9800),
-                                      )),
-                                      onPressed: () async {
+                                    InkWell(
+                                      onTap: () {
                                         showAlertDialog(context);
                                       },
-                                      child: const Text(
-                                        "Assign To",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xffFF9800),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            'Assign To ',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    ElevatedButton(
-                                      style: const ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStatePropertyAll(
-                                        Color(0xffFF9800),
-                                      )),
-                                      onPressed: () {
+                                    InkWell(
+                                      onTap: () {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
@@ -274,35 +474,116 @@ class _Form_pageState extends State<Form_page> {
                                                       compno: widget.compno,
                                                     )));
                                       },
-                                      child: const Text(
-                                        "UPDATE",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.25,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xffFF9800),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            'Update',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    ElevatedButton(
-                                      style: const ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStatePropertyAll(
-                                        Color(0xffFF9800),
-                                      )),
-                                      onPressed: () {
+                                    InkWell(
+                                      onTap: () {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (_) =>
                                                     const payment()));
                                       },
-                                      child: const Text(
-                                        "Add Payment",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.28,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xffFF9800),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: const Center(
+                                          child: Text(
+                                            'Add Payment',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                         ),
                                       ),
                                     ),
+                                    // ElevatedButton(
+                                    //   style: const ButtonStyle(
+                                    //       backgroundColor:
+                                    //           MaterialStatePropertyAll(
+                                    //     Color(0xffFF9800),
+                                    //   )),
+                                    //   onPressed: () async {
+                                    //     showAlertDialog(context);
+                                    //   },
+                                    //   child: const Text(
+                                    //     "Assign To",
+                                    //     style: TextStyle(
+                                    //       color: Colors.white,
+                                    //       fontSize: 15,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    // ElevatedButton(
+                                    //   style: const ButtonStyle(
+                                    //       backgroundColor:
+                                    //           MaterialStatePropertyAll(
+                                    //     Color(0xffFF9800),
+                                    //   )),
+                                    //   onPressed: () {
+                                    //     Navigator.push(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //             builder: (_) => comp_update(
+                                    //                   compno: widget.compno,
+                                    //                 )));
+                                    //   },
+                                    //   child: const Text(
+                                    //     "UPDATE",
+                                    //     style: TextStyle(
+                                    //       color: Colors.white,
+                                    //       fontSize: 15,
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    // ElevatedButton(
+                                    //   style: const ButtonStyle(
+                                    //       backgroundColor:
+                                    //           MaterialStatePropertyAll(
+                                    //     Color(0xffFF9800),
+                                    //   )),
+                                    //   onPressed: () {
+                                    //     Navigator.push(
+                                    //         context,
+                                    //         MaterialPageRoute(
+                                    //             builder: (_) =>
+                                    //                 const payment()));
+                                    //   },
+                                    //   child: const Text(
+                                    //     "Add Payment",
+                                    //     style: TextStyle(
+                                    //       color: Colors.white,
+                                    //       fontSize: 15,
+                                    //     ),
+                                    //   ),
+                                    // ),
                                   ]),
                             )
                           ]),
