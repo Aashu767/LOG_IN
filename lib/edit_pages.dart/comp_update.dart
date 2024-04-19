@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:log_in/models/All_dropdown_model.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
@@ -45,6 +46,9 @@ class _comp_updateState extends State<comp_update> {
   List<ItemDetails> itemdetail = [];
   List<ServiceAction> serviceact = [];
   List<ComplaintStatus> Compstatus = [];
+  List<SERVICEACTION> servieloctiondropdwn = [];
+  List<SERVICEACTION> defectypedropdown = [];
+  List<SERVICEACTION> callcatdropdown = [];
   TextEditingController Qty = TextEditingController();
   TextEditingController Rate = TextEditingController();
   List<AddedItem> addedItems = [];
@@ -52,11 +56,15 @@ class _comp_updateState extends State<comp_update> {
   ServiceAction? actionval;
   ItemDetails? itemval;
   ComplaintStatus? statusval;
+  SERVICEACTION? serviceloc;
+  SERVICEACTION? defectcode;
+  SERVICEACTION? callcode;
 
   @override
   void initState() {
     super.initState();
     DDUApi();
+    fetchservice();
   }
 
   DDUApi() async {
@@ -97,6 +105,53 @@ class _comp_updateState extends State<comp_update> {
         Compstatus =
             status.map((data) => ComplaintStatus.fromJson(data)).toList();
       });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  fetchservice() async {
+    var staffId = await UserSecureStorage().getStaffId();
+    var body = {
+      "ProductCode": "0",
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_DropDownValueSR"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+
+      var itemliststring = data['string'];
+      itemliststring = itemliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var itemobject = json.decode(itemliststring.toString());
+      var serviceobject = itemobject['SERVICE_LOCATION'];
+      Iterable item = serviceobject;
+      var deftypelistobject = itemobject['DEFECT_TYPE'];
+      Iterable service = deftypelistobject;
+      var callcatobject = itemobject['CALL_CATEGORY'];
+      Iterable status = callcatobject;
+
+      setState(() {
+        servieloctiondropdwn =
+            item.map((data) => SERVICEACTION.fromJson(data)).toList();
+        defectypedropdown =
+            service.map((data) => SERVICEACTION.fromJson(data)).toList();
+        callcatdropdown =
+            status.map((data) => SERVICEACTION.fromJson(data)).toList();
+      });
+      print("servieloctiondropdwn$servieloctiondropdwn");
     } else {
       setState(() {
         isLoading = false;
@@ -630,48 +685,49 @@ class _comp_updateState extends State<comp_update> {
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: DropdownButton(
-                    underline: Container(
-                      height: 0,
-                      color: Colors.transparent,
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    hint: _dropDownValue3 == ""
-                        ? const Text('Select Service Location')
-                        : Text(
-                            _dropDownValue3,
-                            style: const TextStyle(
+                  child: StatefulBuilder(builder:
+                      (BuildContext context, StateSetter dropDownState) {
+                    return DropdownButton<SERVICEACTION>(
+                      underline: Container(
+                        height: 0,
+                        color: Colors.transparent,
+                      ),
+                      value: serviceloc,
+                      hint: const Text(
+                        '  Select Service location',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      isExpanded: true,
+                      iconSize: 30.0,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      items: servieloctiondropdwn
+                          .map((SERVICEACTION servicelocval) {
+                        return DropdownMenuItem<SERVICEACTION>(
+                          value: servicelocval,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              servicelocval.nAME!,
+                              style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 16,
+                              ),
+                            ),
                           ),
-                    isExpanded: true,
-                    iconSize: 30.0,
-                    style: const TextStyle(
-                        color: Colors.blue,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                    items: [
-                      'In CIty',
-                      'Out City (25-40)',
-                      'Out City (Above 40)',
-                      'Out City Actual',
-                    ].map(
-                      (val) {
-                        return DropdownMenuItem<String>(
-                          value: val,
-                          child: Text(val),
                         );
+                      }).toList(),
+                      onChanged: (SERVICEACTION? val) {
+                        dropDownState(() {
+                          setState(() {
+                            _dropDownValue3 = val!.iD!;
+                            serviceloc = val;
+                          });
+                        });
                       },
-                    ).toList(),
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          _dropDownValue3 = val!;
-                        },
-                      );
-                    },
-                  ),
+                    );
+                  }),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
