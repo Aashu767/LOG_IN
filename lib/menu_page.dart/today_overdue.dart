@@ -57,7 +57,6 @@ class _Today_overdueState extends State<Today_overdue> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reis${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();

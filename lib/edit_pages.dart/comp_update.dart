@@ -113,7 +113,6 @@ class _comp_updateState extends State<comp_update> {
   }
 
   fetchservice() async {
-    var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "ProductCode": "0",
     };
@@ -151,7 +150,6 @@ class _comp_updateState extends State<comp_update> {
         callcatdropdown =
             status.map((data) => SERVICEACTION.fromJson(data)).toList();
       });
-      print("servieloctiondropdwn$servieloctiondropdwn");
     } else {
       setState(() {
         isLoading = false;
@@ -245,7 +243,7 @@ class _comp_updateState extends State<comp_update> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
                 Container(
@@ -290,6 +288,7 @@ class _comp_updateState extends State<comp_update> {
                   child: Row(
                     children: [
                       Container(
+                        height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.35,
                         decoration: const BoxDecoration(
                           border: Border(
@@ -344,6 +343,7 @@ class _comp_updateState extends State<comp_update> {
                         }),
                       ),
                       Container(
+                        height: MediaQuery.of(context).size.height * 0.06,
                         width: MediaQuery.of(context).size.width * 0.15,
                         decoration: const BoxDecoration(
                           border: Border(
@@ -354,6 +354,7 @@ class _comp_updateState extends State<comp_update> {
                           ),
                         ),
                         child: TextField(
+                          keyboardType: TextInputType.number,
                           controller: Qty,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(hintText: 'Qty'),
@@ -370,6 +371,7 @@ class _comp_updateState extends State<comp_update> {
                           ),
                         ),
                         child: TextField(
+                          keyboardType: TextInputType.number,
                           controller: Rate,
                           textAlign: TextAlign.center,
                           decoration: const InputDecoration(hintText: 'Rate'),
@@ -392,11 +394,12 @@ class _comp_updateState extends State<comp_update> {
                           }
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.145,
+                          width: MediaQuery.of(context).size.width * 0.189,
                           decoration: const BoxDecoration(
                             color: Color(0xffFF9800),
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(0),
+                                bottomLeft: Radius.circular(0),
                                 bottomRight: Radius.circular(10),
                                 topRight: Radius.circular(10)),
                           ),
@@ -422,6 +425,7 @@ class _comp_updateState extends State<comp_update> {
                     itemCount: addedItems.length,
                     itemBuilder: (context, index) {
                       final item = addedItems[index];
+
                       return Container(
                         height: MediaQuery.of(context).size.height * 0.06,
                         decoration: BoxDecoration(
@@ -737,53 +741,48 @@ class _comp_updateState extends State<comp_update> {
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: DropdownButton(
-                    underline: Container(
-                      height: 0,
-                      color: Colors.transparent,
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    hint: _dropDownValue4 == ""
-                        ? const Text('Select Defected Type-Code')
-                        : Text(
-                            _dropDownValue4,
-                            style: const TextStyle(
+                  child: StatefulBuilder(builder:
+                      (BuildContext context, StateSetter dropDownState) {
+                    return DropdownButton<SERVICEACTION>(
+                      underline: Container(
+                        height: 0,
+                        color: Colors.transparent,
+                      ),
+                      value: defectcode,
+                      hint: const Text(
+                        '  Select defected-type',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      isExpanded: true,
+                      iconSize: 30.0,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      items: defectypedropdown.map((SERVICEACTION defectcode) {
+                        return DropdownMenuItem<SERVICEACTION>(
+                          value: defectcode,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              defectcode.nAME!,
+                              style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 16,
+                              ),
+                            ),
                           ),
-                    isExpanded: true,
-                    iconSize: 30.0,
-                    style: const TextStyle(
-                        color: Colors.blue,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                    items: [
-                      'Batt Low-10',
-                      'Break-10',
-                      'Damage-10',
-                      'Helter Damage-53',
-                      'Low Batter-53',
-                      'New Part-30',
-                      'New Part-39',
-                      'New Part-42',
-                      'Not Working-10',
-                    ].map(
-                      (val) {
-                        return DropdownMenuItem<String>(
-                          value: val,
-                          child: Text(val),
                         );
+                      }).toList(),
+                      onChanged: (SERVICEACTION? val) {
+                        dropDownState(() {
+                          setState(() {
+                            _dropDownValue4 = val!.iD!;
+                            defectcode = val;
+                          });
+                        });
                       },
-                    ).toList(),
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          _dropDownValue4 = val!;
-                        },
-                      );
-                    },
-                  ),
+                    );
+                  }),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -793,48 +792,48 @@ class _comp_updateState extends State<comp_update> {
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: DropdownButton(
-                    underline: Container(
-                      height: 0,
-                      color: Colors.transparent,
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    hint: _dropDownValue5 == ""
-                        ? const Text('Select Call Catogery')
-                        : Text(
-                            _dropDownValue5,
-                            style: const TextStyle(
+                  child: StatefulBuilder(builder:
+                      (BuildContext context, StateSetter dropDownState) {
+                    return DropdownButton<SERVICEACTION>(
+                      underline: Container(
+                        height: 0,
+                        color: Colors.transparent,
+                      ),
+                      value: defectcode,
+                      hint: const Text(
+                        '  Select call category',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      isExpanded: true,
+                      iconSize: 30.0,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                      items: callcatdropdown.map((SERVICEACTION callcode) {
+                        return DropdownMenuItem<SERVICEACTION>(
+                          value: callcode,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              callcode.nAME!,
+                              style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 16,
+                              ),
+                            ),
                           ),
-                    isExpanded: true,
-                    iconSize: 30.0,
-                    style: const TextStyle(
-                        color: Colors.blue,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                    items: [
-                      'Transit Damage',
-                      'Fresh Defective',
-                      'Used',
-                      'Inspection',
-                    ].map(
-                      (val) {
-                        return DropdownMenuItem<String>(
-                          value: val,
-                          child: Text(val),
                         );
+                      }).toList(),
+                      onChanged: (SERVICEACTION? val) {
+                        dropDownState(() {
+                          setState(() {
+                            _dropDownValue5 = val!.iD!;
+                            callcode = val;
+                          });
+                        });
                       },
-                    ).toList(),
-                    onChanged: (val) {
-                      setState(
-                        () {
-                          _dropDownValue5 = val!;
-                        },
-                      );
-                    },
-                  ),
+                    );
+                  }),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,

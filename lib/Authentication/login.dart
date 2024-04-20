@@ -58,13 +58,11 @@ class _LoginState extends State<Login> {
       });
 
       debugPrint(statusCode.toString());
-      debugPrint("res is ${res.body}");
       Xml2Json xml2Json = Xml2Json();
       xml2Json.parse(bodyIs);
       var jsonString = xml2Json.toParker();
       var data = jsonDecode(jsonString);
       var staffId = data['string'];
-      debugPrint("data is ${data['string']}");
       if (!context.mounted) return;
       if (data['string'] != 'false') {
         showDialog(

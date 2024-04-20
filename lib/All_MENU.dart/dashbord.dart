@@ -49,7 +49,6 @@ class _dashboardState extends State<dashboard> {
   fetchmenuApi() async {
     var t_code = await UserSecureStorage().gettcode();
     var staffId = await UserSecureStorage().getStaffId();
-    print("staffId$staffId");
     var body = {
       "UserID": staffId,
       "dt1": "0",
@@ -67,7 +66,6 @@ class _dashboardState extends State<dashboard> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reis${res.body}");
       Xml2Json xml2Json = Xml2Json();
       xml2Json.parse(bodyIs);
       var jsonString = xml2Json.toParker();

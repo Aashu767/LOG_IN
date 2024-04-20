@@ -87,7 +87,6 @@ class _paymentState extends State<payment> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reuseris${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
@@ -131,7 +130,6 @@ class _paymentState extends State<payment> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reuseris${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();

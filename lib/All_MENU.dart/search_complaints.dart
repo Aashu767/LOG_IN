@@ -42,7 +42,6 @@ class _Search_complaintsState extends State<Search_complaints> {
     var bodyIs = res.body;
     var statuCode = res.statusCode;
     if (statuCode == 200) {
-      debugPrint("reis${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();

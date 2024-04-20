@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:log_in/edit_pages.dart/comp_update.dart';
 import 'package:log_in/models/form_model.dart';
@@ -49,7 +48,6 @@ class _Form_pageState extends State<Form_page> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reuseris${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
@@ -87,7 +85,6 @@ class _Form_pageState extends State<Form_page> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reis${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
@@ -121,7 +118,6 @@ class _Form_pageState extends State<Form_page> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reis${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
@@ -366,74 +362,6 @@ class _Form_pageState extends State<Form_page> {
                                 ),
                               ],
                             ),
-
-                            // RichTextWidget(
-                            //     title: 'Complaint No:',
-                            //     value: '${complaintlist.first.complaintNo}'),
-                            // RichTextWidget(
-                            //     title: 'Customer_Name : ',
-                            //     value: '${complaintlist.first.customerName}'),
-                            // RichTextWidget(
-                            //     title: 'Mobile No : ',
-                            //     value: '${complaintlist.first.mobileNo}'),
-                            // RichTextWidget(
-                            //     title: 'Address : ',
-                            //     value: '${complaintlist.first.address}'),
-                            // RichTextWidget(
-                            //     title: 'zone : ',
-                            //     value: '${complaintlist.first.zone}'),
-                            // RichTextWidget(
-                            //     title: 'Problem : ',
-                            //     value: '${complaintlist.first.problem}'),
-                            // RichTextWidget(
-                            //     title: 'Problem_Since : ',
-                            //     value: '${complaintlist.first.problemSince}'),
-                            // RichTextWidget(
-                            //     title: 'Nature : ',
-                            //     value: '${complaintlist.first.nature}'),
-                            // RichTextWidget(
-                            //     title: 'type : ',
-                            //     value: '${complaintlist.first.type}'),
-                            // RichTextWidget(
-                            //     title: 'KNo : ',
-                            //     value: '${complaintlist.first.kNo}'),
-                            // RichTextWidget(
-                            //     title: 'eMail : ',
-                            //     value: '${complaintlist.first.eMail}'),
-                            // RichTextWidget(
-                            //     title: 'PinCode : ',
-                            //     value: '${complaintlist.first.pinCode}'),
-                            // RichTextWidget(
-                            //     title: 'MrCode : ',
-                            //     value: '${complaintlist.first.mrCode}'),
-                            // RichTextWidget(
-                            //     title: 'Colony : ',
-                            //     value: '${complaintlist.first.colony}'),
-                            // RichTextWidget(
-                            //     title: 'AREA : ',
-                            //     value: '${complaintlist.first.aREA}'),
-                            // RichTextWidget(
-                            //     title: 'Status : ',
-                            //     value: '${complaintlist.first.status}'),
-                            // RichTextWidget(
-                            //     title: 'ASSIGN_TO_Name : ',
-                            //     value: '${complaintlist.first.aSSIGNTOName}'),
-                            // RichTextWidget(
-                            //     title: 'Assign_To : ',
-                            //     value: '${complaintlist.first.assignTo}'),
-                            // RichTextWidget(
-                            //     title: 'Registration_Date : ',
-                            //     value:
-                            //         '${complaintlist.first.registrationDate}'),
-                            // RichTextWidget(
-                            //     title: 'Completion_Date : ',
-                            //     value: '${complaintlist.first.completionDate}'),
-                            // RichTextWidget(
-                            //     title: 'ButtonDisplay : ',
-                            //     value: '${complaintlist.first.buttonDisplay}'),
-                            // const SizedBox(
-                            //   height: 55,
-                            // ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
@@ -524,66 +452,6 @@ class _Form_pageState extends State<Form_page> {
                                         ),
                                       ),
                                     ),
-                                    // ElevatedButton(
-                                    //   style: const ButtonStyle(
-                                    //       backgroundColor:
-                                    //           MaterialStatePropertyAll(
-                                    //     Color(0xffFF9800),
-                                    //   )),
-                                    //   onPressed: () async {
-                                    //     showAlertDialog(context);
-                                    //   },
-                                    //   child: const Text(
-                                    //     "Assign To",
-                                    //     style: TextStyle(
-                                    //       color: Colors.white,
-                                    //       fontSize: 15,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    // ElevatedButton(
-                                    //   style: const ButtonStyle(
-                                    //       backgroundColor:
-                                    //           MaterialStatePropertyAll(
-                                    //     Color(0xffFF9800),
-                                    //   )),
-                                    //   onPressed: () {
-                                    //     Navigator.push(
-                                    //         context,
-                                    //         MaterialPageRoute(
-                                    //             builder: (_) => comp_update(
-                                    //                   compno: widget.compno,
-                                    //                 )));
-                                    //   },
-                                    //   child: const Text(
-                                    //     "UPDATE",
-                                    //     style: TextStyle(
-                                    //       color: Colors.white,
-                                    //       fontSize: 15,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    // ElevatedButton(
-                                    //   style: const ButtonStyle(
-                                    //       backgroundColor:
-                                    //           MaterialStatePropertyAll(
-                                    //     Color(0xffFF9800),
-                                    //   )),
-                                    //   onPressed: () {
-                                    //     Navigator.push(
-                                    //         context,
-                                    //         MaterialPageRoute(
-                                    //             builder: (_) =>
-                                    //                 const payment()));
-                                    //   },
-                                    //   child: const Text(
-                                    //     "Add Payment",
-                                    //     style: TextStyle(
-                                    //       color: Colors.white,
-                                    //       fontSize: 15,
-                                    //     ),
-                                    //   ),
-                                    // ),
                                   ]),
                             )
                           ]),
@@ -709,9 +577,6 @@ class _Form_pageState extends State<Form_page> {
                         setState(() {
                           userlist1 = val!.eMPLID!;
                           userval = val;
-                          if (kDebugMode) {
-                            print("Vlalll${val.eMPLID} $userlist1");
-                          }
                         });
                       });
                     },
