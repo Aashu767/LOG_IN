@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:log_in/All_MENU.dart/attandance.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
@@ -46,7 +45,6 @@ class _feedbackState extends State<feedback> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
@@ -172,10 +170,7 @@ class _feedbackState extends State<feedback> {
                       backgroundColor:
                           MaterialStatePropertyAll(Color(0xffFF9800))),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const attandance()));
+                    Navigator.of(context).pop();
                   },
                   child: const Text(
                     "Cancel",

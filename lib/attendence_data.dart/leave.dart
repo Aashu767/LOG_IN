@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:log_in/All_MENU.dart/attandance.dart';
 
 class leave extends StatefulWidget {
   const leave({super.key});
@@ -221,10 +220,7 @@ class _leaveState extends State<leave> {
                             backgroundColor:
                                 MaterialStatePropertyAll(Color(0xffFF9800))),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const attandance()));
+                          Navigator.of(context).pop();
                         },
                         child: const Text(
                           "Cancel",

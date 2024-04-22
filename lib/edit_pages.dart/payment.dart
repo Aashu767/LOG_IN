@@ -1,7 +1,8 @@
 // ignore_for_file: camel_case_types, avoid_print
 
 import 'dart:convert';
-
+import 'dart:io';
+import 'dart:io' as io;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,6 +26,8 @@ class _paymentState extends State<payment> {
   TextEditingController dateController = TextEditingController();
   final picker = ImagePicker();
   bool isLoading = true;
+  File? _imgFile;
+  String img64 = "";
   List<PaymentMode> paymentMode = [];
   String paymentlist1 = "";
   PaymentMode? paymentval;
@@ -149,20 +152,19 @@ class _paymentState extends State<payment> {
     }
   }
 
-  Future getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  Future getImageFromGallery(ImageSource source) async {
+    final pickedFile = await picker.pickImage(source: source);
 
+    if (pickedFile == null) return;
     setState(() {
-      if (pickedFile != null) {}
+      _imgFile = File(pickedFile.path);
+      imagetobase64(_imgFile!);
     });
   }
 
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {}
-    });
+  imagetobase64(File img) {
+    final bytes = io.File(img.path).readAsBytesSync();
+    img64 = base64Encode(bytes);
   }
 
   Future showOptions() async {
@@ -174,14 +176,14 @@ class _paymentState extends State<payment> {
             child: const Text('Photo Gallery'),
             onPressed: () {
               Navigator.of(context).pop();
-              getImageFromGallery();
+              getImageFromGallery(ImageSource.gallery);
             },
           ),
           CupertinoActionSheetAction(
             child: const Text('Camera'),
             onPressed: () {
               Navigator.of(context).pop();
-              getImageFromCamera();
+              getImageFromGallery(ImageSource.camera);
             },
           ),
         ],
@@ -225,6 +227,7 @@ class _paymentState extends State<payment> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: 'Enter Transaction ID',
                                 border: OutlineInputBorder(
@@ -238,7 +241,9 @@ class _paymentState extends State<payment> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
@@ -254,7 +259,9 @@ class _paymentState extends State<payment> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
@@ -270,7 +277,9 @@ class _paymentState extends State<payment> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
                           Container(
                             decoration: BoxDecoration(
                                 border: Border.all(),
@@ -319,7 +328,9 @@ class _paymentState extends State<payment> {
                               );
                             }),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
@@ -337,57 +348,79 @@ class _paymentState extends State<payment> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Row(children: [
-                              IconButton(
-                                onPressed: () => {
-                                  _selectdate(context),
-                                },
-                                icon: const Icon(
-                                  Icons.calendar_today,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  dateController.text == ""
-                                      ? 'Transaction Date *'
-                                      : dateController.text,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ]),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
                           ),
-                          const SizedBox(height: 20),
-                          Container(
-                            decoration: BoxDecoration(
+                          InkWell(
+                            onTap: () {
+                              _selectdate(context);
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              decoration: BoxDecoration(
                                 border: Border.all(),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Row(children: [
-                              IconButton(
-                                onPressed: showOptions,
-                                icon: const Icon(
-                                  (Icons.add_a_photo),
-                                ),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              const Expanded(
-                                flex: 2,
-                                child: Text(
-                                  'Picture Taken',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
+                              padding: const EdgeInsets.all(5.0),
+                              child: Row(
+                                children: [
+                                  Row(children: [
+                                    Text(
+                                      dateController.text == ""
+                                          ? ' Transaction Date: *'
+                                          : dateController.text,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ]),
+                                ],
                               ),
-                            ]),
+                            ),
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              showOptions();
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.06,
+                              decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: const EdgeInsets.all(5.0),
+                              child: Center(
+                                child: SizedBox(
+                                  width: 150,
+                                  child: Row(children: [
+                                    Image.asset("assets/image/camera.png"),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.03,
+                                    ),
+                                    _imgFile == null
+                                        ? const Text(
+                                            'Picture Taken',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                            ),
+                                          )
+                                        : Image.file(
+                                            _imgFile!,
+                                          ),
+                                  ]),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.01,
+                          ),
                           Center(
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.05,
@@ -397,14 +430,7 @@ class _paymentState extends State<payment> {
                                     backgroundColor: MaterialStatePropertyAll(
                                   Color(0xffFF9800),
                                 )),
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Form Submitted')),
-                                    );
-                                  }
-                                },
+                                onPressed: () {},
                                 child: const Text('Save',
                                     style: TextStyle(
                                       color: Colors.white,

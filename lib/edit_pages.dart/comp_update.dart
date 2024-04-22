@@ -216,6 +216,12 @@ class _comp_updateState extends State<comp_update> {
   }
 
   TextEditingController dateController = TextEditingController();
+  // final SignatureController _controller = SignatureController(
+  //   penStrokeWidth: 5,
+  //   penColor: Colors.black,
+  //   exportBackgroundColor: Colors.white,
+  // );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -588,27 +594,20 @@ class _comp_updateState extends State<comp_update> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: const EdgeInsets.all(5.0),
-                    child: Row(children: [
-                     
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          dateController.text == ""
-                              ? 'Visit Date'
-                              : dateController.text,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                    child: Row(
+                      children: [
+                        Row(children: [
+                          Text(
+                            dateController.text == ""
+                                ? ' Visit Date:'
+                                : dateController.text,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                      ),
-                       IconButton(
-                        onPressed: () => {},
-                        icon: const Icon(
-                          Icons.calendar_today,
-                        ),
-                      ),
-                    ]),
+                        ]),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -625,7 +624,7 @@ class _comp_updateState extends State<comp_update> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        '  Actual Closer',
+                        ' Actual Closer',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -850,49 +849,70 @@ class _comp_updateState extends State<comp_update> {
                   ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
-                    IconButton(
-                      onPressed: () => {},
-                      icon: const Icon(
-                        CupertinoIcons.pencil,
-                      ),
+                    Image.asset(
+                      "assets/image/pen.png",
+                      color: Colors.black,
                     ),
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Signature',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                        ),
-                      ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.03,
                     ),
+
+                    // const Text(
+                    //   'Signature',
+                    //   style: TextStyle(
+                    //     fontSize: 16,
+                    //   ),
+                    // ),
                   ]),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(children: [
-                    IconButton(
-                      onPressed: showOptions,
-                      icon: const Icon(
-                        (Icons.add_a_photo),
-                        color: Colors.black,
-                      ),
+                InkWell(
+                  onTap: () {
+                    showOptions();
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(children: [
+                      Image.asset("assets/image/camera.png"),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
+                      const Text(
                         'Picture Taken',
                         style: TextStyle(
-                          fontSize: 17,
+                          fontSize: 16,
                         ),
+                      ),
+                    ]),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(children: [
+                    Image.asset("assets/image/feedback_remark.png"),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.03,
+                    ),
+                    const Text(
+                      'FeedBack(Remark)',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
                       ),
                     ),
                   ]),
@@ -908,20 +928,15 @@ class _comp_updateState extends State<comp_update> {
                   ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
-                    IconButton(
-                      onPressed: () => {},
-                      icon: const Icon(
-                        Icons.thumb_up_alt_outlined,
-                      ),
+                    Image.asset("assets/image/like_thumb.png"),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.03,
                     ),
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'FeedBack(Remark)',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                        ),
+                    const Text(
+                      'Tech Remark',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
                       ),
                     ),
                   ]),
@@ -937,49 +952,15 @@ class _comp_updateState extends State<comp_update> {
                   ),
                   padding: const EdgeInsets.all(5.0),
                   child: Row(children: [
-                    IconButton(
-                      onPressed: () => {},
-                      icon: const Icon(
-                        Icons.thumb_up_alt_outlined,
-                      ),
+                    Image.asset("assets/image/like_thumb.png"),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.03,
                     ),
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Tech Remark',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                  ]),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(children: [
-                    IconButton(
-                      onPressed: () => {},
-                      icon: const Icon(
-                        Icons.thumb_up_alt_outlined,
-                      ),
-                    ),
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Happy Code',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 17,
-                        ),
+                    const Text(
+                      'Happy Code',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
                       ),
                     ),
                   ]),

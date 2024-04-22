@@ -6,7 +6,6 @@ import 'dart:io' as io;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:log_in/All_MENU.dart/attandance.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
@@ -25,6 +24,7 @@ class _check_inState extends State<check_in> {
   bool isLoading = true;
   File? _imgFile;
   String img64 = "";
+
   Future getImageFromGallery(ImageSource source) async {
     final pickedFile = await picker.pickImage(source: source);
 
@@ -37,7 +37,6 @@ class _check_inState extends State<check_in> {
 
   imagetobase64(File img) {
     final bytes = io.File(img.path).readAsBytesSync();
-
     img64 = base64Encode(bytes);
   }
 
@@ -275,10 +274,7 @@ class _check_inState extends State<check_in> {
                 Color(0xffFF9800),
               )),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const attandance()));
+                Navigator.of(context).pop();
               },
               child: const Text(
                 "Cancel",
