@@ -577,35 +577,39 @@ class _comp_updateState extends State<comp_update> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(children: [
-                    IconButton(
-                      onPressed: () => {
-                        _selectdate(context),
-                      },
-                      icon: const Icon(
-                        Icons.calendar_today,
-                      ),
+                InkWell(
+                  onTap: () {
+                    _selectdate(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        dateController.text == ""
-                            ? 'Visit Date'
-                            : dateController.text,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(children: [
+                     
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          dateController.text == ""
+                              ? 'Visit Date'
+                              : dateController.text,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
-                    ),
-                  ]),
+                       IconButton(
+                        onPressed: () => {},
+                        icon: const Icon(
+                          Icons.calendar_today,
+                        ),
+                      ),
+                    ]),
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -799,7 +803,7 @@ class _comp_updateState extends State<comp_update> {
                         height: 0,
                         color: Colors.transparent,
                       ),
-                      value: defectcode,
+                      value: callcode,
                       hint: const Text(
                         '  Select call category',
                         style: TextStyle(color: Colors.black),
