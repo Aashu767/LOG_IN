@@ -428,10 +428,10 @@ class _comp_updateState extends State<comp_update> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.06,
                   child: ListView.builder(
+                    shrinkWrap: false,
                     itemCount: addedItems.length,
                     itemBuilder: (context, index) {
                       final item = addedItems[index];
-
                       return Container(
                         height: MediaQuery.of(context).size.height * 0.06,
                         decoration: BoxDecoration(
@@ -856,13 +856,12 @@ class _comp_updateState extends State<comp_update> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.03,
                     ),
-
-                    // const Text(
-                    //   'Signature',
-                    //   style: TextStyle(
-                    //     fontSize: 16,
-                    //   ),
-                    // ),
+                    const Text(
+                      'Signature',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
                   ]),
                 ),
                 SizedBox(
