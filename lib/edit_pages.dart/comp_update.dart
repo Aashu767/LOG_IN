@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:io' as io;
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +14,7 @@ import 'package:log_in/models/All_dropdown_model.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
+//import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 
 class AddedItem {
   final String name;
@@ -59,6 +62,10 @@ class _comp_updateState extends State<comp_update> {
   SERVICEACTION? serviceloc;
   SERVICEACTION? defectcode;
   SERVICEACTION? callcode;
+  File? _imgFile;
+  String img64 = "";
+  //final GlobalKey<SignaturePadState> _signaturePadKey = GlobalKey();
+  Uint8List? _signatureImage;
 
   @override
   void initState() {
@@ -157,24 +164,19 @@ class _comp_updateState extends State<comp_update> {
     }
   }
 
-  Future getImageFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  Future getImageFromGallery(ImageSource source) async {
+    final pickedFile = await picker.pickImage(source: source);
 
+    if (pickedFile == null) return;
     setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      }
+      _imgFile = File(pickedFile.path);
+      imagetobase64(_imgFile!);
     });
   }
 
-  Future getImageFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      }
-    });
+  imagetobase64(File img) {
+    final bytes = io.File(img.path).readAsBytesSync();
+    img64 = base64Encode(bytes);
   }
 
   Future showOptions() async {
@@ -186,14 +188,14 @@ class _comp_updateState extends State<comp_update> {
             child: const Text('Photo Gallery'),
             onPressed: () {
               Navigator.of(context).pop();
-              getImageFromGallery();
+              getImageFromGallery(ImageSource.gallery);
             },
           ),
           CupertinoActionSheetAction(
             child: const Text('Camera'),
             onPressed: () {
               Navigator.of(context).pop();
-              getImageFromCamera();
+              getImageFromGallery(ImageSource.camera);
             },
           ),
         ],
@@ -216,11 +218,6 @@ class _comp_updateState extends State<comp_update> {
   }
 
   TextEditingController dateController = TextEditingController();
-  // final SignatureController _controller = SignatureController(
-  //   penStrokeWidth: 5,
-  //   penColor: Colors.black,
-  //   exportBackgroundColor: Colors.white,
-  // );
 
   @override
   Widget build(BuildContext context) {
@@ -350,37 +347,42 @@ class _comp_updateState extends State<comp_update> {
                       ),
                       Container(
                         height: MediaQuery.of(context).size.height * 0.06,
-                        width: MediaQuery.of(context).size.width * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.12,
                         decoration: const BoxDecoration(
                           border: Border(
-                            top: BorderSide.none,
-                            bottom: BorderSide.none,
-                            left: BorderSide.none,
-                            right: BorderSide(),
+                            right: BorderSide(color: Colors.transparent),
+                            bottom: BorderSide(color: Colors.transparent),
                           ),
                         ),
                         child: TextField(
                           keyboardType: TextInputType.number,
                           controller: Qty,
                           textAlign: TextAlign.center,
-                          decoration: const InputDecoration(hintText: 'Qty'),
+                          decoration: const InputDecoration(
+                            hintText: 'Qty',
+                            border: InputBorder.none,
+                          ),
                         ),
+                      ),
+                      const VerticalDivider(
+                        color: Colors.black,
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.15,
                         decoration: const BoxDecoration(
                           border: Border(
-                            top: BorderSide.none,
-                            bottom: BorderSide.none,
-                            left: BorderSide.none,
-                            right: BorderSide(),
+                            right: BorderSide(color: Colors.transparent),
+                            bottom: BorderSide(color: Colors.transparent),
                           ),
                         ),
                         child: TextField(
                           keyboardType: TextInputType.number,
                           controller: Rate,
                           textAlign: TextAlign.center,
-                          decoration: const InputDecoration(hintText: 'Rate'),
+                          decoration: const InputDecoration(
+                            hintText: 'Rate',
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
                       GestureDetector(
@@ -400,7 +402,7 @@ class _comp_updateState extends State<comp_update> {
                           }
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.189,
+                          width: MediaQuery.of(context).size.width * 0.180,
                           decoration: const BoxDecoration(
                             color: Color(0xffFF9800),
                             borderRadius: BorderRadius.only(
@@ -426,84 +428,102 @@ class _comp_updateState extends State<comp_update> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  child: ListView.builder(
-                    shrinkWrap: false,
-                    itemCount: addedItems.length,
-                    itemBuilder: (context, index) {
-                      final item = addedItems[index];
-                      return Container(
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: addedItems.length,
+                      itemBuilder: (context, index) {
+                        final item = addedItems[index];
+                        return Column(
                           children: [
                             Container(
                               height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  top: BorderSide.none,
-                                  bottom: BorderSide.none,
-                                  left: BorderSide.none,
-                                  right: BorderSide(),
-                                ),
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(child: Text(' ${item.name}')),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  top: BorderSide.none,
-                                  bottom: BorderSide.none,
-                                  left: BorderSide.none,
-                                  right: BorderSide(),
-                                ),
-                              ),
-                              child: Center(child: Text('${item.quantity}')),
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.15,
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  top: BorderSide.none,
-                                  bottom: BorderSide.none,
-                                  left: BorderSide.none,
-                                  right: BorderSide(),
-                                ),
-                              ),
-                              child: Center(child: Text('${item.rate}')),
-                            ),
-                            Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.06,
-                                width: MediaQuery.of(context).size.width * 0.13,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(0),
-                                      bottomRight: Radius.circular(10),
-                                      topRight: Radius.circular(10)),
-                                ),
-                                child: Center(
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        addedItems.removeAt(index);
-                                      });
-                                    },
-                                    icon: const Icon(Icons.delete,
-                                        color: Colors.red),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.35,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        top: BorderSide.none,
+                                        bottom: BorderSide.none,
+                                        left: BorderSide.none,
+                                        right: BorderSide(),
+                                      ),
+                                    ),
+                                    child: Center(child: Text(' ${item.name}')),
                                   ),
-                                )),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.15,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        top: BorderSide.none,
+                                        bottom: BorderSide.none,
+                                        left: BorderSide.none,
+                                        right: BorderSide(),
+                                      ),
+                                    ),
+                                    child:
+                                        Center(child: Text('${item.quantity}')),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.15,
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        top: BorderSide.none,
+                                        bottom: BorderSide.none,
+                                        left: BorderSide.none,
+                                        right: BorderSide(),
+                                      ),
+                                    ),
+                                    child: Center(child: Text('${item.rate}')),
+                                  ),
+                                  Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.13,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(0),
+                                            bottomRight: Radius.circular(10),
+                                            topRight: Radius.circular(10)),
+                                      ),
+                                      child: Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              addedItems.removeAt(index);
+                                            });
+                                          },
+                                          icon: const Icon(Icons.delete,
+                                              color: Colors.red),
+                                        ),
+                                      )),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.01,
+                            )
                           ],
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -650,7 +670,7 @@ class _comp_updateState extends State<comp_update> {
                       ),
                       value: statusval,
                       hint: const Text(
-                        '  Select Status',
+                        '  Select complaints Status',
                         style: TextStyle(color: Colors.black),
                       ),
                       isExpanded: true,
@@ -841,28 +861,33 @@ class _comp_updateState extends State<comp_update> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(children: [
-                    Image.asset(
-                      "assets/image/pen.png",
-                      color: Colors.black,
+                InkWell(
+                  onTap: () {
+                    //  _controller;
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    const Text(
-                      'Signature',
-                      style: TextStyle(
-                        fontSize: 16,
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(children: [
+                      Image.asset(
+                        "assets/image/pen.png",
+                        color: Colors.black,
                       ),
-                    ),
-                  ]),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
+                      ),
+                      const Text(
+                        'Signature',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ]),
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -883,12 +908,16 @@ class _comp_updateState extends State<comp_update> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.03,
                       ),
-                      const Text(
-                        'Picture Taken',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
+                      _imgFile == null
+                          ? const Text(
+                              'Picture Taken',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            )
+                          : Image.file(
+                              _imgFile!,
+                            ),
                     ]),
                   ),
                 ),

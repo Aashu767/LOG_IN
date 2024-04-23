@@ -118,117 +118,92 @@ class _Search_complaintsState extends State<Search_complaints> {
                         child: Card(
                           elevation: 5,
                           child: Container(
-                            height: 150,
+                            height: MediaQuery.of(context).size.height * 0.15,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Complaint No. :  ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 20.0,
+                                          right: 10.0,
+                                          top: 10.0,
+                                          bottom: 10.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          TextSpan(
-                                              text:
-                                                  '${searchlist[index].complaintNo}',
-                                              style: const TextStyle(
-                                                  color: Colors.grey)),
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Customer Name :  ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
+                                          Text('Complaint No '),
+                                          Text('Customer Name '),
+                                          Text('Mobile No '),
+                                          Text('K No '),
+                                          Text('Address '),
+                                          Text('Problem '),
+                                        ],
+                                      ),
+                                    ),
+                                    const Column(
+                                      children: [
+                                        Text(': '),
+                                        Text(': '),
+                                        Text(': '),
+                                        Text(': '),
+                                        Text(': '),
+                                        Text(': '),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          TextSpan(
-                                              text:
-                                                  '${searchlist[index].customerName}',
-                                              style: const TextStyle(
-                                                  color: Colors.grey)),
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Mobile No. :  ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  '${searchlist[index].mobileNo}',
-                                              style: const TextStyle(
-                                                  color: Colors.grey)),
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'kNO :  ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                              text: '${searchlist[index].kNo}',
-                                              style: const TextStyle(
-                                                  color: Colors.grey)),
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Problem  :  ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  '${searchlist[index].problem}',
-                                              style: const TextStyle(
-                                                  color: Colors.grey)),
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Address :  ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  '${searchlist[index].address}',
-                                              style: const TextStyle(
-                                                  color: Colors.grey)),
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Problem  :  ',
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  '${searchlist[index].problem}',
-                                              style: const TextStyle(
-                                                  color: Colors.grey)),
-                                        ]),
-                                  ),
-                                ],
-                              ),
+                                          Text(
+                                            '${searchlist[index].complaintNo}',
+                                            style: const TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${searchlist[index].customerName}',
+                                            style: const TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${searchlist[index].mobileNo}',
+                                            style: const TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${searchlist[index].kNo}',
+                                            style: const TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${searchlist[index].address}',
+                                            style: const TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${searchlist[index].problem}',
+                                            style: const TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
