@@ -164,134 +164,123 @@ class _check_inState extends State<check_in> {
         ),
         backgroundColor: const Color(0xffFF9800),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 16, right: 16, top: 16, bottom: 16),
-              child: Row(
+      body: SizedBox(
+        height: 300,
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          color: const Color(0xffDEE4F4),
+          margin: const EdgeInsets.all(15),
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Start Reading',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
-                      )),
-                  Flexible(
-                    flex: 4,
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: readingcontroller,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.all(5),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        hintText: 'Enter the Reading',
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter Reading';
-                        }
-                        return null;
-                      },
+                  const Text(
+                    'Start Reading :',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: readingcontroller,
+                    decoration: const InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      contentPadding: EdgeInsets.all(5),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      hintText: 'Enter the Reading',
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter Reading';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _imgFile == null
+                      ? Container()
+                      : Image.file(
+                          _imgFile!,
+                          width: 700,
+                          height: 100,
+                        ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                            Color(0xffFF9800),
+                          )),
+                          onPressed: () {
+                            if (img64 == "") {
+                              checkin();
+                            } else {
+                              checkinwithreading();
+                            }
+                          },
+                          child: const Text(
+                            "Save",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                            Color(0xffFF9800),
+                          )),
+                          onPressed: () {
+                            showOptions();
+                          },
+                          child: const Text(
+                            "Camera",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                            Color(0xffFF9800),
+                          )),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text(
+                            "Cancel",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ]),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Divider(
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-              color: Colors.blue,
-              height: 5,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              ElevatedButton(
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                  Color(0xffFF9800),
-                )),
-                onPressed: () {
-                  if (img64 == "") {
-                    checkin();
-                  } else {
-                    checkinwithreading();
-                  }
-                },
-                child: const Text(
-                  "Save",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                  Color(0xffFF9800),
-                )),
-                onPressed: () {
-                  showOptions();
-                },
-                child: const Text(
-                  "Camera",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
-              )
-            ]),
-            const SizedBox(
-              height: 10,
-            ),
-            const Divider(
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-              color: Colors.blue,
-              height: 5,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(
-                Color(0xffFF9800),
-              )),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                "Cancel",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            _imgFile == null
-                ? Container()
-                : Image.file(
-                    _imgFile!,
-                    width: 300,
-                    height: 150,
-                  )
-          ],
+          ),
         ),
       ),
     );

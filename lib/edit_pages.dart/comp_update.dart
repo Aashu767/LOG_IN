@@ -43,13 +43,16 @@ class _comp_updateState extends State<comp_update> {
   String _dropDownValue3 = "";
   String _dropDownValue4 = "";
   String _dropDownValue5 = "";
+  String _dropDownValue6 = "";
   String selectedDate = 'Tap to select date';
   late File _image;
   final picker = ImagePicker();
   List<ItemDetails> itemdetail = [];
   List<ServiceAction> serviceact = [];
-  List<ComplaintStatus> Compstatus = [];
+  // List<ComplaintStatus> Compstatus = [];
   List<SERVICEACTION> servieloctiondropdwn = [];
+  List<SERVICEACTION> complaintstatusdropdwn = [];
+  List<SERVICEACTION> redressaldropdown = [];
   List<SERVICEACTION> defectypedropdown = [];
   List<SERVICEACTION> callcatdropdown = [];
   TextEditingController Qty = TextEditingController();
@@ -58,13 +61,15 @@ class _comp_updateState extends State<comp_update> {
   bool isLoading = true;
   ServiceAction? actionval;
   ItemDetails? itemval;
-  ComplaintStatus? statusval;
+  // ComplaintStatus? statusval;
+  SERVICEACTION? complaintstatus;
   SERVICEACTION? serviceloc;
   SERVICEACTION? defectcode;
   SERVICEACTION? callcode;
+  SERVICEACTION? redressal;
   File? _imgFile;
   String img64 = "";
-  //final GlobalKey<SignaturePadState> _signaturePadKey = GlobalKey();
+  // final GlobalKey<SignaturePadState> _signaturePadKey = GlobalKey();
   Uint8List? _signatureImage;
 
   @override
@@ -102,15 +107,15 @@ class _comp_updateState extends State<comp_update> {
       Iterable item = itmelistobject;
       var actionlistobject = itemobject['SERVICE_ACTION'];
       Iterable service = actionlistobject;
-      var statuslistobject = itemobject['COMPLAINT_STATUS'];
-      Iterable status = statuslistobject;
+      // var statuslistobject = itemobject['COMPLAINT_STATUS'];
+      // Iterable status = statuslistobject;
 
       setState(() {
         itemdetail = item.map((data) => ItemDetails.fromJson(data)).toList();
         serviceact =
             service.map((data) => ServiceAction.fromJson(data)).toList();
-        Compstatus =
-            status.map((data) => ComplaintStatus.fromJson(data)).toList();
+        // Compstatus =
+        //     status.map((data) => ComplaintStatus.fromJson(data)).toList();
       });
     } else {
       setState(() {
@@ -142,20 +147,29 @@ class _comp_updateState extends State<comp_update> {
       var itemliststring = data['string'];
       itemliststring = itemliststring.toString().replaceAll("\\r\\\\n", "\n");
       var itemobject = json.decode(itemliststring.toString());
+      var compstatuseobject = itemobject['COMPLAINT_STATUS'];
+      Iterable compstatus = compstatuseobject;
       var serviceobject = itemobject['SERVICE_LOCATION'];
       Iterable item = serviceobject;
       var deftypelistobject = itemobject['DEFECT_TYPE'];
       Iterable service = deftypelistobject;
       var callcatobject = itemobject['CALL_CATEGORY'];
       Iterable status = callcatobject;
+      var redressalobject = itemobject['REDRESSAL_STATUS'];
+      Iterable redressalstatus = redressalobject;
 
       setState(() {
+        complaintstatusdropdwn =
+            compstatus.map((data) => SERVICEACTION.fromJson(data)).toList();
         servieloctiondropdwn =
             item.map((data) => SERVICEACTION.fromJson(data)).toList();
         defectypedropdown =
             service.map((data) => SERVICEACTION.fromJson(data)).toList();
         callcatdropdown =
             status.map((data) => SERVICEACTION.fromJson(data)).toList();
+        redressaldropdown = redressalstatus
+            .map((data) => SERVICEACTION.fromJson(data))
+            .toList();
       });
     } else {
       setState(() {
@@ -526,9 +540,6 @@ class _comp_updateState extends State<comp_update> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.06,
                   decoration: BoxDecoration(
@@ -663,14 +674,14 @@ class _comp_updateState extends State<comp_update> {
                   ),
                   child: StatefulBuilder(builder:
                       (BuildContext context, StateSetter dropDownState) {
-                    return DropdownButton<ComplaintStatus>(
+                    return DropdownButton<SERVICEACTION>(
                       underline: Container(
                         height: 0,
                         color: Colors.transparent,
                       ),
-                      value: statusval,
+                      value: complaintstatus,
                       hint: const Text(
-                        '  Select complaints Status',
+                        '  Select Status',
                         style: TextStyle(color: Colors.black),
                       ),
                       isExpanded: true,
@@ -678,13 +689,14 @@ class _comp_updateState extends State<comp_update> {
                       style: const TextStyle(
                         fontSize: 16,
                       ),
-                      items: Compstatus.map((ComplaintStatus Compstatusval) {
-                        return DropdownMenuItem<ComplaintStatus>(
-                          value: Compstatusval,
+                      items: complaintstatusdropdwn
+                          .map((SERVICEACTION complstatusval) {
+                        return DropdownMenuItem<SERVICEACTION>(
+                          value: complstatusval,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              Compstatusval.name!,
+                              complstatusval.nAME!,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -693,17 +705,73 @@ class _comp_updateState extends State<comp_update> {
                           ),
                         );
                       }).toList(),
-                      onChanged: (ComplaintStatus? val) {
+                      onChanged: (SERVICEACTION? val) {
                         dropDownState(() {
                           setState(() {
-                            _dropDownValue2 = val!.id!;
-                            statusval = val;
+                            _dropDownValue2 = val!.iD!;
+                            complaintstatus = val;
+                            if (val == ComplaintStatus) {
+                            //  _dropDownValue2 = null;
+                            }
                           });
                         });
                       },
                     );
                   }),
                 ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                if (ComplaintStatus == ComplaintStatus())
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: StatefulBuilder(builder:
+                        (BuildContext context, StateSetter dropDownState) {
+                      return DropdownButton<SERVICEACTION>(
+                        underline: Container(
+                          height: 0,
+                          color: Colors.transparent,
+                        ),
+                        value: redressal,
+                        hint: const Text(
+                          '  Select Redressal Status',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        items:
+                            redressaldropdown.map((SERVICEACTION redressalval) {
+                          return DropdownMenuItem<SERVICEACTION>(
+                            value: redressalval,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                redressalval.nAME!,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (SERVICEACTION? val) {
+                          dropDownState(() {
+                            setState(() {
+                              _dropDownValue6 = val!.iD!;
+                              redressal = val;
+                            });
+                          });
+                        },
+                      );
+                    }),
+                  ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),

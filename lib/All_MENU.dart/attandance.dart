@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, avoid_print, unnecessary_new, must_be_immutable, avoid_unnecessary_containers
+// ignore_for_file: camel_case_types, avoid_print, unnecessary_new, must_be_immutable, avoid_unnecessary_containers, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -60,66 +60,73 @@ class _attandanceState extends State<attandance> {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xffF9FAFF),
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.white,
-            )),
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xffFF9800),
-        title: const Text('Attendance'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-      ),
-      body: Flexible(
-        child: GridView.count(
-          childAspectRatio: 3 / 2,
-          padding:
-              const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 16),
-          crossAxisCount: 2,
-          crossAxisSpacing: 18,
-          mainAxisSpacing: 18,
-          children: myList.map((data) {
-            int index = myList.indexOf(data);
-            return InkWell(
-              onTap: () {
-                tapped(index, context);
+        backgroundColor: const Color(0xffF9FAFF),
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
               },
-              child: PhysicalModel(
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                elevation: 5,
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(data.img, width: 35),
-                      const SizedBox(height: 14),
-                      Text(
-                        data.title,
-                        style: GoogleFonts.openSans(
-                          textStyle: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+              )),
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color(0xffFF9800),
+          title: const Text('Attendance'),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
+        ),
+        body: ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          itemCount: myList.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              child: InkWell(
+                onTap: () {
+                  tapped(index, context);
+                },
+                child: PhysicalModel(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  elevation: 5,
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        PhysicalModel(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          elevation: 5,
+                          child: Container(
+                              width: MediaQuery.sizeOf(context).width * 0.16,
+                              height: MediaQuery.sizeOf(context).height * 0.07,
+                              child: Center(
+                                child: Image.asset(
+                                  myList[index].img,
+                                  height: 35,
+                                  width: 35,
+                                ),
+                              )),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          myList[index].title,
+                          style: GoogleFonts.openSans(
+                            textStyle: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             );
-          }).toList(),
-        ),
-      ),
-    );
+          },
+        ));
   }
 }
 
