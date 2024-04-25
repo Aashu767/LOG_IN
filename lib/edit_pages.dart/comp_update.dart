@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters, non_constant_identifier_names, unnecessary_string_interpolations
+// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters, non_constant_identifier_names, unnecessary_string_interpolations, unrelated_type_equality_checks, library_private_types_in_public_api, sized_box_for_whitespace
 
 import 'dart:convert';
 import 'dart:io';
@@ -10,11 +10,11 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:log_in/edit_pages.dart/signature.dart';
 import 'package:log_in/models/All_dropdown_model.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
-//import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 
 class AddedItem {
   final String name;
@@ -49,7 +49,6 @@ class _comp_updateState extends State<comp_update> {
   final picker = ImagePicker();
   List<ItemDetails> itemdetail = [];
   List<ServiceAction> serviceact = [];
-  // List<ComplaintStatus> Compstatus = [];
   List<SERVICEACTION> servieloctiondropdwn = [];
   List<SERVICEACTION> complaintstatusdropdwn = [];
   List<SERVICEACTION> redressaldropdown = [];
@@ -61,7 +60,6 @@ class _comp_updateState extends State<comp_update> {
   bool isLoading = true;
   ServiceAction? actionval;
   ItemDetails? itemval;
-  // ComplaintStatus? statusval;
   SERVICEACTION? complaintstatus;
   SERVICEACTION? serviceloc;
   SERVICEACTION? defectcode;
@@ -69,14 +67,14 @@ class _comp_updateState extends State<comp_update> {
   SERVICEACTION? redressal;
   File? _imgFile;
   String img64 = "";
-  // final GlobalKey<SignaturePadState> _signaturePadKey = GlobalKey();
-  Uint8List? _signatureImage;
-
+  Uint8List? signatureImage;
+  late TimeOfDay selectedTime;
   @override
   void initState() {
     super.initState();
     DDUApi();
     fetchservice();
+    selectedTime = TimeOfDay.now();
   }
 
   DDUApi() async {
@@ -107,15 +105,11 @@ class _comp_updateState extends State<comp_update> {
       Iterable item = itmelistobject;
       var actionlistobject = itemobject['SERVICE_ACTION'];
       Iterable service = actionlistobject;
-      // var statuslistobject = itemobject['COMPLAINT_STATUS'];
-      // Iterable status = statuslistobject;
 
       setState(() {
         itemdetail = item.map((data) => ItemDetails.fromJson(data)).toList();
         serviceact =
             service.map((data) => ServiceAction.fromJson(data)).toList();
-        // Compstatus =
-        //     status.map((data) => ComplaintStatus.fromJson(data)).toList();
       });
     } else {
       setState(() {
@@ -231,7 +225,36 @@ class _comp_updateState extends State<comp_update> {
     }
   }
 
+  _selectDate1(BuildContext context) async {
+    final DateTime? d = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2020),
+    );
+    if (d != null) {
+      setState(() {
+        selectedDate = DateFormat("dd-MM-yyyy").format(d);
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+    );
+
+    if (pickedTime != null && pickedTime != selectedTime) {
+      setState(() {
+        selectedTime = pickedTime;
+      });
+    }
+  }
+
   TextEditingController dateController = TextEditingController();
+  TextEditingController dateController1 = TextEditingController();
+  TextEditingController timeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -273,7 +296,7 @@ class _comp_updateState extends State<comp_update> {
                     const Expanded(
                       flex: 2,
                       child: Text(
-                        '   Complaint No  :-',
+                        '   Complaint No  :',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -655,7 +678,7 @@ class _comp_updateState extends State<comp_update> {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        ' Actual Closer',
+                        'Actual Closer',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -663,6 +686,68 @@ class _comp_updateState extends State<comp_update> {
                       ),
                     ),
                   ]),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  width: MediaQuery.of(context).size.width * 1,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            _selectdate1(context);
+                          },
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            decoration: BoxDecoration(
+                              border: Border.all(),
+                            ),
+                            child: Center(
+                              child: Text(
+                                dateController1.text == ""
+                                    ? ' Action Date:'
+                                    : dateController1.text,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            _selectTime(context);
+                          },
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            decoration: BoxDecoration(
+                              border: Border.all(),
+                            ),
+                            child: Center(
+                                child: Text(
+                              timeController.text == ""
+                                  ? 'Action Time:'
+                                  : timeController.text,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -710,9 +795,6 @@ class _comp_updateState extends State<comp_update> {
                           setState(() {
                             _dropDownValue2 = val!.iD!;
                             complaintstatus = val;
-                            if (val == ComplaintStatus) {
-                            //  _dropDownValue2 = null;
-                            }
                           });
                         });
                       },
@@ -722,7 +804,7 @@ class _comp_updateState extends State<comp_update> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
-                if (ComplaintStatus == ComplaintStatus())
+                if (complaintstatus?.nAME == 'COMPLETED')
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(),
@@ -930,8 +1012,13 @@ class _comp_updateState extends State<comp_update> {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 InkWell(
-                  onTap: () {
-                    //  _controller;
+                  onTap: () async {
+                    signatureImage = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignatureScreen()));
+
+                    setState(() {});
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.06,
@@ -948,12 +1035,16 @@ class _comp_updateState extends State<comp_update> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.03,
                       ),
-                      const Text(
-                        'Signature',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
+                      signatureImage == null
+                          ? const Text(
+                              'Signature',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            )
+                          : Image.memory(
+                              signatureImage!,
+                            ),
                     ]),
                   ),
                 ),
@@ -1108,6 +1199,26 @@ class _comp_updateState extends State<comp_update> {
 
       setState(() {
         dateController.text = formattedDate;
+      });
+    } else {
+      print("Date is not selected");
+    }
+  }
+
+  _selectdate1(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2050));
+
+    if (pickedDate != null) {
+      print(pickedDate);
+      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      print(formattedDate);
+
+      setState(() {
+        dateController1.text = formattedDate;
       });
     } else {
       print("Date is not selected");

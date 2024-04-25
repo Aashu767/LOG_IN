@@ -222,9 +222,7 @@ class _dashboardState extends State<dashboard> {
                                     "${data.menuName}",
                                     style: GoogleFonts.openSans(
                                       textStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18,
                                       ),
                                     ),
                                   ),

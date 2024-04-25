@@ -105,7 +105,7 @@ class _ComplaintsState extends State<Complaints> {
                     child: Card(
                       elevation: 5,
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
+                        height: MediaQuery.of(context).size.height * 0.17,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
@@ -124,21 +124,51 @@ class _ComplaintsState extends State<Complaints> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Complaint No '),
-                                      Text('Customer Name '),
-                                      Text('Mobile No '),
-                                      Text('Address '),
-                                      Text('Problem '),
+                                      Text(
+                                        'Complaint No ',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        'Customer Name ',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        'Mobile No ',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        'Address ',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        'Problem ',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
                                     ],
                                   ),
                                 ),
                                 const Column(
                                   children: [
-                                    Text(': '),
-                                    Text(': '),
-                                    Text(': '),
-                                    Text(': '),
-                                    Text(': '),
+                                    Text(
+                                      ': ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      ': ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      ': ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      ': ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      ': ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
                                   ],
                                 ),
                                 Padding(
@@ -149,33 +179,23 @@ class _ComplaintsState extends State<Complaints> {
                                     children: [
                                       Text(
                                         '${complist[index].complaintNo}',
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                        ),
+                                        style: const TextStyle(fontSize: 18),
                                       ),
                                       Text(
                                         '${complist[index].customerName}',
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                        ),
+                                        style: const TextStyle(fontSize: 18),
                                       ),
                                       Text(
                                         '${complist[index].mobileNo}',
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                        ),
+                                        style: const TextStyle(fontSize: 18),
                                       ),
                                       Text(
                                         '${complist[index].address}',
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                        ),
+                                        style: const TextStyle(fontSize: 18),
                                       ),
                                       Text(
                                         '${complist[index].problem}',
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                        ),
+                                        style: const TextStyle(fontSize: 18),
                                       ),
                                     ],
                                   ),
