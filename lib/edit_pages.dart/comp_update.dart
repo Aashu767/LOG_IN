@@ -12,6 +12,7 @@ import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:log_in/edit_pages.dart/signature.dart';
 import 'package:log_in/models/All_dropdown_model.dart';
+import 'package:log_in/models/itemModel.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
@@ -37,7 +38,8 @@ class comp_update extends StatefulWidget {
 }
 
 class _comp_updateState extends State<comp_update> {
-  String _dropDownValue = "";
+  String _itemcodeValue = "";
+  String _itemnameValue = "";
   String _dropDownValue1 = "";
   String _dropDownValue2 = "";
   String _dropDownValue3 = "";
@@ -60,6 +62,7 @@ class _comp_updateState extends State<comp_update> {
   TextEditingController dateController1 = TextEditingController();
   TextEditingController timeController = TextEditingController();
   List<AddedItem> addedItems = [];
+  List<itemModel> addedItemsVal = [];
   bool isLoading = true;
   ServiceAction? actionval;
   ItemDetails? itemval;
@@ -384,7 +387,8 @@ class _comp_updateState extends State<comp_update> {
                               onChanged: (ItemDetails? val) {
                                 dropDownState(() {
                                   setState(() {
-                                    _dropDownValue = val!.id!;
+                                    _itemcodeValue = val!.id!;
+                                    _itemnameValue = val!.name!;
                                     itemval = val;
                                   });
                                 });
@@ -437,11 +441,21 @@ class _comp_updateState extends State<comp_update> {
                               Qty.text.isNotEmpty &&
                               Rate.text.isNotEmpty) {
                             setState(() {
-                              addedItems.add(AddedItem(
-                                name: itemval!.name!,
-                                quantity: int.parse(Qty.text),
-                                rate: double.parse(Rate.text),
-                              ));
+                              addedItemsVal.add(itemModel(
+                                  itemID: _itemcodeValue,
+                                  itemName: _itemnameValue,
+                                  itemQty: Qty.text,
+                                  sTRQCCODE: "",
+                                  sTREXCREG: "",
+                                  sTRMODVATVLUE: "",
+                                  itemRate: Rate.text,
+                                  sTRPLCECODE: ""));
+
+                              // addedItems.add(AddedItem(
+                              //   name: itemval!.name!,
+                              //   quantity: int.parse(Qty.text),
+                              //   rate: double.parse(Rate.text),
+                              // ));
                             });
                             Qty.clear();
                             Rate.clear();
@@ -478,9 +492,11 @@ class _comp_updateState extends State<comp_update> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: addedItems.length,
+                      itemCount: addedItemsVal.length,
+                      //itemCount: addedItems.length,
                       itemBuilder: (context, index) {
-                        final item = addedItems[index];
+                        final item = addedItemsVal[index];
+                        // final item = addedItems[index];
                         return Column(
                           children: [
                             Container(
@@ -504,7 +520,8 @@ class _comp_updateState extends State<comp_update> {
                                         right: BorderSide(),
                                       ),
                                     ),
-                                    child: Center(child: Text(' ${item.name}')),
+                                    child: Center(
+                                        child: Text(' ${item.itemName}')),
                                   ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
@@ -520,7 +537,7 @@ class _comp_updateState extends State<comp_update> {
                                       ),
                                     ),
                                     child:
-                                        Center(child: Text('${item.quantity}')),
+                                        Center(child: Text('${item.itemQty}')),
                                   ),
                                   Container(
                                     height: MediaQuery.of(context).size.height *
@@ -535,7 +552,8 @@ class _comp_updateState extends State<comp_update> {
                                         right: BorderSide(),
                                       ),
                                     ),
-                                    child: Center(child: Text('${item.rate}')),
+                                    child:
+                                        Center(child: Text('${item.itemRate}')),
                                   ),
                                   Container(
                                       height:
@@ -553,7 +571,8 @@ class _comp_updateState extends State<comp_update> {
                                         child: IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              addedItems.removeAt(index);
+                                              addedItemsVal.removeAt(index);
+                                              // addedItems.removeAt(index);
                                             });
                                           },
                                           icon: const Icon(Icons.delete,
