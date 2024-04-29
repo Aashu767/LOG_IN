@@ -3,9 +3,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:io' as io;
-import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/edit_pages.dart/complaint.dart';
@@ -56,6 +56,9 @@ class _comp_updateState extends State<comp_update> {
   List<SERVICEACTION> callcatdropdown = [];
   TextEditingController Qty = TextEditingController();
   TextEditingController Rate = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController dateController1 = TextEditingController();
+  TextEditingController timeController = TextEditingController();
   List<AddedItem> addedItems = [];
   bool isLoading = true;
   ServiceAction? actionval;
@@ -68,13 +71,15 @@ class _comp_updateState extends State<comp_update> {
   File? _imgFile;
   String img64 = "";
   Uint8List? signatureImage;
-  late TimeOfDay selectedTime;
+  TimeOfDay? _selectedTime;
+  late DateFormat _timeFormat;
+
   @override
   void initState() {
     super.initState();
     DDUApi();
     fetchservice();
-    selectedTime = TimeOfDay.now();
+    _timeFormat = DateFormat('hh:mm a');
   }
 
   DDUApi() async {
@@ -240,21 +245,25 @@ class _comp_updateState extends State<comp_update> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? pickedTime = await showTimePicker(
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: selectedTime,
+      initialTime: _selectedTime ?? TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+          child: child!,
+        );
+      },
     );
 
-    if (pickedTime != null && pickedTime != selectedTime) {
+    if (picked != null) {
       setState(() {
-        selectedTime = pickedTime;
+        _selectedTime = picked;
+        timeController.text = _timeFormat
+            .format(DateTime(2022, 1, 1, picked.hour, picked.minute));
       });
     }
   }
-
-  TextEditingController dateController = TextEditingController();
-  TextEditingController dateController1 = TextEditingController();
-  TextEditingController timeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -569,19 +578,20 @@ class _comp_updateState extends State<comp_update> {
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Row(children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Actual Problem',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
+                  padding: const EdgeInsets.only(left: 8, top: 11, bottom: 5),
+                  child: TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                    ],
+                    decoration: const InputDecoration(
+                      hintText: 'Actual Problem',
+                      border: InputBorder.none,
                     ),
-                  ]),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -673,19 +683,20 @@ class _comp_updateState extends State<comp_update> {
                     border: Border.all(),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Row(children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'Actual Closer',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
+                  padding: const EdgeInsets.only(left: 8, top: 11, bottom: 5),
+                  child: TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
+                    ],
+                    decoration: const InputDecoration(
+                      hintText: 'Actual Closer',
+                      border: InputBorder.none,
                     ),
-                  ]),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -736,7 +747,7 @@ class _comp_updateState extends State<comp_update> {
                             ),
                             child: Center(
                                 child: Text(
-                              timeController.text == ""
+                              timeController.text.isEmpty
                                   ? 'Action Time:'
                                   : timeController.text,
                               style: const TextStyle(
@@ -1090,19 +1101,31 @@ class _comp_updateState extends State<comp_update> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(5.0),
-                  child: Row(children: [
-                    Image.asset("assets/image/feedback_remark.png"),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    const Text(
-                      'FeedBack(Remark)',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                  child: Row(
+                    children: [
+                      Image.asset("assets/image/feedback_remark.png"),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
                       ),
-                    ),
-                  ]),
+                      Expanded(
+                        child: TextField(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z\s]')),
+                          ],
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            hintText: 'FeedBack(Remark)',
+                            border: InputBorder.none,
+                          ),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -1114,19 +1137,31 @@ class _comp_updateState extends State<comp_update> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(5.0),
-                  child: Row(children: [
-                    Image.asset("assets/image/like_thumb.png"),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    const Text(
-                      'Tech Remark',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                  child: Row(
+                    children: [
+                      Image.asset("assets/image/like_thumb.png"),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
                       ),
-                    ),
-                  ]),
+                      Expanded(
+                        child: TextField(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z\s]')),
+                          ],
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            hintText: 'Tech Remark',
+                            border: InputBorder.none,
+                          ),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
@@ -1138,19 +1173,30 @@ class _comp_updateState extends State<comp_update> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(5.0),
-                  child: Row(children: [
-                    Image.asset("assets/image/like_thumb.png"),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.03,
-                    ),
-                    const Text(
-                      'Happy Code',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                  child: Row(
+                    children: [
+                      Image.asset("assets/image/like_thumb.png"),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.03,
                       ),
-                    ),
-                  ]),
+                      Expanded(
+                        child: TextField(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            hintText: 'Happy Code',
+                            border: InputBorder.none,
+                          ),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,

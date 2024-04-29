@@ -165,7 +165,7 @@ class _check_inState extends State<check_in> {
         backgroundColor: const Color(0xffFF9800),
       ),
       body: SizedBox(
-        height: 300,
+        height: MediaQuery.sizeOf(context).height * 0.5,
         child: Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -194,8 +194,8 @@ class _check_inState extends State<check_in> {
                     keyboardType: TextInputType.number,
                     controller: readingcontroller,
                     decoration: const InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
+                      // fillColor: Colors.white,
+                      // filled: true,
                       contentPadding: EdgeInsets.all(5),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -225,10 +225,13 @@ class _check_inState extends State<check_in> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ElevatedButton(
-                          style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                            Color(0xffFF9800),
-                          )),
+                          style: ButtonStyle(
+                              shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5))),
+                              backgroundColor: const MaterialStatePropertyAll(
+                                Color(0xffFF9800),
+                              )),
                           onPressed: () {
                             if (img64 == "") {
                               checkin();
@@ -245,10 +248,13 @@ class _check_inState extends State<check_in> {
                           ),
                         ),
                         ElevatedButton(
-                          style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                            Color(0xffFF9800),
-                          )),
+                          style: ButtonStyle(
+                              shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5))),
+                              backgroundColor: const MaterialStatePropertyAll(
+                                Color(0xffFF9800),
+                              )),
                           onPressed: () {
                             showOptions();
                           },
@@ -261,10 +267,13 @@ class _check_inState extends State<check_in> {
                           ),
                         ),
                         ElevatedButton(
-                          style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                            Color(0xffFF9800),
-                          )),
+                          style: ButtonStyle(
+                              shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5))),
+                              backgroundColor: const MaterialStatePropertyAll(
+                                Color(0xffFF9800),
+                              )),
                           onPressed: () {
                             Navigator.of(context).pop();
                           },

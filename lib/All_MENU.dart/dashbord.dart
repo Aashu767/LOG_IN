@@ -158,93 +158,96 @@ class _dashboardState extends State<dashboard> {
         ),
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
-            : Column(
-                children: menulist.map((data) {
-                  int index = menulist.indexOf(data);
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 10),
-                    child: PhysicalModel(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                      elevation: 5,
-                      child: Container(
-                        width: MediaQuery.sizeOf(context).width,
-                        height: MediaQuery.sizeOf(context).height * 0.07,
-                        margin: EdgeInsets.only(
-                          right: 10,
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            if (data.menuName == "Search Complaints") {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => Search_complaints()));
-                            } else if (data.menuName == "Attendance") {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => attandance()));
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => zone(
-                                            menuid: data.menuId.toString(),
-                                          )));
-                            }
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  PhysicalModel(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white,
-                                    elevation: 5,
-                                    child: Container(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.16,
-                                      height:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.07,
-                                      child: Image.asset(
-                                        images[index],
-                                        height: 60,
-                                        width: 80,
+            : SingleChildScrollView(
+                child: Column(
+                  children: menulist.map((data) {
+                    int index = menulist.indexOf(data);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
+                      child: PhysicalModel(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                        elevation: 5,
+                        child: Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          height: MediaQuery.sizeOf(context).height * 0.07,
+                          margin: EdgeInsets.only(
+                            right: 10,
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              if (data.menuName == "Search Complaints") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => Search_complaints()));
+                              } else if (data.menuName == "Attendance") {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => attandance()));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => zone(
+                                              menuid: data.menuId.toString(),
+                                            )));
+                              }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    PhysicalModel(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                      elevation: 5,
+                                      child: Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.16,
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                0.07,
+                                        child: Image.asset(
+                                          images[index],
+                                          height: 60,
+                                          width: 80,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Text(
-                                    "${data.menuName}",
-                                    style: GoogleFonts.openSans(
-                                      textStyle: const TextStyle(
-                                        fontSize: 18,
+                                    const SizedBox(width: 20),
+                                    Text(
+                                      "${data.menuName}",
+                                      style: GoogleFonts.openSans(
+                                        textStyle: const TextStyle(
+                                          fontSize: 18,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "[${data.count}]",
-                                style: GoogleFonts.openSans(
-                                  textStyle: const TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                                  ],
+                                ),
+                                Text(
+                                  "[${data.count}]",
+                                  style: GoogleFonts.openSans(
+                                    textStyle: const TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
               ));
   }
 }
