@@ -388,7 +388,7 @@ class _comp_updateState extends State<comp_update> {
                                 dropDownState(() {
                                   setState(() {
                                     _itemcodeValue = val!.id!;
-                                    _itemnameValue = val!.name!;
+                                    _itemnameValue = val.name!;
                                     itemval = val;
                                   });
                                 });
@@ -450,12 +450,6 @@ class _comp_updateState extends State<comp_update> {
                                   sTRMODVATVLUE: "",
                                   itemRate: Rate.text,
                                   sTRPLCECODE: ""));
-
-                              // addedItems.add(AddedItem(
-                              //   name: itemval!.name!,
-                              //   quantity: int.parse(Qty.text),
-                              //   rate: double.parse(Rate.text),
-                              // ));
                             });
                             Qty.clear();
                             Rate.clear();
@@ -493,10 +487,8 @@ class _comp_updateState extends State<comp_update> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: addedItemsVal.length,
-                      //itemCount: addedItems.length,
                       itemBuilder: (context, index) {
                         final item = addedItemsVal[index];
-                        // final item = addedItems[index];
                         return Column(
                           children: [
                             Container(
@@ -572,7 +564,6 @@ class _comp_updateState extends State<comp_update> {
                                           onPressed: () {
                                             setState(() {
                                               addedItemsVal.removeAt(index);
-                                              // addedItems.removeAt(index);
                                             });
                                           },
                                           icon: const Icon(Icons.delete,

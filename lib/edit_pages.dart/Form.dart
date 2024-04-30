@@ -21,6 +21,7 @@ class Form_page extends StatefulWidget {
 class _Form_pageState extends State<Form_page> {
   bool isLoading = true;
   List<ComplaintDetail> complaintlist = [];
+  List<ItemDetail> ItemList = [];
   List<UserList> userlist = [];
   String userlist1 = "";
   UserList? userval;
@@ -85,6 +86,7 @@ class _Form_pageState extends State<Form_page> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
+      debugPrint("reis${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
@@ -94,9 +96,15 @@ class _Form_pageState extends State<Form_page> {
       var complobject = json.decode(complliststring.toString());
       complobject = complobject['Complaint_Detail'];
       Iterable l = complobject;
+      var itemliststring = data['string'];
+      itemliststring = itemliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var itemlobject = json.decode(itemliststring.toString());
+      itemlobject = itemlobject['Item_Detail'];
+      Iterable m = itemlobject;
       setState(() {
         complaintlist =
             l.map((data) => ComplaintDetail.fromJson(data)).toList();
+        ItemList = m.map((data) => ItemDetail.fromJson(data)).toList();
         isLoading = false;
       });
     }
@@ -173,7 +181,7 @@ class _Form_pageState extends State<Form_page> {
                                       top: 10.0,
                                       bottom: 10.0,
                                       right: 10.0,
-                                      left: 10.0),
+                                      left: 8.0),
                                   child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -204,27 +212,28 @@ class _Form_pageState extends State<Form_page> {
                                             style: TextStyle(fontSize: 18)),
                                         Text('Problem ',
                                             style: TextStyle(fontSize: 18)),
-                                        // Text('Status ',
-                                        //     style: TextStyle(fontSize: 18)),
                                         Text('Assign To',
                                             style: TextStyle(fontSize: 18)),
-                                        // Text('Assign_To ',
-                                        //     style: TextStyle(fontSize: 18)),
                                         Text('Registration Date ',
                                             style: TextStyle(fontSize: 18)),
-                                        Text('Completion Date ',
+                                        Text('Closure Date ',
                                             style: TextStyle(fontSize: 18)),
-                                        Text('Button Display ',
+                                        Text('Bu Name ',
                                             style: TextStyle(fontSize: 18)),
-                                        Text('Nature ',
+                                        Text('Category Name ',
                                             style: TextStyle(fontSize: 18)),
-                                        Text('kno ',
+                                        Text('Model Code ',
+                                            style: TextStyle(fontSize: 18)),
+                                        Text('Product Name',
+                                            style: TextStyle(fontSize: 18)),
+                                        Text('Color Name',
+                                            style: TextStyle(fontSize: 18)),
+                                        Text('Size Code ',
                                             style: TextStyle(fontSize: 18)),
                                       ]),
                                 ),
                                 const Column(
                                   children: [
-                                    // Text(":", style: TextStyle(fontSize: 18)),
                                     Text(":", style: TextStyle(fontSize: 18)),
                                     Text(":", style: TextStyle(fontSize: 18)),
                                     Text(":", style: TextStyle(fontSize: 18)),
@@ -244,7 +253,9 @@ class _Form_pageState extends State<Form_page> {
                                     Text(":", style: TextStyle(fontSize: 18)),
                                     Text(":", style: TextStyle(fontSize: 18)),
                                     Text(":", style: TextStyle(fontSize: 18)),
-                                    //  Text(":", style: TextStyle(fontSize: 18)),
+                                    Text(":", style: TextStyle(fontSize: 18)),
+                                    Text(":", style: TextStyle(fontSize: 18)),
+                                    Text(":", style: TextStyle(fontSize: 18)),
                                   ],
                                 ),
                                 Padding(
@@ -305,18 +316,10 @@ class _Form_pageState extends State<Form_page> {
                                           '${complaintlist.first.problem}',
                                           style: const TextStyle(fontSize: 18),
                                         ),
-                                        // Text(
-                                        //   '${complaintlist.first.status}',
-                                        //   style: const TextStyle(fontSize: 18),
-                                        // ),
                                         Text(
                                           '${complaintlist.first.aSSIGNTOName}',
                                           style: const TextStyle(fontSize: 18),
                                         ),
-                                        // Text(
-                                        //   '${complaintlist.first.assignTo}',
-                                        //   style: const TextStyle(fontSize: 18),
-                                        // ),
                                         Text(
                                           '${complaintlist.first.registrationDate}',
                                           style: const TextStyle(fontSize: 18),
@@ -326,15 +329,27 @@ class _Form_pageState extends State<Form_page> {
                                           style: const TextStyle(fontSize: 18),
                                         ),
                                         Text(
-                                          '${complaintlist.first.buttonDisplay}',
+                                          '${ItemList.first.bUNAME}',
                                           style: const TextStyle(fontSize: 18),
                                         ),
                                         Text(
-                                          '${complaintlist.first.type}',
+                                          '${ItemList.first.cATEGORYNAME}',
                                           style: const TextStyle(fontSize: 18),
                                         ),
                                         Text(
-                                          '${complaintlist.first.kNo}',
+                                          '${ItemList.first.mODELNAME}',
+                                          style: const TextStyle(fontSize: 18),
+                                        ),
+                                        Text(
+                                          '${ItemList.first.iTEMNAME}',
+                                          style: const TextStyle(fontSize: 18),
+                                        ),
+                                        Text(
+                                          '${ItemList.first.cOLORNAME}',
+                                          style: const TextStyle(fontSize: 18),
+                                        ),
+                                        Text(
+                                          '${ItemList.first.sIZENAME}',
                                           style: const TextStyle(fontSize: 18),
                                         ),
                                       ]),

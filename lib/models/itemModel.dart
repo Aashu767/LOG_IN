@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, file_names, prefer_collection_literals
+
 class itemModel {
   String? itemName;
   String? itemID;
@@ -30,7 +32,7 @@ class itemModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['Item_Name'] = itemName;
     data['Item_ID'] = itemID;
     data['Item_Qty'] = itemQty;
