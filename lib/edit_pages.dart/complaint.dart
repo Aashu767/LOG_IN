@@ -105,7 +105,7 @@ class _ComplaintsState extends State<Complaints> {
                     child: Card(
                       elevation: 5,
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 0.17,
+                        height: MediaQuery.of(context).size.height * 0.20,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),

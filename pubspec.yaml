@@ -58,6 +58,8 @@ dependencies:
   signature: ^5.4.1
   flutter_signature_view: ^2.0.0
   flutter_signature_pad: ^3.0.1
+  location: ^6.0.1
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -86,7 +88,7 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/image/1024.png"
+  image_path: "assets/image/new_newton.png"
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
