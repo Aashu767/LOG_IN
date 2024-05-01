@@ -2,10 +2,8 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/All_MENU.dart/dashbord.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:xml2json/xml2json.dart';
 import '../utils/secure_storage.dart';
 
@@ -28,38 +26,6 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-  }
-
-  Future asklocation() async {
-    var status = await Permission.locationWhenInUse.request();
-    debugPrint(status.toString());
-  }
-
-  Future<Position> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    permission = await Geolocator.requestPermission();
-
-    if (permission == LocationPermission.denied) {
-      return Future.error('Location permissions are denied');
-    }
-
-    Position position = await Geolocator.getCurrentPosition();
-    setState(() {
-      setState(() {});
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => dashboard()));
-    });
-
-    debugPrint(position.toString());
-    return await Geolocator.getCurrentPosition();
   }
 
   Future<void> login(String user, String pass) async {
