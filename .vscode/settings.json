@@ -2,5 +2,6 @@
   "cSpell.words": ["attandance"],
   "yaml.schemas": {
     "https://json.schemastore.org/pubspec.json": "file:///c%3A/Users/Admin/Desktop/New%20folder/LOG_IN/pubspec.yaml"
-  }
+  },
+  "cmake.sourceDirectory": "C:/Users/Admin/Desktop/LOG_IN/linux/flutter"
 }

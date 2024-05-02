@@ -86,18 +86,21 @@ class _Search_complaintsState extends State<Search_complaints> {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16),
-              child: TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    hintText: 'Search...',
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          fetchsearchApi();
-                        },
-                        icon: const Icon(Icons.search))),
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.06,
+                child: TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      hintText: 'Complant No. / Mob No...',
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            fetchsearchApi();
+                          },
+                          icon: const Icon(Icons.search))),
+                ),
               ),
             ),
             Expanded(
@@ -118,7 +121,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                         child: Card(
                           elevation: 5,
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.25,
+                            height: MediaQuery.of(context).size.height * 0.20,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(15),

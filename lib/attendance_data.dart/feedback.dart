@@ -86,7 +86,7 @@ class _feedbackState extends State<feedback> {
       ),
       body: SingleChildScrollView(
           child: SizedBox(
-        height: MediaQuery.sizeOf(context).height * 0.4,
+        height: MediaQuery.sizeOf(context).height * 0.5,
         child: Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,

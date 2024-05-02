@@ -194,8 +194,6 @@ class _check_outState extends State<check_out> {
                     keyboardType: TextInputType.number,
                     controller: readingcontroller,
                     decoration: const InputDecoration(
-                      // fillColor: Colors.white,
-                      // filled: true,
                       contentPadding: EdgeInsets.all(5),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),

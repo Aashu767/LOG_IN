@@ -80,9 +80,64 @@ class _comp_updateState extends State<comp_update> {
   @override
   void initState() {
     super.initState();
+    saveupdatedata();
     DDUApi();
     fetchservice();
     _timeFormat = DateFormat('hh:mm a');
+  }
+
+  saveupdatedata() async {
+    var staffId = await UserSecureStorage().getStaffId();
+    var body = {
+      "Complaint_No": "",
+      "Actual_Problem": "",
+      "Action_Taken": "",
+      "Visit_Date": "",
+      "Action_Date": "",
+      "Action_Time": "",
+      "Status": "",
+      "Signature_Image": "",
+      "Picture_Taken": "",
+      "Item_JSON": "",
+      "Actual_Closure": "",
+      "Customer_FeedBack": "",
+      "User_Id": staffId,
+      "REDRESSAL_STATUS": "",
+      "Tech_Remark": "",
+      "Service_Location": "",
+      "Happy_Code": "",
+      "DefectType": "",
+      "CallCatg": "",
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://nds1.nippondata.com/ServiceWebApi/Service.asmx/WS_Update_complaints_SR"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var valueliststring = data['string'];
+      valueliststring = valueliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var valueobject = json.decode(valueliststring.toString());
+      var valuelistobject = valueobject['SchemeSKU'];
+      Iterable l = valuelistobject;
+      setState(() {
+        // saveupdatedata =
+        //     l.map((data) => saveupdatedata.fromJson(data)).toList();
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   DDUApi() async {
