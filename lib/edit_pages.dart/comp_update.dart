@@ -85,7 +85,6 @@ class _comp_updateState extends State<comp_update> {
   @override
   void initState() {
     super.initState();
-    saveupdatedata();
     DDUApi();
     fetchservice();
     _timeFormat = DateFormat('hh:mm a');
