@@ -40,12 +40,12 @@ class comp_update extends StatefulWidget {
 class _comp_updateState extends State<comp_update> {
   String _itemcodeValue = "";
   String _itemnameValue = "";
-  String _dropDownValue1 = "";
-  String _dropDownValue2 = "";
-  String _dropDownValue3 = "";
-  String _dropDownValue4 = "";
-  String _dropDownValue5 = "";
-  String _dropDownValue6 = "";
+  String _actiontakenValue = "";
+  String _compstatusValue = "";
+  String _servicelocValue = "";
+  String _defecttypeValue = "";
+  String _callcodeValue = "";
+  String _redressalValue6 = "";
   String selectedDate = 'Tap to select date';
   late File _image;
   final picker = ImagePicker();
@@ -61,6 +61,11 @@ class _comp_updateState extends State<comp_update> {
   TextEditingController dateController = TextEditingController();
   TextEditingController dateController1 = TextEditingController();
   TextEditingController timeController = TextEditingController();
+  TextEditingController actualController = TextEditingController();
+  TextEditingController actualcloserController = TextEditingController();
+  TextEditingController feedbackController = TextEditingController();
+  TextEditingController techremarkController = TextEditingController();
+  TextEditingController happycodeController = TextEditingController();
   List<AddedItem> addedItems = [];
   List<itemModel> addedItemsVal = [];
   bool isLoading = true;
@@ -86,28 +91,36 @@ class _comp_updateState extends State<comp_update> {
     _timeFormat = DateFormat('hh:mm a');
   }
 
+  String uint8ListTob64(Uint8List uint8list) {
+    String base64String = base64Encode(uint8list);
+    String header = "data:image/png;base64,";
+    return header + base64String;
+  }
+
   saveupdatedata() async {
+    var signimg64 = uint8ListTob64(signatureImage!);
+
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
-      "Complaint_No": "",
-      "Actual_Problem": "",
-      "Action_Taken": "",
-      "Visit_Date": "",
-      "Action_Date": "",
-      "Action_Time": "",
-      "Status": "",
-      "Signature_Image": "",
-      "Picture_Taken": "",
-      "Item_JSON": "",
-      "Actual_Closure": "",
-      "Customer_FeedBack": "",
+      "Complaint_No": widget.compno,
+      "Actual_Problem": actualController.text,
+      "Action_Taken": _actiontakenValue,
+      "Visit_Date": dateController.text,
+      "Action_Date": dateController1.text,
+      "Action_Time": timeController.text,
+      "Status": _compstatusValue,
+      "Signature_Image": signimg64,
+      "Picture_Taken": img64,
+      "Item_JSON": addedItemsVal.toString(),
+      "Actual_Closure": actualcloserController.text,
+      "Customer_FeedBack": feedbackController.text,
       "User_Id": staffId,
-      "REDRESSAL_STATUS": "",
-      "Tech_Remark": "",
-      "Service_Location": "",
-      "Happy_Code": "",
-      "DefectType": "",
-      "CallCatg": "",
+      "REDRESSAL_STATUS": _redressalValue6,
+      "Tech_Remark": techremarkController.text,
+      "Service_Location": _servicelocValue,
+      "Happy_Code": happycodeController.text,
+      "DefectType": _defecttypeValue,
+      "CallCatg": _callcodeValue,
     };
     var res = await http.post(
         Uri.parse(
@@ -124,11 +137,12 @@ class _comp_updateState extends State<comp_update> {
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
-      var valueliststring = data['string'];
+      var valueliststring = data['SchemeSKU'];
+      print("valueliststring$valueliststring");
       valueliststring = valueliststring.toString().replaceAll("\\r\\\\n", "\n");
       var valueobject = json.decode(valueliststring.toString());
-      var valuelistobject = valueobject['SchemeSKU'];
-      Iterable l = valuelistobject;
+      var valuelistobject = valueobject;
+      print("objectupdate$valuelistobject");
       setState(() {
         // saveupdatedata =
         //     l.map((data) => saveupdatedata.fromJson(data)).toList();
@@ -645,6 +659,7 @@ class _comp_updateState extends State<comp_update> {
                   ),
                   padding: const EdgeInsets.only(left: 8, top: 11, bottom: 5),
                   child: TextField(
+                    controller: actualController,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
                     ],
@@ -701,7 +716,7 @@ class _comp_updateState extends State<comp_update> {
                       onChanged: (ServiceAction? val) {
                         dropDownState(() {
                           setState(() {
-                            _dropDownValue1 = val!.id!;
+                            _actiontakenValue = val!.id!;
                             actionval = val;
                           });
                         });
@@ -750,6 +765,7 @@ class _comp_updateState extends State<comp_update> {
                   ),
                   padding: const EdgeInsets.only(left: 8, top: 11, bottom: 5),
                   child: TextField(
+                    controller: actualcloserController,
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
                     ],
@@ -869,7 +885,7 @@ class _comp_updateState extends State<comp_update> {
                       onChanged: (SERVICEACTION? val) {
                         dropDownState(() {
                           setState(() {
-                            _dropDownValue2 = val!.iD!;
+                            _compstatusValue = val!.iD!;
                             complaintstatus = val;
                           });
                         });
@@ -922,7 +938,7 @@ class _comp_updateState extends State<comp_update> {
                         onChanged: (SERVICEACTION? val) {
                           dropDownState(() {
                             setState(() {
-                              _dropDownValue6 = val!.iD!;
+                              _redressalValue6 = val!.iD!;
                               redressal = val;
                             });
                           });
@@ -974,7 +990,7 @@ class _comp_updateState extends State<comp_update> {
                       onChanged: (SERVICEACTION? val) {
                         dropDownState(() {
                           setState(() {
-                            _dropDownValue3 = val!.iD!;
+                            _servicelocValue = val!.iD!;
                             serviceloc = val;
                           });
                         });
@@ -1025,7 +1041,7 @@ class _comp_updateState extends State<comp_update> {
                       onChanged: (SERVICEACTION? val) {
                         dropDownState(() {
                           setState(() {
-                            _dropDownValue4 = val!.iD!;
+                            _defecttypeValue = val!.iD!;
                             defectcode = val;
                           });
                         });
@@ -1076,7 +1092,7 @@ class _comp_updateState extends State<comp_update> {
                       onChanged: (SERVICEACTION? val) {
                         dropDownState(() {
                           setState(() {
-                            _dropDownValue5 = val!.iD!;
+                            _callcodeValue = val!.iD!;
                             callcode = val;
                           });
                         });
@@ -1174,6 +1190,7 @@ class _comp_updateState extends State<comp_update> {
                       ),
                       Expanded(
                         child: TextField(
+                          controller: feedbackController,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'[a-zA-Z\s]')),
@@ -1210,6 +1227,7 @@ class _comp_updateState extends State<comp_update> {
                       ),
                       Expanded(
                         child: TextField(
+                          controller: techremarkController,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
                                 RegExp(r'[a-zA-Z\s]')),
@@ -1246,6 +1264,7 @@ class _comp_updateState extends State<comp_update> {
                       ),
                       Expanded(
                         child: TextField(
+                          controller: happycodeController,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
@@ -1272,13 +1291,14 @@ class _comp_updateState extends State<comp_update> {
                     Color(0xffFF9800),
                   )),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => Complaints(
-                                  zoneid: "",
-                                  menuid: "",
-                                )));
+                    saveupdatedata();
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (_) => Complaints(
+                    //               zoneid: "",
+                    //               menuid: "",
+                    //             )));
                   },
                   child: const Text(
                     "UPDATE",
