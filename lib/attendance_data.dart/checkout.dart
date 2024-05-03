@@ -74,7 +74,7 @@ class _check_outState extends State<check_out> {
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "_StaffId": staffId,
-      "_Reading": "",
+      "_Reading": readingcontroller.text,
       "_Image": img64,
       "_buffer": "",
       "_Extension": "",

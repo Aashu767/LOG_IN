@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, avoid_print
+// ignore_for_file: camel_case_types, avoid_print, must_be_immutable, use_key_in_widget_constructors
 
 import 'dart:convert';
 import 'dart:io';
@@ -13,7 +13,8 @@ import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
 
 class payment extends StatefulWidget {
-  const payment({super.key});
+  String complno;
+  payment({Key? key, required this.complno});
 
   //PE0003
   @override
@@ -24,6 +25,9 @@ class _paymentState extends State<payment> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _amountController = TextEditingController();
   TextEditingController dateController = TextEditingController();
+  TextEditingController transactionidController = TextEditingController();
+  TextEditingController customernameController = TextEditingController();
+  TextEditingController banknameController = TextEditingController();
   final picker = ImagePicker();
   bool isLoading = true;
   File? _imgFile;
@@ -37,7 +41,6 @@ class _paymentState extends State<payment> {
     super.initState();
     fetchDDApi();
     updatepayment();
-    savepdata();
   }
 
   fetchDDApi() async {
@@ -77,7 +80,7 @@ class _paymentState extends State<payment> {
 
   updatepayment() async {
     var body = {
-      "CustomerCode": "PE0003",
+      "CustomerCode": "",
     };
     var res = await http.post(
         Uri.parse(
@@ -111,16 +114,16 @@ class _paymentState extends State<payment> {
 
   savepdata() async {
     var body = {
-      "Customer_Code": "PE0003",
-      "TransactionID": "",
-      "PaymentMode": "",
-      "TransactionAmt": "",
+      "Customer_Code": widget.complno,
+      "TransactionID": transactionidController.text,
+      "PaymentMode": paymentlist1,
+      "TransactionAmt": _amountController.text,
       "InvoiceNo": "",
-      "TransactionDate": "",
+      "TransactionDate": dateController.text,
       "Remarks": "",
-      "PartyName": "",
-      "BankName": "",
-      "AttachDocument": "",
+      "PartyName": customernameController.text,
+      "BankName": banknameController.text,
+      "AttachDocument": img64,
     };
     var res = await http.post(
         Uri.parse(
@@ -140,10 +143,13 @@ class _paymentState extends State<payment> {
       var valueliststring = data['string'];
       valueliststring = valueliststring.toString().replaceAll("\\r\\\\n", "\n");
       var valueobject = json.decode(valueliststring.toString());
-      var valuelistobject = valueobject['Payment_Mode'];
-      Iterable l = valuelistobject;
+      var valuelistobject = valueobject['SchemeSKU'];
       setState(() {
-        paymentMode = l.map((data) => PaymentMode.fromJson(data)).toList();
+        if (valuelistobject == "Data saved Successfully.") {
+          Navigator.pop(context);
+        } else {
+          print("error");
+        }
       });
     } else {
       setState(() {
@@ -227,6 +233,7 @@ class _paymentState extends State<payment> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
+                              controller: transactionidController,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: 'Enter Transaction ID',
@@ -247,6 +254,7 @@ class _paymentState extends State<payment> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
+                              controller: customernameController,
                               decoration: InputDecoration(
                                   labelText: 'Enter Customer Name',
                                   border: OutlineInputBorder(
@@ -265,6 +273,7 @@ class _paymentState extends State<payment> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
+                              controller: banknameController,
                               decoration: InputDecoration(
                                   labelText: 'Enter Bank Name',
                                   border: OutlineInputBorder(
@@ -324,9 +333,7 @@ class _paymentState extends State<payment> {
                                       paymentval = val;
                                     });
                                   });
-                                  
                                 },
-                                
                               );
                             }),
                           ),
@@ -432,7 +439,9 @@ class _paymentState extends State<payment> {
                                     backgroundColor: MaterialStatePropertyAll(
                                   Color(0xffFF9800),
                                 )),
-                                onPressed: () {},
+                                onPressed: () {
+                                  savepdata();
+                                },
                                 child: const Text('Save',
                                     style: TextStyle(
                                       color: Colors.white,

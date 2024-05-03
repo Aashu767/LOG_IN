@@ -422,8 +422,9 @@ class _Form_pageState extends State<Form_page> {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (_) =>
-                                                    const payment()));
+                                                builder: (_) => payment(
+                                                      complno: widget.compno,
+                                                    )));
                                       },
                                       child: Container(
                                         height:

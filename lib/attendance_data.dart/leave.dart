@@ -1,8 +1,13 @@
-// ignore_for_file: camel_case_types, unused_element, avoid_print
+// ignore_for_file: camel_case_types, unused_element, avoid_print, use_build_context_synchronously
+
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:log_in/utils/secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:xml2json/xml2json.dart';
 
 class leave extends StatefulWidget {
   const leave({super.key});
@@ -14,8 +19,56 @@ class leave extends StatefulWidget {
 class _leaveState extends State<leave> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController reasoncontroller = TextEditingController();
+  TextEditingController dayscontroller = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController dateController1 = TextEditingController();
+  TextEditingController remarkscontroller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  leave() async {
+    var staffId = await UserSecureStorage().getStaffId();
+    var body = {
+      "_StaffId": staffId,
+      "LeaveDays": dayscontroller.text,
+      "_Remarks": remarkscontroller.text,
+      "FromDate": dateController.text,
+      "Todate": dateController1.text,
+      "_VisitCode": "01",
+      "_TenantCode": "101",
+      "_Location": "110001",
+      "_AStatus": "",
+    };
+    var res = await http.post(
+        Uri.parse(
+            "http://nds1.nippondata.com/ServiceWebApi/Service.asmx/Ws_Leave_Request"),
+        headers: {
+          "Accept": "application/json",
+          "Content_type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statusCode = res.statusCode;
+    if (statusCode == 200) {
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var response = data['boolean'];
+      response = response.toString().replaceAll("\\r\\\\n", "\n");
+      if (response == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Checkout Successfully")));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(response)));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +143,7 @@ class _leaveState extends State<leave> {
                       ),
                     ),
                     TextFormField(
+                      controller: dayscontroller,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(5),
@@ -185,8 +239,9 @@ class _leaveState extends State<leave> {
                         fontSize: 16,
                       ),
                     ),
-                    const TextField(
-                      decoration: InputDecoration(
+                    TextField(
+                      controller: remarkscontroller,
+                      decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(5))),

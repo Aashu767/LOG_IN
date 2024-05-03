@@ -74,7 +74,7 @@ class _check_inState extends State<check_in> {
 
     var body = {
       "_StaffId": staffId,
-      "_Reading": "",
+      "_Reading": readingcontroller.text,
       "_Image": img64,
       "_buffer": "",
       "_Extension": "",
@@ -194,8 +194,6 @@ class _check_inState extends State<check_in> {
                     keyboardType: TextInputType.number,
                     controller: readingcontroller,
                     decoration: const InputDecoration(
-                      // fillColor: Colors.white,
-                      // filled: true,
                       contentPadding: EdgeInsets.all(5),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),

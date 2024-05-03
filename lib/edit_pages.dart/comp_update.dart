@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-import 'package:log_in/edit_pages.dart/complaint.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:log_in/edit_pages.dart/signature.dart';
 import 'package:log_in/models/All_dropdown_model.dart';
@@ -92,13 +91,12 @@ class _comp_updateState extends State<comp_update> {
 
   String uint8ListTob64(Uint8List uint8list) {
     String base64String = base64Encode(uint8list);
-    String header = "data:image/png;base64,";
-    return header + base64String;
+    // String header = "data:image/png;base64,";
+    return base64String;
   }
 
   saveupdatedata() async {
     var signimg64 = uint8ListTob64(signatureImage!);
-
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "Complaint_No": widget.compno,
@@ -136,11 +134,11 @@ class _comp_updateState extends State<comp_update> {
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
-      var valueliststring = data['SchemeSKU'];
-      print("valueliststring$valueliststring");
+      print("objectupdate$data");
+      var valueliststring = data['string'];
       valueliststring = valueliststring.toString().replaceAll("\\r\\\\n", "\n");
       var valueobject = json.decode(valueliststring.toString());
-      var valuelistobject = valueobject;
+      var valuelistobject = valueobject['SchemeSKU'];
       print("objectupdate$valuelistobject");
       setState(() {
         // saveupdatedata =

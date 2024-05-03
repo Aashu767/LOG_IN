@@ -19,6 +19,7 @@ class _feedbackState extends State<feedback> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = true;
   TextEditingController dateController = TextEditingController();
+  TextEditingController feedbackcontroller = TextEditingController();
 
   @override
   void initState() {
@@ -30,8 +31,8 @@ class _feedbackState extends State<feedback> {
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "_StaffId": staffId,
-      "_Remarks": "",
-      "Fromdate": "",
+      "_Remarks": feedbackcontroller.text,
+      "Fromdate": dateController.text,
       "_VisitCode": "01",
       "_TenantCode": "101",
       "_Location": "110001",
@@ -145,8 +146,9 @@ class _feedbackState extends State<feedback> {
                         fontSize: 16,
                       ),
                     ),
-                    const TextField(
-                      decoration: InputDecoration(
+                    TextField(
+                      controller: feedbackcontroller,
+                      decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(5))),
