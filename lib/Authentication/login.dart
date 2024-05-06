@@ -1,9 +1,10 @@
-// ignore_for_file: deprecated_member_use, use_super_parameters, use_build_context_synchronously
+// ignore_for_file: deprecated_member_use, use_super_parameters, use_build_context_synchronously, unused_element
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/All_MENU.dart/dashbord.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:xml2json/xml2json.dart';
 import '../utils/secure_storage.dart';
 
@@ -22,10 +23,18 @@ class _LoginState extends State<Login> {
   final bool _isObscure = true;
 
   var isDataLoading = false;
-
   @override
   void initState() {
     super.initState();
+    _checkPermissionStatus();
+  }
+
+  Future<void> _checkPermissionStatus() async {
+    setState(() {});
+  }
+
+  Future<void> _requestPermission() async {
+    setState(() {});
   }
 
   Future<void> login(String user, String pass) async {
@@ -97,18 +106,27 @@ class _LoginState extends State<Login> {
                                 children: [
                                   TextButton(
                                       onPressed: () async {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    dashboard()));
-                                        await UserSecureStorage()
-                                            .setStaffId(staffId);
-                                        await UserSecureStorage().setuser(user);
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (_) => dashboard()));
+                                        _requestPermission();
+                                        final status =
+                                            await Permission.location.request();
+                                        if (status ==
+                                            PermissionStatus.granted) {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      dashboard()));
+                                          await UserSecureStorage()
+                                              .setStaffId(staffId);
+                                          await UserSecureStorage()
+                                              .setuser(user);
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) => dashboard()));
+                                        } else {
+                                          Navigator.pop(context);
+                                        }
                                       },
                                       child: const Text(
                                         "Allow ",

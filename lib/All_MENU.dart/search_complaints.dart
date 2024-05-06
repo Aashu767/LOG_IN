@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:log_in/edit_pages.dart/Form.dart';
 import 'package:log_in/models/search_model.dart';
 import 'package:xml2json/xml2json.dart';
@@ -91,6 +92,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                 height: MediaQuery.sizeOf(context).height * 0.06,
                 child: TextField(
                   controller: _controller,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15)),
@@ -121,7 +123,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                         child: Card(
                           elevation: 5,
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.20,
+                            height: MediaQuery.of(context).size.height * 0.25,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(15),

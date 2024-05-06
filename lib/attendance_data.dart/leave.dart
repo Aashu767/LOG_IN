@@ -144,6 +144,7 @@ class _leaveState extends State<leave> {
                     ),
                     TextFormField(
                       controller: dayscontroller,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(5),
@@ -239,14 +240,24 @@ class _leaveState extends State<leave> {
                         fontSize: 16,
                       ),
                     ),
-                    TextField(
+                    TextFormField(
                       controller: remarkscontroller,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z\s]')),
+                      ],
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         hintText: ' Enter Remarks',
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Remark';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: MediaQuery.sizeOf(context).height * 0.05,
@@ -267,8 +278,7 @@ class _leaveState extends State<leave> {
                               if (_formKey.currentState != null &&
                                   _formKey.currentState!.validate()) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Enter All Details')),
+                                  const SnackBar(content: Text('Saved')),
                                 );
                               }
                             },

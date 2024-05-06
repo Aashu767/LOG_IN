@@ -65,6 +65,7 @@ class _comp_updateState extends State<comp_update> {
   TextEditingController feedbackController = TextEditingController();
   TextEditingController techremarkController = TextEditingController();
   TextEditingController happycodeController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<AddedItem> addedItems = [];
   List<itemModel> addedItemsVal = [];
   bool isLoading = true;
@@ -355,545 +356,504 @@ class _comp_updateState extends State<comp_update> {
           child: Card(
         margin: const EdgeInsets.all(16),
         elevation: 10,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(children: [
-                    const Expanded(
-                      flex: 2,
-                      child: Text(
-                        '   Complaint No  :',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        widget.compno,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ]),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 1,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        width: MediaQuery.of(context).size.width * 0.35,
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            top: BorderSide.none,
-                            bottom: BorderSide.none,
-                            left: BorderSide.none,
-                            right: BorderSide(),
-                          ),
-                        ),
-                        child: StatefulBuilder(builder:
-                            (BuildContext context, StateSetter dropDownState) {
-                          return DropdownButton<ItemDetails>(
-                              underline: Container(
-                                height: 0,
-                                color: Colors.transparent,
-                              ),
-                              value: itemval,
-                              hint: const Text(
-                                "   Item Name",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              isExpanded: true,
-                              iconSize: 30.0,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
-                              items: itemdetail.map(
-                                (ItemDetails itemdetail) {
-                                  return DropdownMenuItem<ItemDetails>(
-                                    value: itemdetail,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        itemdetail.name!,
-                                        style: const TextStyle(
-                                            fontSize: 16, color: Colors.black),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ).toList(),
-                              onChanged: (ItemDetails? val) {
-                                dropDownState(() {
-                                  setState(() {
-                                    _itemcodeValue = val!.id!;
-                                    _itemnameValue = val.name!;
-                                    itemval = val;
-                                  });
-                                });
-                              });
-                        }),
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.06,
-                        width: MediaQuery.of(context).size.width * 0.12,
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            right: BorderSide(color: Colors.transparent),
-                            bottom: BorderSide(color: Colors.transparent),
-                          ),
-                        ),
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          controller: Qty,
-                          textAlign: TextAlign.center,
-                          decoration: const InputDecoration(
-                            hintText: 'Qty',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                      const VerticalDivider(
-                        color: Colors.black,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.15,
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            right: BorderSide(color: Colors.transparent),
-                            bottom: BorderSide(color: Colors.transparent),
-                          ),
-                        ),
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          controller: Rate,
-                          textAlign: TextAlign.center,
-                          decoration: const InputDecoration(
-                            hintText: 'Rate',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          if (itemval != null &&
-                              Qty.text.isNotEmpty &&
-                              Rate.text.isNotEmpty) {
-                            setState(() {
-                              addedItemsVal.add(itemModel(
-                                  itemID: _itemcodeValue,
-                                  itemName: _itemnameValue,
-                                  itemQty: Qty.text,
-                                  sTRQCCODE: "",
-                                  sTREXCREG: "",
-                                  sTRMODVATVLUE: "",
-                                  itemRate: Rate.text,
-                                  sTRPLCECODE: ""));
-                            });
-                            Qty.clear();
-                            Rate.clear();
-                          }
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.180,
-                          decoration: const BoxDecoration(
-                            color: Color(0xffFF9800),
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                bottomLeft: Radius.circular(0),
-                                bottomRight: Radius.circular(10),
-                                topRight: Radius.circular(10)),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: addedItemsVal.length,
-                      itemBuilder: (context, index) {
-                        final item = addedItemsVal[index];
-                        return Column(
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              decoration: BoxDecoration(
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.35,
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        top: BorderSide.none,
-                                        bottom: BorderSide.none,
-                                        left: BorderSide.none,
-                                        right: BorderSide(),
-                                      ),
-                                    ),
-                                    child: Center(
-                                        child: Text(' ${item.itemName}')),
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        top: BorderSide.none,
-                                        bottom: BorderSide.none,
-                                        left: BorderSide.none,
-                                        right: BorderSide(),
-                                      ),
-                                    ),
-                                    child:
-                                        Center(child: Text('${item.itemQty}')),
-                                  ),
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.06,
-                                    width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        top: BorderSide.none,
-                                        bottom: BorderSide.none,
-                                        left: BorderSide.none,
-                                        right: BorderSide(),
-                                      ),
-                                    ),
-                                    child:
-                                        Center(child: Text('${item.itemRate}')),
-                                  ),
-                                  Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.13,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(0),
-                                            bottomRight: Radius.circular(10),
-                                            topRight: Radius.circular(10)),
-                                      ),
-                                      child: Center(
-                                        child: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              addedItemsVal.removeAt(index);
-                                            });
-                                          },
-                                          icon: const Icon(Icons.delete,
-                                              color: Colors.red),
-                                        ),
-                                      )),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.01,
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.only(left: 8, top: 11, bottom: 5),
-                  child: TextField(
-                    controller: actualController,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
-                    ],
-                    decoration: const InputDecoration(
-                      hintText: 'Actual Problem',
-                      border: InputBorder.none,
-                    ),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: StatefulBuilder(builder:
-                      (BuildContext context, StateSetter dropDownState) {
-                    return DropdownButton<ServiceAction>(
-                      underline: Container(
-                        height: 0,
-                        color: Colors.transparent,
-                      ),
-                      value: actionval,
-                      hint: const Text(
-                        '  Action Taken',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      isExpanded: true,
-                      iconSize: 30.0,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                      items: serviceact.map((ServiceAction serviceact) {
-                        return DropdownMenuItem<ServiceAction>(
-                          value: serviceact,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              serviceact.name!,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (ServiceAction? val) {
-                        dropDownState(() {
-                          setState(() {
-                            _actiontakenValue = val!.id!;
-                            actionval = val;
-                          });
-                        });
-                      },
-                    );
-                  }),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                InkWell(
-                  onTap: () {
-                    _selectdate(context);
-                  },
-                  child: Container(
+        child: Form(
+          key: _formKey,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Container(
                     height: MediaQuery.of(context).size.height * 0.06,
                     decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    padding: const EdgeInsets.all(5.0),
+                    child: Row(children: [
+                      const Expanded(
+                        flex: 2,
+                        child: Text(
+                          '   Complaint No  :',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          widget.compno,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ]),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 1,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Row(
                       children: [
-                        Row(children: [
-                          Text(
-                            dateController.text == ""
-                                ? ' Visit Date:'
-                                : dateController.text,
-                            style: const TextStyle(
-                              fontSize: 16,
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              top: BorderSide.none,
+                              bottom: BorderSide.none,
+                              left: BorderSide.none,
+                              right: BorderSide(),
                             ),
                           ),
-                        ]),
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.only(left: 8, top: 11, bottom: 5),
-                  child: TextField(
-                    controller: actualcloserController,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z\s]')),
-                    ],
-                    decoration: const InputDecoration(
-                      hintText: 'Actual Closer',
-                      border: InputBorder.none,
-                    ),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width * 1,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            _selectdate1(context);
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            width: MediaQuery.of(context).size.width * 0.35,
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                            ),
-                            child: Center(
-                              child: Text(
-                                dateController1.text == ""
-                                    ? ' Action Date:'
-                                    : dateController1.text,
+                          child: StatefulBuilder(builder: (BuildContext context,
+                              StateSetter dropDownState) {
+                            return DropdownButton<ItemDetails>(
+                                underline: Container(
+                                  height: 0,
+                                  color: Colors.transparent,
+                                ),
+                                value: itemval,
+                                hint: const Text(
+                                  "   Item Name",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                isExpanded: true,
+                                iconSize: 30.0,
                                 style: const TextStyle(
                                   fontSize: 16,
+                                ),
+                                items: itemdetail.map(
+                                  (ItemDetails itemdetail) {
+                                    return DropdownMenuItem<ItemDetails>(
+                                      value: itemdetail,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          itemdetail.name!,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                                onChanged: (ItemDetails? val) {
+                                  dropDownState(() {
+                                    setState(() {
+                                      _itemcodeValue = val!.id!;
+                                      _itemnameValue = val.name!;
+                                      itemval = val;
+                                    });
+                                  });
+                                });
+                          }),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width * 0.12,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              right: BorderSide(color: Colors.transparent),
+                              bottom: BorderSide(color: Colors.transparent),
+                            ),
+                          ),
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            controller: Qty,
+                            textAlign: TextAlign.center,
+                            decoration: const InputDecoration(
+                              hintText: 'Qty',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        const VerticalDivider(
+                          color: Colors.black,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              right: BorderSide(color: Colors.transparent),
+                              bottom: BorderSide(color: Colors.transparent),
+                            ),
+                          ),
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            controller: Rate,
+                            textAlign: TextAlign.center,
+                            decoration: const InputDecoration(
+                              hintText: 'Rate',
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            if (itemval != null &&
+                                Qty.text.isNotEmpty &&
+                                Rate.text.isNotEmpty) {
+                              setState(() {
+                                addedItemsVal.add(itemModel(
+                                    itemID: _itemcodeValue,
+                                    itemName: _itemnameValue,
+                                    itemQty: Qty.text,
+                                    sTRQCCODE: "",
+                                    sTREXCREG: "",
+                                    sTRMODVATVLUE: "",
+                                    itemRate: Rate.text,
+                                    sTRPLCECODE: ""));
+                              });
+                              Qty.clear();
+                              Rate.clear();
+                            }
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.180,
+                            decoration: const BoxDecoration(
+                              color: Color(0xffFF9800),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(0),
+                                  bottomLeft: Radius.circular(0),
+                                  bottomRight: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Add',
+                                style: TextStyle(
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            _selectTime(context);
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.07,
-                            width: MediaQuery.of(context).size.width * 0.35,
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                            ),
-                            child: Center(
-                                child: Text(
-                              timeController.text.isEmpty
-                                  ? 'Action Time:'
-                                  : timeController.text,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
-                            )),
-                          ),
-                        ),
                       ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
-                  child: StatefulBuilder(builder:
-                      (BuildContext context, StateSetter dropDownState) {
-                    return DropdownButton<SERVICEACTION>(
-                      underline: Container(
-                        height: 0,
-                        color: Colors.transparent,
+                  SizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: addedItemsVal.length,
+                        itemBuilder: (context, index) {
+                          final item = addedItemsVal[index];
+                          return Column(
+                            children: [
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.06,
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.35,
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          top: BorderSide.none,
+                                          bottom: BorderSide.none,
+                                          left: BorderSide.none,
+                                          right: BorderSide(),
+                                        ),
+                                      ),
+                                      child: Center(
+                                          child: Text(' ${item.itemName}')),
+                                    ),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.15,
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          top: BorderSide.none,
+                                          bottom: BorderSide.none,
+                                          left: BorderSide.none,
+                                          right: BorderSide(),
+                                        ),
+                                      ),
+                                      child: Center(
+                                          child: Text('${item.itemQty}')),
+                                    ),
+                                    Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.15,
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          top: BorderSide.none,
+                                          bottom: BorderSide.none,
+                                          left: BorderSide.none,
+                                          right: BorderSide(),
+                                        ),
+                                      ),
+                                      child: Center(
+                                          child: Text('${item.itemRate}')),
+                                    ),
+                                    Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.06,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.13,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(0),
+                                              bottomRight: Radius.circular(10),
+                                              topRight: Radius.circular(10)),
+                                        ),
+                                        child: Center(
+                                          child: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                addedItemsVal.removeAt(index);
+                                              });
+                                            },
+                                            icon: const Icon(Icons.delete,
+                                                color: Colors.red),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01,
+                              )
+                            ],
+                          );
+                        },
                       ),
-                      value: complaintstatus,
-                      hint: const Text(
-                        '  Select Status',
-                        style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.only(left: 8, top: 11, bottom: 5),
+                    child: TextField(
+                      controller: actualController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z\s]')),
+                      ],
+                      decoration: const InputDecoration(
+                        hintText: 'Actual Problem',
+                        border: InputBorder.none,
                       ),
-                      isExpanded: true,
-                      iconSize: 30.0,
                       style: const TextStyle(
+                        color: Colors.black,
                         fontSize: 16,
                       ),
-                      items: complaintstatusdropdwn
-                          .map((SERVICEACTION complstatusval) {
-                        return DropdownMenuItem<SERVICEACTION>(
-                          value: complstatusval,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              complstatusval.nAME!,
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: StatefulBuilder(builder:
+                        (BuildContext context, StateSetter dropDownState) {
+                      return DropdownButton<ServiceAction>(
+                        underline: Container(
+                          height: 0,
+                          color: Colors.transparent,
+                        ),
+                        value: actionval,
+                        hint: const Text(
+                          '  Action Taken',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        items: serviceact.map((ServiceAction serviceact) {
+                          return DropdownMenuItem<ServiceAction>(
+                            value: serviceact,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                serviceact.name!,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (ServiceAction? val) {
+                          dropDownState(() {
+                            setState(() {
+                              _actiontakenValue = val!.id!;
+                              actionval = val;
+                            });
+                          });
+                        },
+                      );
+                    }),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      _selectdate(context);
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        children: [
+                          Row(children: [
+                            Text(
+                              dateController.text == ""
+                                  ? ' Visit Date:'
+                                  : dateController.text,
                               style: const TextStyle(
-                                color: Colors.black,
                                 fontSize: 16,
                               ),
                             ),
+                          ]),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.only(left: 8, top: 11, bottom: 5),
+                    child: TextField(
+                      controller: actualcloserController,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z\s]')),
+                      ],
+                      decoration: const InputDecoration(
+                        hintText: 'Actual Closer',
+                        border: InputBorder.none,
+                      ),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 1,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              _selectdate1(context);
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  dateController1.text == ""
+                                      ? ' Action Date:'
+                                      : dateController1.text,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        );
-                      }).toList(),
-                      onChanged: (SERVICEACTION? val) {
-                        dropDownState(() {
-                          setState(() {
-                            _compstatusValue = val!.iD!;
-                            complaintstatus = val;
-                          });
-                        });
-                      },
-                    );
-                  }),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                if (complaintstatus?.nAME == 'COMPLETED')
+                          InkWell(
+                            onTap: () {
+                              _selectTime(context);
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.07,
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              decoration: BoxDecoration(
+                                border: Border.all(),
+                              ),
+                              child: Center(
+                                  child: Text(
+                                timeController.text.isEmpty
+                                    ? 'Action Time:'
+                                    : timeController.text,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(),
@@ -906,9 +866,9 @@ class _comp_updateState extends State<comp_update> {
                           height: 0,
                           color: Colors.transparent,
                         ),
-                        value: redressal,
+                        value: complaintstatus,
                         hint: const Text(
-                          '  Select Redressal Status',
+                          '  Select Status',
                           style: TextStyle(color: Colors.black),
                         ),
                         isExpanded: true,
@@ -916,14 +876,14 @@ class _comp_updateState extends State<comp_update> {
                         style: const TextStyle(
                           fontSize: 16,
                         ),
-                        items:
-                            redressaldropdown.map((SERVICEACTION redressalval) {
+                        items: complaintstatusdropdwn
+                            .map((SERVICEACTION complstatusval) {
                           return DropdownMenuItem<SERVICEACTION>(
-                            value: redressalval,
+                            value: complstatusval,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                redressalval.nAME!,
+                                complstatusval.nAME!,
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -935,377 +895,432 @@ class _comp_updateState extends State<comp_update> {
                         onChanged: (SERVICEACTION? val) {
                           dropDownState(() {
                             setState(() {
-                              _redressalValue6 = val!.iD!;
-                              redressal = val;
+                              _compstatusValue = val!.iD!;
+                              complaintstatus = val;
                             });
                           });
                         },
                       );
                     }),
                   ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
-                  child: StatefulBuilder(builder:
-                      (BuildContext context, StateSetter dropDownState) {
-                    return DropdownButton<SERVICEACTION>(
-                      underline: Container(
-                        height: 0,
-                        color: Colors.transparent,
+                  if (complaintstatus?.nAME == 'COMPLETED')
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      value: serviceloc,
-                      hint: const Text(
-                        '  Select Service location',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      isExpanded: true,
-                      iconSize: 30.0,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                      items: servieloctiondropdwn
-                          .map((SERVICEACTION servicelocval) {
-                        return DropdownMenuItem<SERVICEACTION>(
-                          value: servicelocval,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              servicelocval.nAME!,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
+                      child: StatefulBuilder(builder:
+                          (BuildContext context, StateSetter dropDownState) {
+                        return DropdownButton<SERVICEACTION>(
+                          underline: Container(
+                            height: 0,
+                            color: Colors.transparent,
+                          ),
+                          value: redressal,
+                          hint: const Text(
+                            '  Select Redressal Status',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          isExpanded: true,
+                          iconSize: 30.0,
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                          items: redressaldropdown
+                              .map((SERVICEACTION redressalval) {
+                            return DropdownMenuItem<SERVICEACTION>(
+                              value: redressalval,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  redressalval.nAME!,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (SERVICEACTION? val) {
+                            dropDownState(() {
+                              setState(() {
+                                _redressalValue6 = val!.iD!;
+                                redressal = val;
+                              });
+                            });
+                          },
+                        );
+                      }),
+                    ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: StatefulBuilder(builder:
+                        (BuildContext context, StateSetter dropDownState) {
+                      return DropdownButton<SERVICEACTION>(
+                        underline: Container(
+                          height: 0,
+                          color: Colors.transparent,
+                        ),
+                        value: serviceloc,
+                        hint: const Text(
+                          '  Select Service location',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        items: servieloctiondropdwn
+                            .map((SERVICEACTION servicelocval) {
+                          return DropdownMenuItem<SERVICEACTION>(
+                            value: servicelocval,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                servicelocval.nAME!,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (SERVICEACTION? val) {
-                        dropDownState(() {
-                          setState(() {
-                            _servicelocValue = val!.iD!;
-                            serviceloc = val;
+                          );
+                        }).toList(),
+                        onChanged: (SERVICEACTION? val) {
+                          dropDownState(() {
+                            setState(() {
+                              _servicelocValue = val!.iD!;
+                              serviceloc = val;
+                            });
                           });
-                        });
-                      },
-                    );
-                  }),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
+                        },
+                      );
+                    }),
                   ),
-                  child: StatefulBuilder(builder:
-                      (BuildContext context, StateSetter dropDownState) {
-                    return DropdownButton<SERVICEACTION>(
-                      underline: Container(
-                        height: 0,
-                        color: Colors.transparent,
-                      ),
-                      value: defectcode,
-                      hint: const Text(
-                        '  Select defected-type',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      isExpanded: true,
-                      iconSize: 30.0,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                      items: defectypedropdown.map((SERVICEACTION defectcode) {
-                        return DropdownMenuItem<SERVICEACTION>(
-                          value: defectcode,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              defectcode.nAME!,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: StatefulBuilder(builder:
+                        (BuildContext context, StateSetter dropDownState) {
+                      return DropdownButton<SERVICEACTION>(
+                        underline: Container(
+                          height: 0,
+                          color: Colors.transparent,
+                        ),
+                        value: defectcode,
+                        hint: const Text(
+                          '  Select defected-type',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        items:
+                            defectypedropdown.map((SERVICEACTION defectcode) {
+                          return DropdownMenuItem<SERVICEACTION>(
+                            value: defectcode,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                defectcode.nAME!,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (SERVICEACTION? val) {
-                        dropDownState(() {
-                          setState(() {
-                            _defecttypeValue = val!.iD!;
-                            defectcode = val;
+                          );
+                        }).toList(),
+                        onChanged: (SERVICEACTION? val) {
+                          dropDownState(() {
+                            setState(() {
+                              _defecttypeValue = val!.iD!;
+                              defectcode = val;
+                            });
                           });
-                        });
-                      },
-                    );
-                  }),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
+                        },
+                      );
+                    }),
                   ),
-                  child: StatefulBuilder(builder:
-                      (BuildContext context, StateSetter dropDownState) {
-                    return DropdownButton<SERVICEACTION>(
-                      underline: Container(
-                        height: 0,
-                        color: Colors.transparent,
-                      ),
-                      value: callcode,
-                      hint: const Text(
-                        '  Select call category',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      isExpanded: true,
-                      iconSize: 30.0,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                      items: callcatdropdown.map((SERVICEACTION callcode) {
-                        return DropdownMenuItem<SERVICEACTION>(
-                          value: callcode,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              callcode.nAME!,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: StatefulBuilder(builder:
+                        (BuildContext context, StateSetter dropDownState) {
+                      return DropdownButton<SERVICEACTION>(
+                        underline: Container(
+                          height: 0,
+                          color: Colors.transparent,
+                        ),
+                        value: callcode,
+                        hint: const Text(
+                          '  Select call category',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        isExpanded: true,
+                        iconSize: 30.0,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                        items: callcatdropdown.map((SERVICEACTION callcode) {
+                          return DropdownMenuItem<SERVICEACTION>(
+                            value: callcode,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                callcode.nAME!,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (SERVICEACTION? val) {
-                        dropDownState(() {
-                          setState(() {
-                            _callcodeValue = val!.iD!;
-                            callcode = val;
+                          );
+                        }).toList(),
+                        onChanged: (SERVICEACTION? val) {
+                          dropDownState(() {
+                            setState(() {
+                              _callcodeValue = val!.iD!;
+                              callcode = val;
+                            });
                           });
-                        });
-                      },
-                    );
-                  }),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                InkWell(
-                  onTap: () async {
-                    signatureImage = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignatureScreen()));
+                        },
+                      );
+                    }),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      signatureImage = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignatureScreen()));
 
-                    setState(() {});
-                  },
-                  child: Container(
+                      setState(() {});
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(children: [
+                        Image.asset(
+                          "assets/image/pen.png",
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        signatureImage == null
+                            ? const Text(
+                                'Signature',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )
+                            : Image.memory(
+                                signatureImage!,
+                              ),
+                      ]),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      showOptions();
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(children: [
+                        Image.asset("assets/image/camera.png"),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        _imgFile == null
+                            ? const Text(
+                                'Picture Taken',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )
+                            : Image.file(
+                                _imgFile!,
+                              ),
+                      ]),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
                     height: MediaQuery.of(context).size.height * 0.06,
                     decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: const EdgeInsets.all(5.0),
-                    child: Row(children: [
-                      Image.asset(
-                        "assets/image/pen.png",
-                        color: Colors.black,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.03,
-                      ),
-                      signatureImage == null
-                          ? const Text(
-                              'Signature',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            )
-                          : Image.memory(
-                              signatureImage!,
+                    child: Row(
+                      children: [
+                        Image.asset("assets/image/feedback_remark.png"),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: feedbackController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[a-zA-Z\s]')),
+                            ],
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              hintText: 'FeedBack(Remark)',
+                              border: InputBorder.none,
                             ),
-                    ]),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                InkWell(
-                  onTap: () {
-                    showOptions();
-                  },
-                  child: Container(
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
                     height: MediaQuery.of(context).size.height * 0.06,
                     decoration: BoxDecoration(
                       border: Border.all(),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     padding: const EdgeInsets.all(5.0),
-                    child: Row(children: [
-                      Image.asset("assets/image/camera.png"),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.03,
-                      ),
-                      _imgFile == null
-                          ? const Text(
-                              'Picture Taken',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            )
-                          : Image.file(
-                              _imgFile!,
+                    child: Row(
+                      children: [
+                        Image.asset("assets/image/like_thumb.png"),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: techremarkController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[a-zA-Z\s]')),
+                            ],
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              hintText: 'Tech Remark',
+                              border: InputBorder.none,
                             ),
-                    ]),
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(
-                    children: [
-                      Image.asset("assets/image/feedback_remark.png"),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.03,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          controller: feedbackController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z\s]')),
-                          ],
-                          keyboardType: TextInputType.text,
-                          decoration: const InputDecoration(
-                            hintText: 'FeedBack(Remark)',
-                            border: InputBorder.none,
-                          ),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(
-                    children: [
-                      Image.asset("assets/image/like_thumb.png"),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.03,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          controller: techremarkController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z\s]')),
-                          ],
-                          keyboardType: TextInputType.text,
-                          decoration: const InputDecoration(
-                            hintText: 'Tech Remark',
-                            border: InputBorder.none,
-                          ),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(5.0),
-                  child: Row(
-                    children: [
-                      Image.asset("assets/image/like_thumb.png"),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.03,
-                      ),
-                      Expanded(
-                        child: TextField(
-                          controller: happycodeController,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                          ],
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            hintText: 'Happy Code',
-                            border: InputBorder.none,
-                          ),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                ElevatedButton(
-                  style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                    Color(0xffFF9800),
-                  )),
-                  onPressed: () {
-                    saveupdatedata();
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (_) => Complaints(
-                    //               zoneid: "",
-                    //               menuid: "",
-                    //             )));
-                  },
-                  child: const Text(
-                    "UPDATE",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                      ],
                     ),
                   ),
-                )
-              ],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Image.asset("assets/image/like_thumb.png"),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.03,
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: happycodeController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              hintText: 'Happy Code',
+                              border: InputBorder.none,
+                            ),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  ElevatedButton(
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(
+                      Color(0xffFF9800),
+                    )),
+                    onPressed: () {
+                      saveupdatedata();
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => Complaints(
+                      //               zoneid: "",
+                      //               menuid: "",
+                      //             )));
+                    },
+                    child: const Text(
+                      "UPDATE",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

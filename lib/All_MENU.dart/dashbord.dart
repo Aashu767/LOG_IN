@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/All_MENU.dart/Zone.dart';
 import 'package:log_in/models/menu_model.dart';
@@ -21,7 +22,11 @@ class dashboard extends StatefulWidget {
 class _dashboardState extends State<dashboard> {
   bool isLoading = true;
   List<MenuDetails> menulist = [];
-
+  TextEditingController fromdatecontroller = TextEditingController();
+  TextEditingController todatecontroller = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController fromdateController = TextEditingController();
+  TextEditingController todateController = TextEditingController();
   var staffId;
   void tapped(int index, BuildContext context) {}
   final List<String> images = [
@@ -97,14 +102,19 @@ class _dashboardState extends State<dashboard> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
                   'DashBoard',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                Text(
-                  'Date Filter',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                GestureDetector(
+                  onTap: () {
+                    showAlertDialog(context);
+                  },
+                  child: Text(
+                    'Date Filter',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
               ],
             ),
@@ -249,5 +259,186 @@ class _dashboardState extends State<dashboard> {
                   }).toList(),
                 ),
               ));
+  }
+
+  showAlertDialog(BuildContext context) async {
+    Widget DismissButton = TextButton(
+      style: const ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(
+        Color(0xffFF9800),
+      )),
+      child: const Text("Dismiss",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          )),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    const SizedBox(
+      width: 25,
+    );
+    Widget submitButton = TextButton(
+      style: const ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(
+        Color(0xffFF9800),
+      )),
+      onPressed: () {
+        if (_formKey.currentState != null &&
+            _formKey.currentState!.validate()) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please Enter Date')),
+          );
+        }
+      },
+      child: const Text("Submit",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          )),
+    );
+
+    AlertDialog alert = AlertDialog(
+      actionsAlignment: MainAxisAlignment.center,
+      scrollable: true,
+      title: const Center(
+        child: Text("DATE FILTER",
+            style: TextStyle(
+              fontSize: 18,
+            )),
+      ),
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "From Date :",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    _fromdate(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Row(children: [
+                          Text(
+                            fromdateController.text == ""
+                                ? ' Select From Date '
+                                : fromdateController.text,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ]),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "To Date :",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    _todate(context);
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Row(children: [
+                          Text(
+                            todateController.text == ""
+                                ? 'Select To Date '
+                                : todateController.text,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ]),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )),
+      ),
+      actions: [
+        DismissButton,
+        submitButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  _fromdate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2050));
+
+    if (pickedDate != null) {
+      print(pickedDate);
+      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      print(formattedDate);
+
+      setState(() {
+        fromdateController.text = formattedDate;
+      });
+    } else {
+      print("Date is not selected");
+    }
+  }
+
+  _todate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2050));
+
+    if (pickedDate != null) {
+      print(pickedDate);
+      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      print(formattedDate);
+
+      setState(() {
+        todateController.text = formattedDate;
+      });
+    } else {
+      print("Date is not selected");
+    }
   }
 }

@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -146,14 +147,24 @@ class _feedbackState extends State<feedback> {
                         fontSize: 16,
                       ),
                     ),
-                    TextField(
+                    TextFormField(
                       controller: feedbackcontroller,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[a-zA-Z\s]')),
+                      ],
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(5),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         hintText: ' Enter Day FeedBack',
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter FeedBack';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: MediaQuery.sizeOf(context).height * 0.05,
@@ -170,7 +181,30 @@ class _feedbackState extends State<feedback> {
                                 backgroundColor: const MaterialStatePropertyAll(
                                   Color(0xffFF9800),
                                 )),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (dateController.text.isEmpty ||
+                                  feedbackcontroller.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Please enter both date and feedback')),
+                                );
+                              } else if (dateController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Please select a date')),
+                                );
+                              } else if (feedbackcontroller.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Please enter Feedback')),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Saved')),
+                                );
+                              }
+                            },
                             child: const Text(
                               "Save",
                               style: TextStyle(

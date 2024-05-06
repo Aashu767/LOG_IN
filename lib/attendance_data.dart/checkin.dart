@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:io' as io;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -193,6 +194,7 @@ class _check_inState extends State<check_in> {
                   TextFormField(
                     keyboardType: TextInputType.number,
                     controller: readingcontroller,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.all(5),
                       border: OutlineInputBorder(
@@ -231,7 +233,12 @@ class _check_inState extends State<check_in> {
                                 Color(0xffFF9800),
                               )),
                           onPressed: () {
-                            if (img64 == "") {
+                            if (_formKey.currentState != null &&
+                                _formKey.currentState!.validate()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('check in')),
+                              );
+                            } else if (img64 == "") {
                               checkin();
                             } else {
                               checkinwithreading();
