@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:io' as io;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
@@ -234,6 +235,9 @@ class _paymentState extends State<payment> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
                               controller: transactionidController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 labelText: 'Enter Transaction ID',
@@ -255,6 +259,10 @@ class _paymentState extends State<payment> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
                               controller: customernameController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[a-zA-Z\s]')),
+                              ],
                               decoration: InputDecoration(
                                   labelText: 'Enter Customer Name',
                                   border: OutlineInputBorder(
@@ -274,6 +282,10 @@ class _paymentState extends State<payment> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
                               controller: banknameController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[a-zA-Z\s]')),
+                              ],
                               decoration: InputDecoration(
                                   labelText: 'Enter Bank Name',
                                   border: OutlineInputBorder(
@@ -344,6 +356,9 @@ class _paymentState extends State<payment> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: TextFormField(
                               controller: _amountController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                   labelText: 'Enter Amount',
