@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:log_in/Authentication/login.dart';
 import 'package:log_in/All_MENU.dart/Zone.dart';
+import 'package:log_in/models/date_filter_model.dart';
 import 'package:log_in/models/menu_model.dart';
 import 'search_complaints.dart';
 import 'package:log_in/utils/secure_storage.dart';
@@ -38,12 +39,54 @@ class _dashboardState extends State<dashboard> {
     'assets/image/search1.png',
     'assets/image/attandance1.png',
   ];
+  List<ComplaintsList> datefilterlist = [];
 
   @override
   void initState() {
     super.initState();
     fetchmenuApi();
     getstaffid();
+    date_filterapi();
+  }
+
+  date_filterapi() async {
+    var body = {
+      "SearchString": "2208100002",
+      "dt1": fromdateController.text,
+      "dt2": todateController.text,
+    };
+
+    var res = await http.post(
+        Uri.parse(
+            "http://nds1.nippondata.com/ServiceWebApi/Service.asmx/Search_ComplaintsListV2"),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: body);
+    var bodyIs = res.body;
+    var statuCode = res.statusCode;
+    if (statuCode == 200) {
+      debugPrint("reis${res.body}");
+      Xml2Json xml2json = Xml2Json();
+      xml2json.parse(bodyIs);
+      var jsonString = xml2json.toParker();
+      var data = jsonDecode(jsonString);
+      var compliststring = data['string'];
+      compliststring = compliststring.toString().replaceAll("\\r\\\\n", "\n");
+      var compobject = json.decode(compliststring.toString());
+      var complistobject = compobject['Complaints_List'];
+      Iterable l = complistobject;
+      setState(() {
+        datefilterlist =
+            l.map((data) => ComplaintsList.fromJson(data)).toList();
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   Future<String> getstaffid() async {
@@ -285,12 +328,13 @@ class _dashboardState extends State<dashboard> {
         Color(0xffFF9800),
       )),
       onPressed: () {
-        if (_formKey.currentState != null &&
-            _formKey.currentState!.validate()) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Please Enter Date')),
-          );
-        }
+        // if (_formKey.currentState != null &&
+        //     _formKey.currentState!.validate()) {
+        //   ScaffoldMessenger.of(context).showSnackBar(
+        //     const SnackBar(content: Text('Please Enter Date')),
+        //   );
+        // }
+        date_filterapi();
       },
       child: const Text("Submit",
           style: TextStyle(

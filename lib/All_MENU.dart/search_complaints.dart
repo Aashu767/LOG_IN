@@ -134,8 +134,8 @@ class _Search_complaintsState extends State<Search_complaints> {
                                   children: [
                                     const Padding(
                                       padding: EdgeInsets.only(
-                                          left: 20.0,
-                                          right: 10.0,
+                                          left: 10.0,
+                                          right: 0.0,
                                           top: 10.0,
                                           bottom: 10.0),
                                       child: Column(
