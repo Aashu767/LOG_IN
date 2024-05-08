@@ -51,7 +51,7 @@ class _dashboardState extends State<dashboard> {
 
   date_filterapi() async {
     var body = {
-      "SearchString": "2208100002",
+      "SearchString": "2405010001",
       "dt1": fromdateController.text,
       "dt2": todateController.text,
     };
@@ -99,8 +99,8 @@ class _dashboardState extends State<dashboard> {
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "UserID": staffId,
-      "dt1": "0",
-      "dt2": "0",
+      "dt1": "",
+      "dt2": "",
     };
     var res = await http.post(
         Uri.parse(

@@ -86,7 +86,7 @@ class _Form_pageState extends State<Form_page> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-      debugPrint("reis${res.body}");
+     // debugPrint("reis${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();

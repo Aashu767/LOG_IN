@@ -66,7 +66,7 @@ class _LoginState extends State<Login> {
         isLoading = false;
       });
 
-      debugPrint(statusCode.toString());
+     // debugPrint(statusCode.toString());
       Xml2Json xml2Json = Xml2Json();
       xml2Json.parse(bodyIs);
       var jsonString = xml2Json.toParker();
