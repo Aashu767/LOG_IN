@@ -27,7 +27,7 @@ class _Search_complaintsState extends State<Search_complaints> {
     super.initState();
   }
 
-  fetchsearchApi() async {
+  fetchsearchApi(String searchTerm) async {
     var body = {
       "SearchString": _controller.text,
     };
@@ -91,6 +91,9 @@ class _Search_complaintsState extends State<Search_complaints> {
               child: SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.06,
                 child: TextField(
+                  onSubmitted: (String searchTerm) {
+                    fetchsearchApi(searchTerm);
+                  },
                   controller: _controller,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   decoration: InputDecoration(
@@ -99,7 +102,7 @@ class _Search_complaintsState extends State<Search_complaints> {
                       hintText: 'Complant No. / Mob No...',
                       suffixIcon: IconButton(
                           onPressed: () {
-                            fetchsearchApi();
+                            // fetchsearchApi();
                           },
                           icon: const Icon(Icons.search))),
                 ),

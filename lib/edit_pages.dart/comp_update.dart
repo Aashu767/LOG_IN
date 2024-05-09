@@ -478,6 +478,9 @@ class _comp_updateState extends State<comp_update> {
                           child: TextField(
                             keyboardType: TextInputType.number,
                             controller: Qty,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
                               hintText: 'Qty',
@@ -499,6 +502,9 @@ class _comp_updateState extends State<comp_update> {
                           child: TextField(
                             keyboardType: TextInputType.number,
                             controller: Rate,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
                               hintText: 'Rate',
