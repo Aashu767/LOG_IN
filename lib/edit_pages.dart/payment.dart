@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:log_in/models/get_detail_model.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -34,6 +35,7 @@ class _paymentState extends State<payment> {
   File? _imgFile;
   String img64 = "";
   List<PaymentMode> paymentMode = [];
+  List<PaymentdetailModel> paymentdetail = [];
   String paymentlist1 = "";
   PaymentMode? paymentval;
 
@@ -80,8 +82,9 @@ class _paymentState extends State<payment> {
   }
 
   updatepayment() async {
+    print("paymentdetail${widget.complno}");
     var body = {
-      "CustomerCode": "",
+      "CustomerCode": widget.complno,
     };
     var res = await http.post(
         Uri.parse(
@@ -101,10 +104,12 @@ class _paymentState extends State<payment> {
       var valueliststring = data['string'];
       valueliststring = valueliststring.toString().replaceAll("\\r\\\\n", "\n");
       var valueobject = json.decode(valueliststring.toString());
-      var valuelistobject = valueobject['SchemeSKU'];
+      var valuelistobject = valueobject['PAYMENT_DETAILS'];
       Iterable l = valuelistobject;
       setState(() {
-        paymentMode = l.map((data) => PaymentMode.fromJson(data)).toList();
+        paymentdetail =
+            l.map((data) => PaymentdetailModel.fromJson(data)).toList();
+        print("paymentdetail$paymentdetail");
       });
     } else {
       setState(() {
