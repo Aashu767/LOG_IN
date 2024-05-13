@@ -82,7 +82,6 @@ class _paymentState extends State<payment> {
   }
 
   updatepayment() async {
-    print("paymentdetail${widget.complno}");
     var body = {
       "CustomerCode": widget.complno,
     };
@@ -109,7 +108,6 @@ class _paymentState extends State<payment> {
       setState(() {
         paymentdetail =
             l.map((data) => PaymentdetailModel.fromJson(data)).toList();
-        print("paymentdetail$paymentdetail");
       });
     } else {
       setState(() {

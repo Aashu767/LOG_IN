@@ -23,8 +23,6 @@ class dashboard extends StatefulWidget {
 class _dashboardState extends State<dashboard> {
   bool isLoading = true;
   List<MenuDetails> menulist = [];
-  TextEditingController fromdatecontroller = TextEditingController();
-  TextEditingController todatecontroller = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController fromdateController = TextEditingController();
   TextEditingController todateController = TextEditingController();
@@ -46,7 +44,6 @@ class _dashboardState extends State<dashboard> {
     super.initState();
     fetchmenuApi();
     getstaffid();
-    date_filterapi();
   }
 
   date_filterapi() async {
@@ -305,135 +302,128 @@ class _dashboardState extends State<dashboard> {
   }
 
   showAlertDialog(BuildContext context) async {
-    Widget DismissButton = TextButton(
-      style: const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(
-        Color(0xffFF9800),
-      )),
-      child: const Text("Dismiss",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          )),
+    Widget dismissButton = TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: const Color(0xffFF9800),
+      ),
       onPressed: () {
         Navigator.pop(context);
       },
+      child: Text(
+        "Dismiss",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+        ),
+      ),
     );
-    const SizedBox(
-      width: 25,
-    );
+
     Widget submitButton = TextButton(
-      style: const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(
-        Color(0xffFF9800),
-      )),
+      style: TextButton.styleFrom(
+        backgroundColor: const Color(0xffFF9800),
+      ),
       onPressed: () {
-        // if (_formKey.currentState != null &&
-        //     _formKey.currentState!.validate()) {
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     const SnackBar(content: Text('Please Enter Date')),
-        //   );
-        // }
         date_filterapi();
       },
-      child: const Text("Submit",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-          )),
+      child: Text(
+        "Submit",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+        ),
+      ),
     );
 
     AlertDialog alert = AlertDialog(
       actionsAlignment: MainAxisAlignment.center,
       scrollable: true,
-      title: const Center(
-        child: Text("DATE FILTER",
-            style: TextStyle(
-              fontSize: 18,
-            )),
+      title: Center(
+        child: Text(
+          "DATE FILTER",
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
       ),
       content: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "From Date :",
-                  style: TextStyle(
-                    fontSize: 16,
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "From Date :",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  _fromdate(context);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        fromdateController.text == ""
+                            ? ' Select From Date '
+                            : fromdateController.text,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    _fromdate(context);
-                  },
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Row(
-                      children: [
-                        Row(children: [
-                          Text(
-                            fromdateController.text == ""
-                                ? ' Select From Date '
-                                : fromdateController.text,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ]),
-                      ],
-                    ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "To Date :",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  _todate(context);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        todateController.text == ""
+                            ? 'Select To Date '
+                            : todateController.text,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  "To Date :",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    _todate(context);
-                  },
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Row(
-                      children: [
-                        Row(children: [
-                          Text(
-                            todateController.text == ""
-                                ? 'Select To Date '
-                                : todateController.text,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ]),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
       ),
       actions: [
-        DismissButton,
+        dismissButton,
         submitButton,
       ],
     );
@@ -448,10 +438,11 @@ class _dashboardState extends State<dashboard> {
 
   _fromdate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2050));
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2050),
+    );
 
     if (pickedDate != null) {
       print(pickedDate);
@@ -468,10 +459,11 @@ class _dashboardState extends State<dashboard> {
 
   _todate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2050));
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2050),
+    );
 
     if (pickedDate != null) {
       print(pickedDate);

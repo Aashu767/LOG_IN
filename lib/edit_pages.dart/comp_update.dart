@@ -92,7 +92,6 @@ class _comp_updateState extends State<comp_update> {
 
   String uint8ListTob64(Uint8List uint8list) {
     String base64String = base64Encode(uint8list);
-    // String header = "data:image/png;base64,";
     return base64String;
   }
 
