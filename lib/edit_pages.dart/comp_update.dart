@@ -1,21 +1,21 @@
 // ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters, non_constant_identifier_names, unnecessary_string_interpolations, unrelated_type_equality_checks, library_private_types_in_public_api, sized_box_for_whitespace, deprecated_member_use
 
 import 'dart:convert';
-import 'dart:io';
 import 'dart:io' as io;
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:xml2json/xml2json.dart';
 import 'package:log_in/api.dart';
 import 'package:log_in/edit_pages.dart/signature.dart';
 import 'package:log_in/models/All_dropdown_model.dart';
 import 'package:log_in/models/itemModel.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
-import 'package:xml2json/xml2json.dart';
 
 class AddedItem {
   final String name;
@@ -93,11 +93,12 @@ class _comp_updateState extends State<comp_update> {
 
   String uint8ListTob64(Uint8List uint8list) {
     String base64String = base64Encode(uint8list);
-    return base64String;
+    String header = "data:image/png;base64,";
+    return header + base64String;
   }
 
   saveupdatedata() async {
-    var signimg64 = uint8ListTob64(signatureImage!);
+    String signimg64 = uint8ListTob64(signatureImage!);
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "Complaint_No": widget.compno,
@@ -109,7 +110,7 @@ class _comp_updateState extends State<comp_update> {
       "Status": _compstatusValue,
       "Signature_Image": signimg64,
       "Picture_Taken": img64,
-      "Item_JSON": addedItemsVal.toString(),
+      "Item_JSON": addedItemsVal,
       "Actual_Closure": actualcloserController.text,
       "Customer_FeedBack": feedbackController.text,
       "User_Id": staffId,
@@ -123,10 +124,11 @@ class _comp_updateState extends State<comp_update> {
     var res = await http.post(Uri.parse(AppUrl.WS_Update_complaints_SR),
         headers: {
           "Accept": "application/json",
-          "Content_type": "application/x-www-form-urlencoded"
+          "Content_type": 'application/json',
         },
-        body: body);
+        body: json.encode(body));
     var bodyIs = res.body;
+    print("objectupdate1$bodyIs");
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       Xml2Json xml2json = Xml2Json();
@@ -140,6 +142,8 @@ class _comp_updateState extends State<comp_update> {
       var valuelistobject = valueobject['SchemeSKU'];
       print("objectupdate$valuelistobject");
       setState(() {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Save sucessfully")));
         // saveupdatedata =
         //     l.map((data) => saveupdatedata.fromJson(data)).toList();
       });

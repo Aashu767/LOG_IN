@@ -99,9 +99,10 @@ class _check_outState extends State<check_out> {
       var data = jsonDecode(jsonString);
       var response = data['boolean'];
       response = response.toString().replaceAll("\\r\\\\n", "\n");
-      if (response == true) {
+      if (response == "true") {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Checkout Successfully")));
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response)));
@@ -132,9 +133,10 @@ class _check_outState extends State<check_out> {
       var data = jsonDecode(jsonString);
       var response = data['boolean'];
       response = response.toString().replaceAll("\\r\\\\n", "\n");
-      if (response == true) {
+      if (response == "true") {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Checkout Successfully")));
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response)));
@@ -232,13 +234,16 @@ class _check_outState extends State<check_out> {
                           onPressed: () {
                             if (_formKey.currentState != null &&
                                 _formKey.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Check out')),
-                              );
-                            } else if (img64 == "") {
-                              checkout();
+                              if (img64 == "") {
+                                checkout();
+                              } else {
+                                checkoutwithreading();
+                              }
                             } else {
-                              checkoutwithreading();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Please try again')),
+                              );
                             }
                           },
                           child: const Text(

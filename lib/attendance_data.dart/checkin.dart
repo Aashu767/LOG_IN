@@ -91,6 +91,7 @@ class _check_inState extends State<check_in> {
         },
         body: body);
     var bodyIs = res.body;
+    print("objectupdatecheckin$bodyIs");
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       Xml2Json xml2json = Xml2Json();
@@ -99,9 +100,10 @@ class _check_inState extends State<check_in> {
       var data = jsonDecode(jsonString);
       var response = data['boolean'];
       response = response.toString().replaceAll("\\r\\\\n", "\n");
-      if (response == true) {
+      if (response == "true") {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("CheckIn Successfully")));
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response)));
@@ -124,6 +126,7 @@ class _check_inState extends State<check_in> {
         },
         body: body);
     var bodyIs = res.body;
+    print("objectupdatecheckin$bodyIs");
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       Xml2Json xml2json = Xml2Json();
@@ -132,9 +135,10 @@ class _check_inState extends State<check_in> {
       var data = jsonDecode(jsonString);
       var response = data['boolean'];
       response = response.toString().replaceAll("\\r\\\\n", "\n");
-      if (response == true) {
+      if (response == "true") {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("CheckIn Successfully")));
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response)));
@@ -232,13 +236,15 @@ class _check_inState extends State<check_in> {
                           onPressed: () {
                             if (_formKey.currentState != null &&
                                 _formKey.currentState!.validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('check in')),
-                              );
-                            } else if (img64 == "") {
-                              checkin();
+                              if (img64 == "") {
+                                checkin();
+                              } else {
+                                checkinwithreading();
+                              }
                             } else {
-                              checkinwithreading();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Please try again")));
                             }
                           },
                           child: const Text(

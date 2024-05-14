@@ -24,20 +24,22 @@ class _leaveState extends State<leave> {
   TextEditingController dateController = TextEditingController();
   TextEditingController dateController1 = TextEditingController();
   TextEditingController remarkscontroller = TextEditingController();
+  String todate = "";
+  String fromdate = "";
 
   @override
   void initState() {
     super.initState();
   }
 
-  leave() async {
+  saveleave() async {
     var staffId = await UserSecureStorage().getStaffId();
     var body = {
       "_StaffId": staffId,
       "LeaveDays": dayscontroller.text,
       "_Remarks": remarkscontroller.text,
-      "FromDate": dateController.text,
-      "Todate": dateController1.text,
+      "FromDate": fromdate,
+      "Todate": todate,
       "_VisitCode": "01",
       "_TenantCode": "101",
       "_Location": "110001",
@@ -50,6 +52,7 @@ class _leaveState extends State<leave> {
         },
         body: body);
     var bodyIs = res.body;
+    print("objectupdate$bodyIs ${dateController.text} ${dateController1.text}");
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       Xml2Json xml2json = Xml2Json();
@@ -276,6 +279,8 @@ class _leaveState extends State<leave> {
                             onPressed: () {
                               if (_formKey.currentState != null &&
                                   _formKey.currentState!.validate()) {
+                                saveleave();
+                              } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Saved')),
                                 );
@@ -329,11 +334,12 @@ class _leaveState extends State<leave> {
 
     if (pickedDate != null) {
       print(pickedDate);
-      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-      print(formattedDate);
+      //jo format wo bateyga wo yha likh
+      fromdate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      // print(formattedDate);
 
       setState(() {
-        dateController.text = formattedDate;
+        dateController.text = fromdate;
       });
     } else {
       print("Date is not selected");
@@ -349,11 +355,11 @@ class _leaveState extends State<leave> {
 
     if (pickedDate != null) {
       print(pickedDate);
-      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-      print(formattedDate);
+      todate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      print(todate);
 
       setState(() {
-        dateController1.text = formattedDate;
+        dateController1.text = todate;
       });
     } else {
       print("Date is not selected");

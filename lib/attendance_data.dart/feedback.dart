@@ -22,11 +22,11 @@ class _feedbackState extends State<feedback> {
   bool isLoading = true;
   TextEditingController dateController = TextEditingController();
   TextEditingController feedbackcontroller = TextEditingController();
+  String selecteddate = "";
 
   @override
   void initState() {
     super.initState();
-    feedback();
   }
 
   feedback() async {
@@ -34,7 +34,7 @@ class _feedbackState extends State<feedback> {
     var body = {
       "_StaffId": staffId,
       "_Remarks": feedbackcontroller.text,
-      "Fromdate": dateController.text,
+      "Fromdate": selecteddate,
       "_VisitCode": "01",
       "_TenantCode": "101",
       "_Location": "110001",
@@ -46,19 +46,19 @@ class _feedbackState extends State<feedback> {
         },
         body: body);
     var bodyIs = res.body;
+    print("objectupdatecheckin$bodyIs");
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
       var data = jsonDecode(jsonString);
-      var checkinliststring = data['string'];
-      checkinliststring =
-          checkinliststring.toString().replaceAll("\\r\\\\n", "\n");
-      var response = data['string'];
+      var response = data['boolean'];
+      response = response.toString().replaceAll("\\r\\\\n", "\n");
       if (response == "true") {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("CheckIn Successfully")));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Successfully saved")));
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response)));
@@ -181,26 +181,13 @@ class _feedbackState extends State<feedback> {
                                   Color(0xffFF9800),
                                 )),
                             onPressed: () {
-                              if (dateController.text.isEmpty ||
-                                  feedbackcontroller.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Please enter both date and feedback')),
-                                );
-                              } else if (dateController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Please select a date')),
-                                );
-                              } else if (feedbackcontroller.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Please enter Feedback')),
-                                );
+                              if (_formKey.currentState != null &&
+                                  _formKey.currentState!.validate()) {
+                                feedback();
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Saved')),
+                                  const SnackBar(
+                                      content: Text('Please try again')),
                                 );
                               }
                             },
@@ -252,11 +239,14 @@ class _feedbackState extends State<feedback> {
 
     if (pickedDate != null) {
       print(pickedDate);
-      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-      print(formattedDate);
+      selecteddate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      // print(formattedDate);
 
       setState(() {
-        dateController.text = formattedDate;
+        dateController.text = selecteddate;
+        // selecteddate = formattedDate;
+        print("Date ${dateController.text}");
       });
     } else {
       print("Date is not selected");
