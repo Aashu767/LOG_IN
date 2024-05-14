@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/edit_pages.dart/Form.dart';
 import 'package:log_in/models/search_model.dart';
 import 'package:xml2json/xml2json.dart';
@@ -32,9 +33,7 @@ class _Search_complaintsState extends State<Search_complaints> {
       "SearchString": _controller.text,
     };
 
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Search_ComplaintsList"),
+    var res = await http.post(Uri.parse(AppUrl.Search_ComplaintsList),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"
