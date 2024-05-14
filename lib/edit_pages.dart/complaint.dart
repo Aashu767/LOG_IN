@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/edit_pages.dart/Form.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/models/complaintlist_model.dart';
@@ -39,9 +40,7 @@ class _ComplaintsState extends State<Complaints> {
       "dt2": "0",
     };
 
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_ComplaintsList_SR"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Get_All_ComplaintsList_SR),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"
@@ -50,7 +49,7 @@ class _ComplaintsState extends State<Complaints> {
     var bodyIs = res.body;
     var statuCode = res.statusCode;
     if (statuCode == 200) {
-     // debugPrint("reis${res.body}");
+      // debugPrint("reis${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/models/zone_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:xml2json/xml2json.dart';
@@ -47,9 +48,7 @@ class _zoneState extends State<zone> {
       "dt1": "0",
       "dt2": "0",
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_Zones_SR"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Get_All_Zones_SR),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
@@ -38,9 +39,7 @@ class _feedbackState extends State<feedback> {
       "_TenantCode": "101",
       "_Location": "110001",
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Day_Feedback"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Day_Feedback),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"

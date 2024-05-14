@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:log_in/api.dart';
 import 'package:xml2json/xml2json.dart';
 import 'package:log_in/All_MENU.dart/Zone.dart';
 import 'package:log_in/Authentication/login.dart';
@@ -53,9 +54,7 @@ class _dashboardState extends State<dashboard> {
       "dt2": todateController.text,
     };
 
-    var res = await http.post(
-        Uri.parse(
-            "http://nds1.nippondata.com/ServiceWebApi/Service.asmx/Search_ComplaintsListV2"),
+    var res = await http.post(Uri.parse(AppUrl.Search_ComplaintsListV2),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"
@@ -99,9 +98,7 @@ class _dashboardState extends State<dashboard> {
       "dt1": "",
       "dt2": "",
     };
-    var res = await http.post(
-        Uri.parse(
-            'http://140.238.162.89/ServiceWebAPI/Service.asmx/Get_All_MenuLinks_SR'),
+    var res = await http.post(Uri.parse(AppUrl.Get_All_MenuLinks_SR),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"

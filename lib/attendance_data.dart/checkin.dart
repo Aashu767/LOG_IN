@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
@@ -83,9 +84,7 @@ class _check_inState extends State<check_in> {
       "_TenantCode": "101",
       "_Location": "110001",
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Day_Check_In_With_Reading"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Day_Check_In_With_Reading),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
@@ -118,9 +117,7 @@ class _check_inState extends State<check_in> {
       "_TenantCode": "101",
       "_Location": "110001",
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Day_Check_In"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Day_Check_In),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"

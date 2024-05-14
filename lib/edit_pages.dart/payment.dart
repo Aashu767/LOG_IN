@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/models/get_detail_model.dart';
 import 'package:log_in/models/paymendropdown_model.dart';
 import 'package:log_in/utils/secure_storage.dart';
@@ -51,9 +52,7 @@ class _paymentState extends State<payment> {
     var body = {
       "USER_ID": staffId,
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_DropDownValue"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Get_All_DropDownValue),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
@@ -85,9 +84,7 @@ class _paymentState extends State<payment> {
     var body = {
       "CustomerCode": widget.complno,
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_Customer_PaymentSR"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Get_Customer_PaymentSR),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
@@ -129,9 +126,7 @@ class _paymentState extends State<payment> {
       "BankName": banknameController.text,
       "AttachDocument": img64,
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/WS_Insert_PaymentSR"),
+    var res = await http.post(Uri.parse(AppUrl.WS_Insert_PaymentSR),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"

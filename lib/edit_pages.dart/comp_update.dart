@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/edit_pages.dart/signature.dart';
 import 'package:log_in/models/All_dropdown_model.dart';
 import 'package:log_in/models/itemModel.dart';
@@ -119,9 +120,7 @@ class _comp_updateState extends State<comp_update> {
       "DefectType": _defecttypeValue,
       "CallCatg": _callcodeValue,
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://nds1.nippondata.com/ServiceWebApi/Service.asmx/WS_Update_complaints_SR"),
+    var res = await http.post(Uri.parse(AppUrl.WS_Update_complaints_SR),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
@@ -156,9 +155,7 @@ class _comp_updateState extends State<comp_update> {
     var body = {
       "USER_ID": staffId,
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_DropDownValue"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Get_All_DropDownValue),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
@@ -196,9 +193,7 @@ class _comp_updateState extends State<comp_update> {
     var body = {
       "ProductCode": "0",
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_DropDownValueSR"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Get_All_DropDownValueSR),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"

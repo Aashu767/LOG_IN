@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:log_in/All_MENU.dart/dashbord.dart';
+import 'package:log_in/api.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:xml2json/xml2json.dart';
 import '../utils/secure_storage.dart';
@@ -45,20 +46,16 @@ class _LoginState extends State<Login> {
     setState(() {
       isLoading = true;
     });
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Validate_Login"),
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: {
-          "_sUserId": user,
-          "_sPwd": pass,
-          "_VisitorCode": "",
-          "_TenantCode": "",
-          "_Location": ""
-        });
+    var res = await http.post(Uri.parse(AppUrl.Ws_Validate_Login), headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded"
+    }, body: {
+      "_sUserId": user,
+      "_sPwd": pass,
+      "_VisitorCode": "",
+      "_TenantCode": "",
+      "_Location": ""
+    });
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {

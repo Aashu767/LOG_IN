@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/edit_pages.dart/comp_update.dart';
 import 'package:log_in/models/form_model.dart';
 import 'package:http/http.dart' as http;
@@ -38,9 +39,7 @@ class _Form_pageState extends State<Form_page> {
     var body = {
       "USER_ID": staffId,
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_All_Bind_subordinate"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Get_All_Bind_subordinate),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
@@ -76,8 +75,7 @@ class _Form_pageState extends State<Form_page> {
       "Assign_User_ID": staffId,
     };
     var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/Ws_Get_Complaint_BasedOnComplaintNo_SR"),
+        Uri.parse(AppUrl.Ws_Get_Complaint_BasedOnComplaintNo_SR),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
@@ -86,7 +84,7 @@ class _Form_pageState extends State<Form_page> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
-     // debugPrint("reis${res.body}");
+      // debugPrint("reis${res.body}");
       Xml2Json xml2json = Xml2Json();
       xml2json.parse(bodyIs);
       var jsonString = xml2json.toParker();
@@ -115,9 +113,7 @@ class _Form_pageState extends State<Form_page> {
       "Complaint_No": widget.compno,
       "Assign_USER_ID": userlist1,
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://140.238.162.89/ServiceWebAPI/Service.asmx/WS_UPdate_Complaint_Assign"),
+    var res = await http.post(Uri.parse(AppUrl.WS_UPdate_Complaint_Assign),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"

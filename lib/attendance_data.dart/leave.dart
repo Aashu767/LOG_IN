@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:log_in/api.dart';
 import 'package:log_in/utils/secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
@@ -42,9 +43,7 @@ class _leaveState extends State<leave> {
       "_Location": "110001",
       "_AStatus": "",
     };
-    var res = await http.post(
-        Uri.parse(
-            "http://nds1.nippondata.com/ServiceWebApi/Service.asmx/Ws_Leave_Request"),
+    var res = await http.post(Uri.parse(AppUrl.Ws_Leave_Request),
         headers: {
           "Accept": "application/json",
           "Content_type": "application/x-www-form-urlencoded"
