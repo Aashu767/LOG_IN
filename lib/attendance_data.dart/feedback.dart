@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, use_build_context_synchronously, avoid_print, unused_element
+// ignore_for_file: camel_case_types, use_build_context_synchronously, avoid_print, unused_element, deprecated_member_use
 
 import 'dart:convert';
 

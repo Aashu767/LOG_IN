@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, avoid_print, must_be_immutable, use_key_in_widget_constructors
+// ignore_for_file: camel_case_types, avoid_print, must_be_immutable, use_key_in_widget_constructors, deprecated_member_use
 
 import 'dart:convert';
 import 'dart:io';

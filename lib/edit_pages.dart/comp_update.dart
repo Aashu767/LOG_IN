@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters, non_constant_identifier_names, unnecessary_string_interpolations, unrelated_type_equality_checks, library_private_types_in_public_api, sized_box_for_whitespace
+// ignore_for_file: camel_case_types, unnecessary_null_comparison, avoid_unnecessary_containers, unused_element, avoid_print, unused_field, must_be_immutable, use_super_parameters, non_constant_identifier_names, unnecessary_string_interpolations, unrelated_type_equality_checks, library_private_types_in_public_api, sized_box_for_whitespace, deprecated_member_use
 
 import 'dart:convert';
 import 'dart:io';
