@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, use_super_parameters, use_build_context_synchronously, unused_element
+// ignore_for_file: deprecated_member_use, use_super_parameters, use_build_context_synchronously, unused_element, avoid_print
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
