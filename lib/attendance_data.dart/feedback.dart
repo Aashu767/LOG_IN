@@ -37,7 +37,7 @@ class _feedbackState extends State<feedback> {
       "Fromdate": selecteddate,
       "_VisitCode": "01",
       "_TenantCode": "101",
-      "_Location": "110001",
+      "_Location": "100001",
     };
     var res = await http.post(Uri.parse(AppUrl.Ws_Day_Feedback),
         headers: {
@@ -46,7 +46,6 @@ class _feedbackState extends State<feedback> {
         },
         body: body);
     var bodyIs = res.body;
-    print("objectupdatecheckin$bodyIs");
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       Xml2Json xml2json = Xml2Json();
@@ -57,7 +56,7 @@ class _feedbackState extends State<feedback> {
       response = response.toString().replaceAll("\\r\\\\n", "\n");
       if (response == "true") {
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Successfully saved")));
+            .showSnackBar(const SnackBar(content: Text("feedback saved")));
         Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
@@ -187,7 +186,7 @@ class _feedbackState extends State<feedback> {
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content: Text('Please try again')),
+                                      content: Text('enter details')),
                                 );
                               }
                             },
@@ -239,13 +238,11 @@ class _feedbackState extends State<feedback> {
 
     if (pickedDate != null) {
       print(pickedDate);
-      selecteddate = DateFormat('dd-MM-yyyy').format(pickedDate);
-      //String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-      // print(formattedDate);
+      selecteddate = DateFormat('yyyy-MM-dd').format(pickedDate);
 
       setState(() {
         dateController.text = selecteddate;
-        // selecteddate = formattedDate;
+
         print("Date ${dateController.text}");
       });
     } else {

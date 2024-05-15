@@ -126,7 +126,7 @@ class _check_inState extends State<check_in> {
         },
         body: body);
     var bodyIs = res.body;
-    print("objectupdatecheckin$bodyIs");
+
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       Xml2Json xml2json = Xml2Json();

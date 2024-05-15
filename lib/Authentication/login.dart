@@ -59,6 +59,7 @@ class _LoginState extends State<Login> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
+      print("body$bodyIs");
       setState(() {
         isLoading = false;
       });

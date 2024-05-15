@@ -108,6 +108,7 @@ class _dashboardState extends State<dashboard> {
     var bodyIs = res.body;
     var statusCode = res.statusCode;
     if (statusCode == 200) {
+      print("dfufuf$bodyIs");
       Xml2Json xml2Json = Xml2Json();
       xml2Json.parse(bodyIs);
       var jsonString = xml2Json.toParker();

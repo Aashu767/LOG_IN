@@ -1307,6 +1307,8 @@ class _comp_updateState extends State<comp_update> {
                     )),
                     onPressed: () {
                       saveupdatedata();
+                      Navigator.pop(context);
+
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(

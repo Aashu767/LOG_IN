@@ -40,10 +40,10 @@ class _leaveState extends State<leave> {
       "_Remarks": remarkscontroller.text,
       "FromDate": fromdate,
       "Todate": todate,
-      "_VisitCode": "01",
+      "_VisitCode": "",
       "_TenantCode": "101",
-      "_Location": "110001",
-      "_AStatus": "",
+      "_Location": "100001",
+      "_AStatus": "1",
     };
     var res = await http.post(Uri.parse(AppUrl.Ws_Leave_Request),
         headers: {
@@ -52,7 +52,6 @@ class _leaveState extends State<leave> {
         },
         body: body);
     var bodyIs = res.body;
-    print("objectupdate$bodyIs ${dateController.text} ${dateController1.text}");
     var statusCode = res.statusCode;
     if (statusCode == 200) {
       Xml2Json xml2json = Xml2Json();
@@ -61,9 +60,10 @@ class _leaveState extends State<leave> {
       var data = jsonDecode(jsonString);
       var response = data['boolean'];
       response = response.toString().replaceAll("\\r\\\\n", "\n");
-      if (response == true) {
+      if (response == "true") {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Checkout Successfully")));
+            const SnackBar(content: Text("Leave Saved")));
+        Navigator.pop(context);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(response)));
@@ -282,7 +282,7 @@ class _leaveState extends State<leave> {
                                 saveleave();
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Saved')),
+                                  const SnackBar(content: Text('enter detail')),
                                 );
                               }
                             },
@@ -335,7 +335,7 @@ class _leaveState extends State<leave> {
     if (pickedDate != null) {
       print(pickedDate);
       //jo format wo bateyga wo yha likh
-      fromdate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      fromdate = DateFormat('yyyy-MM-dd').format(pickedDate);
       // print(formattedDate);
 
       setState(() {
@@ -355,7 +355,7 @@ class _leaveState extends State<leave> {
 
     if (pickedDate != null) {
       print(pickedDate);
-      todate = DateFormat('dd-MM-yyyy').format(pickedDate);
+      todate = DateFormat('yyyy-MM-dd').format(pickedDate);
       print(todate);
 
       setState(() {
